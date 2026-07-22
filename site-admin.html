@@ -87,8 +87,8 @@ const SCHEMA=[
  {h:'Fonts',f:[
    ['font_heading','Heading font','fontpick'],
    ['font_body','Body font','fontpick'],
-   ['font_heading_scale','Heading size (50–150%)','scaleH'],
-   ['font_body_scale','Body size (80–130%)','scaleB'],
+   ['font_heading_px','Heading size (px)','pxH'],
+   ['font_body_px','Body size (px)','pxB'],
  ]},
  {h:'Hero (top banner)',f:[
    ['hero_eyebrow','Small text above title','line'],
@@ -223,13 +223,14 @@ function render(){
         return `<label>${esc(label)}</label>
           <select data-k="${key}" oninput="onEdit();fontPreview()">${fonts.map(f=>`<option value="${esc(f)}"${v===f?' selected':''} style="font-family:'${esc(f)}'">${esc(f)}</option>`).join('')}</select>`;
       }
-      if(type==='scaleH'||type==='scaleB'){
-        const min=type==='scaleH'?50:80, max=type==='scaleH'?150:130;
+      if(type==='pxH'||type==='pxB'){
+        const def=type==='pxH'?'48':'16';
         return `<label>${esc(label)}</label>
-          <div style="display:flex;align-items:center;gap:12px">
-            <input type="range" min="${min}" max="${max}" value="${esc(v||'100')}" data-k="${key}" oninput="onEdit();document.getElementById('sv_${key}').textContent=this.value+'%'" style="flex:1">
-            <span id="sv_${key}" style="min-width:44px;text-align:right;color:var(--gold);font-weight:700">${esc(v||'100')}%</span>
-          </div>`;
+          <div style="display:flex;align-items:center;gap:10px">
+            <input type="number" min="8" max="120" value="${esc(v||def)}" data-k="${key}" oninput="onEdit()" style="width:110px">
+            <span style="color:var(--muted);font-size:13px">px</span>
+          </div>
+          <div class="hint2">${type==='pxH'?'Desktop heading size. Scales down on smaller screens.':'Body text size. 16px is standard.'}</div>`;
       }
       if(type==='mediatype') return `<label>${esc(label)}</label>
         <select data-k="${key}" oninput="onEdit()">

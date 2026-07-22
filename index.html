@@ -12,9 +12,9 @@
   *{box-sizing:border-box;margin:0;padding:0}
   :root{--bg:#0a0a0a;--bg2:#111;--gold:#F5C518;--gold-dim:#c9a417;--text:#f4f4f0;--muted:#9a9a92;--line:#232320;--serif:'Cormorant Garamond',serif;--sans:'Inter',-apple-system,sans-serif}
   html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;--hscale:1;--bscale:1;font-size:calc(1rem * var(--bscale))}
-  .hero h1{font-size:calc(clamp(42px,8vw,88px) * var(--hscale))}
-  .h2{font-size:calc(clamp(30px,5vw,54px) * var(--hscale))}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;--hpx:48px;--bpx:16px;font-size:var(--bpx)}
+  .hero h1{font-size:clamp(32px, 7vw, var(--hpx))}
+  .h2{font-size:clamp(26px, 5vw, var(--hpx))}
   a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
   .serif{font-family:var(--serif)}.gold{color:var(--gold)}
 
@@ -199,11 +199,8 @@
         const r=document.documentElement.style;
         if(C.font_heading) r.setProperty('--serif',"'"+C.font_heading+"', serif");
         if(C.font_body) r.setProperty('--sans',"'"+C.font_body+"', sans-serif");
-        if(C.font_heading_scale){const hs=Math.max(50,Math.min(150,+C.font_heading_scale))/100;
-          document.querySelectorAll('.h1,.hero h1,.h2').forEach(e=>{e.style.fontSize='';e.style.transform='';});
-          document.body.style.setProperty('--hscale',hs);}
-        if(C.font_body_scale){const bs=Math.max(80,Math.min(130,+C.font_body_scale))/100;
-          document.body.style.setProperty('--bscale',bs);}
+        if(C.font_heading_px){document.body.style.setProperty('--hpx',(+C.font_heading_px||48)+'px');}
+        if(C.font_body_px){document.body.style.setProperty('--bpx',(+C.font_body_px||16)+'px');}
       })();
       document.querySelectorAll('[data-c]').forEach(el=>{const v=C[el.dataset.c];if(v!=null&&v!=='')el.textContent=v;});
       document.querySelectorAll('[data-cimg]').forEach(el=>{const v=C[el.dataset.cimg];if(v)el.src=v;});

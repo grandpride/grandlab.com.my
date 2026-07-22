@@ -48,7 +48,10 @@
     padding:120px 6vw 80px;
     background:linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,.85)),
       url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=2000&auto=format&fit=crop') center/cover fixed}
-  .hero .inner{max-width:900px}
+  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,.85));z-index:1}
+  .hero .inner{max-width:900px;position:relative;z-index:2}
+  .hero .scroll-cue{z-index:2}
   .hero .eyebrow{font-size:13px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;font-weight:400}
   .hero h1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(42px,8vw,88px);line-height:1.05;margin-bottom:24px}
   .hero p{font-size:clamp(15px,2.2vw,19px);color:var(--muted);max-width:600px;margin:0 auto 38px;font-weight:300}
@@ -129,24 +132,25 @@
 <nav id="nav">
   <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo"></a>
   <div class="links" id="navLinks">
-    <a href="#home" onclick="closeNav()">Home</a>
-    <a href="#about" onclick="closeNav()">About</a>
-    <a href="#services" onclick="closeNav()">Services</a>
-    <a href="#brands" onclick="closeNav()">Brands</a>
+    <a href="/" onclick="closeNav()">Home</a>
+    <a href="about.html" onclick="closeNav()">About</a>
+    <a href="services.html" onclick="closeNav()">Services</a>
+    <a href="services.html" onclick="closeNav()">Brands</a>
     <a href="/warranty/" onclick="closeNav()">Warranty</a>
-    <a href="#contact" onclick="closeNav()">Contact</a>
+    <a href="contact.html" onclick="closeNav()">Contact</a>
   </div>
   <button class="burger" onclick="toggleNav()"><i class="ti ti-menu-2" id="burgerIcon"></i></button>
 </nav>
 
 <!-- HERO -->
 <header class="hero" id="home">
+  <video id="heroVideo" class="hero-video" muted autoplay loop playsinline style="display:none"></video>
   <div class="inner">
     <div class="eyebrow" data-c="hero_eyebrow">Detailing by GrandPride</div>
     <h1 data-c="hero_title">Your Personalized<br>Detailer</h1>
     <p data-c="hero_text">Premium ceramic coating, paint protection film, wrapping and detailing — crafted for those who treat their car as more than transport.</p>
     <div class="btns">
-      <a class="btn btn-gold" href="#services"><i class="ti ti-sparkles"></i> Explore Services</a>
+      <a class="btn btn-gold" href="services.html"><i class="ti ti-sparkles"></i> Explore Services</a>
       <a class="btn btn-ghost" href="https://wa.me/60169618299" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp"></i> Book Now</a>
     </div>
   </div>
@@ -215,6 +219,9 @@
     <div class="svc"><div class="ic"><i class="ti ti-armchair"></i></div><h3 data-c="svc2_title">PPF</h3><p data-c="svc2_text">ONE+ paint protection film — self-healing, invisible defence against chips.</p></div>
     <div class="svc"><div class="ic"><i class="ti ti-spray"></i></div><h3 data-c="svc3_title">Wrapping</h3><p data-c="svc3_text">NAKA &amp; KTN films — change your colour, protect your paint.</p></div>
     <div class="svc"><div class="ic"><i class="ti ti-droplet"></i></div><h3 data-c="svc4_title">Detailing</h3><p data-c="svc4_text">Interior, exterior &amp; paint correction — showroom condition restored.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:clamp(36px,6vw,54px)">
+    <a class="btn btn-gold" href="services.html"><i class="ti ti-arrow-right"></i> See Our Services</a>
   </div>
 </section>
 
@@ -309,9 +316,15 @@
     document.querySelectorAll('[data-cimg]').forEach(el=>{
       const v=C[el.dataset.cimg]; if(v) el.src=v;
     });
-    // hero background
-    if(C.hero_img){ const h=document.querySelector('.hero');
-      if(h) h.style.backgroundImage="linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,.85)),url('"+C.hero_img+"')"; }
+    // hero background — photo or looping video
+    const heroEl=document.querySelector('.hero'), vidEl=document.getElementById('heroVideo');
+    if(C.hero_media_type==='video' && C.hero_video){
+      if(vidEl){ vidEl.src=C.hero_video; vidEl.style.display='block'; vidEl.play&&vidEl.play().catch(()=>{}); }
+      if(heroEl) heroEl.style.backgroundImage='none';
+    } else if(C.hero_img){
+      if(vidEl) vidEl.style.display='none';
+      if(heroEl) heroEl.style.backgroundImage="linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,.85)),url('"+C.hero_img+"')";
+    }
     // brands line (split on ·)
     if(C.brands){ const br=document.querySelector('.brand-row');
       if(br) br.innerHTML=C.brands.split('·').map(b=>'<span>'+b.trim().replace(/[<>]/g,'')+'</span>').join(''); }

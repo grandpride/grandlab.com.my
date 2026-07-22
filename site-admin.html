@@ -17,7 +17,12 @@
   .sec h2{font-size:14px;color:var(--gold);margin-bottom:14px;letter-spacing:.03em}
   label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:11px 0 5px}
   input,textarea{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:9px;color:#fff;padding:11px 12px;font-size:14px;font-family:inherit;outline:none}
-  input:focus,textarea:focus{border-color:var(--gold)}
+  input:focus,textarea:focus,select:focus{border-color:var(--gold)}
+  select{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:9px;color:#fff;padding:11px 12px;font-size:14px;font-family:inherit;outline:none}
+  .hint2{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5}
+  .upbtn{margin-top:8px;background:var(--card2);border:1px solid var(--line);color:var(--text);border-radius:9px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .upbtn:hover{border-color:var(--gold)}
+  .vidprev{margin-top:10px;width:100%;border-radius:9px;border:1px solid var(--line);max-height:180px;object-fit:cover}
   textarea{resize:vertical;min-height:70px;line-height:1.5}
   .imgprev{margin-top:8px;aspect-ratio:16/8;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#000}
   .imgprev img{width:100%;height:100%;object-fit:cover}
@@ -78,7 +83,9 @@ const SCHEMA=[
    ['hero_eyebrow','Small text above title','line'],
    ['hero_title','Main headline','line'],
    ['hero_text','Sub-text','area'],
+   ['hero_media_type','Background type','mediatype'],
    ['hero_img','Background image URL','img'],
+   ['hero_video','Background video (upload MP4)','video'],
  ]},
  {h:'Intro band',f:[
    ['intro_eyebrow','Eyebrow','line'],['intro_title','Heading','line'],['intro_text','Text','area'],
@@ -140,6 +147,19 @@ function render(){
       if(type==='area') return `<label>${esc(label)}</label><textarea data-k="${key}" oninput="onEdit()">${esc(v)}</textarea>`;
       if(type==='img') return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit();previewImg('${key}')">
         <div class="imgprev"><img id="prev_${key}" src="${esc(v)}" onerror="this.style.opacity=.2"></div>`;
+      if(type==='mediatype') return `<label>${esc(label)}</label>
+        <select data-k="${key}" oninput="onEdit()">
+          <option value="image"${v==='image'?' selected':''}>Photo</option>
+          <option value="video"${v==='video'?' selected':''}>Video (loop)</option>
+        </select>
+        <div class="hint2">Choose whether the top banner shows a photo or a looping video.</div>`;
+      if(type==='video') return `<label>${esc(label)}</label>
+        <input data-k="${key}" value="${esc(v)}" oninput="onEdit()" placeholder="video URL (or upload below)">
+        <button type="button" class="upbtn" onclick="document.getElementById('vidfile').click()"><i class="ti ti-upload"></i> Upload MP4</button>
+        <input id="vidfile" type="file" accept="video/mp4" style="display:none" onchange="uploadVideo(this.files[0],'${key}')">
+        <div class="hint2">Recommended: 1920×1080, <b>max 8&nbsp;MB</b>, 10–20&nbsp;sec, MP4. Larger files load slowly.</div>
+        <div id="vidstat" class="hint2"></div>
+        ${v?`<video src="${esc(v)}" class="vidprev" muted autoplay loop playsinline></video>`:''}`;
       return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit()">`;
     }).join('');
     return `<div class="sec"><h2>${esc(sec.h)}</h2>${fields}</div>`;
@@ -148,6 +168,23 @@ function render(){
 function previewImg(k){ const el=$('prev_'+k); if(el){ el.style.opacity=1; el.src=document.querySelector('[data-k="'+k+'"]').value; } }
 let dirty=false;
 function onEdit(){ dirty=true; $('msg').textContent='Unsaved changes'; $('msg').className='msg'; }
+
+async function uploadVideo(file,key){
+  if(!file) return;
+  const st=document.getElementById('vidstat');
+  if(file.size>8*1024*1024){ st.innerHTML='<span style="color:#e0533d">That file is '+(file.size/1048576).toFixed(1)+' MB — please keep under 8 MB.</span>'; }
+  st.textContent='Uploading… ('+(file.size/1048576).toFixed(1)+' MB)';
+  try{
+    const path='hero-'+Date.now()+'.mp4';
+    const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-videos/'+path,{
+      method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:'Bearer '+SUPABASE_ANON},body:file});
+    if(r.ok){
+      const url=SUPABASE_URL+'/storage/v1/object/public/gl-videos/'+path;
+      const inp=document.querySelector('[data-k="'+key+'"]'); inp.value=url; onEdit();
+      st.innerHTML='<span style="color:#3ec76e">✓ Uploaded. Remember to Save.</span>';
+    } else { st.innerHTML='<span style="color:#e0533d">Upload failed — check the gl-videos bucket exists and is public.</span>'; }
+  }catch(e){ st.innerHTML='<span style="color:#e0533d">Error: '+e.message+'</span>'; }
+}
 
 async function saveAll(){
   $('saveBtn').disabled=true; $('msg').textContent='Saving…'; $('msg').className='msg';

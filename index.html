@@ -49,6 +49,7 @@
   /* centered text band */
   .band{text-align:center;background:var(--bg)}
   .band .lead{margin:0 auto 30px}
+  .band .btn{margin-top:6px}
 
   /* workshop with looping photos */
   .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,72px);align-items:center;max-width:1200px;margin:0 auto}
@@ -116,34 +117,20 @@
   <a class="btn btn-gold" href="services.html"><i class="ti ti-arrow-right"></i> See Our Services</a>
 </section>
 
-<!-- OUR WORKSHOP (looping photos) -->
-<section>
-  <div class="split">
-    <div class="txt">
-      <div class="eyebrow2">The Facility</div>
-      <h2 class="h2" data-c="ws_title">Our Workshop</h2>
-      <p class="lead" data-c="ws_text">Step into our Petaling Jaya facility — a fully-equipped, one-stop garage built for everything your car needs. Detailing bays, a dedicated coating and PPF area, and a full service workshop, all staffed by a skilled in-house team who treat every vehicle as their own.</p>
-      <a class="btn btn-ghost" href="workshop.html" style="margin-top:24px"><i class="ti ti-arrow-right"></i> Learn More</a>
-    </div>
-    <div class="media">
-      <div class="slideshow" id="wsShow"><!-- images injected --></div>
-    </div>
-  </div>
+<!-- OUR WORKSHOP -->
+<section class="band">
+  <div class="eyebrow2">The Facility</div>
+  <h2 class="h2" data-c="ws_title">Our Workshop</h2>
+  <p class="lead" data-c="ws_text">Step into our Petaling Jaya facility — a fully-equipped, one-stop garage built for everything your car needs. Detailing bays, a dedicated coating and PPF area, and a full service workshop, all staffed by a skilled in-house team who treat every vehicle as their own.</p>
+  <a class="btn btn-ghost" href="workshop.html"><i class="ti ti-arrow-right"></i> Learn More</a>
 </section>
 
 <!-- GRANDPRIDE LOUNGE -->
-<section style="padding-top:0">
-  <div class="split rev">
-    <div class="txt">
-      <div class="eyebrow2">Relax With Us</div>
-      <h2 class="h2" data-c="lg_title">The GrandPride Lounge</h2>
-      <p class="lead" data-c="lg_text">While we care for your car, relax in the GrandPride Lounge — a comfortable space designed for our clients to unwind, work, or simply enjoy a coffee while the work is done. Premium care extends beyond the vehicle.</p>
-      <a class="btn btn-ghost" href="lounge.html" style="margin-top:24px"><i class="ti ti-arrow-right"></i> Find Out More</a>
-    </div>
-    <div class="media">
-      <div class="single-img"><img data-cimg="lg_img" src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1400&auto=format&fit=crop" alt="GrandPride Lounge"></div>
-    </div>
-  </div>
+<section class="band">
+  <div class="eyebrow2">Relax With Us</div>
+  <h2 class="h2" data-c="lg_title">The GrandPride Lounge</h2>
+  <p class="lead" data-c="lg_text">While we care for your car, relax in the GrandPride Lounge — a comfortable space designed for our clients to unwind, work, or simply enjoy a coffee while the work is done. Premium care extends beyond the vehicle.</p>
+  <a class="btn btn-ghost" href="lounge.html"><i class="ti ti-arrow-right"></i> Find Out More</a>
 </section>
 
 <!-- FEATURE PHOTO -->
@@ -194,16 +181,6 @@
   const navEl=document.getElementById('nav');let lastY=scrollY;
   addEventListener('scroll',()=>{const y=scrollY;if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');lastY=y;},{passive:true});
 
-  // slideshow engine
-  function startSlideshow(container,urls){
-    if(!urls.length){return;}
-    container.innerHTML=urls.map((u,i)=>'<img src="'+u+'" class="'+(i===0?'active':'')+'" alt="Workshop">').join('');
-    const imgs=container.querySelectorAll('img');if(imgs.length<2)return;
-    let idx=0;setInterval(()=>{imgs[idx].classList.remove('active');idx=(idx+1)%imgs.length;imgs[idx].classList.add('active');},3500);
-  }
-  // default workshop photos (overridden by admin content)
-  let wsDefault=['https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=1400&auto=format&fit=crop','https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1400&auto=format&fit=crop','https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=1400&auto=format&fit=crop'];
-  startSlideshow(document.getElementById('wsShow'),wsDefault);
 
   // load editable content from Supabase
   (async function(){
@@ -217,8 +194,6 @@
       const bg=document.getElementById('heroBg'),vid=document.getElementById('heroVideo');
       if(C.hero_media_type==='video'&&C.hero_video){vid.src=C.hero_video;vid.style.display='block';bg.style.display='none';vid.play&&vid.play().catch(()=>{});}
       else if(C.hero_img){bg.style.background="linear-gradient(180deg,rgba(10,10,10,.45) 0%,rgba(10,10,10,.7) 70%,rgba(10,10,10,1) 100%),url('"+C.hero_img+"') center/cover";}
-      // workshop looping photos (| separated)
-      if(C.ws_photos){const arr=C.ws_photos.split('|').map(x=>x.trim()).filter(Boolean);if(arr.length)startSlideshow(document.getElementById('wsShow'),arr);}
       // feature photo
       if(C.feat_img){document.getElementById('featPhoto').style.backgroundImage="linear-gradient(rgba(10,10,10,.3),rgba(10,10,10,.3)),url('"+C.feat_img+"')";}
       // brands

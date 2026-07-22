@@ -3,121 +3,77 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GrandLab — Your Personalized Detailer</title>
-<meta name="description" content="GrandLab — premium car detailing, ceramic coating, paint protection film (PPF) and wrapping in Petaling Jaya. Your personalized detailer. Detailing by GrandPride.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>GrandLab Detailing — Your Personalized Detailer | Petaling Jaya</title>
+<meta name="description" content="GrandLab Detailing — Petaling Jaya's one-stop garage for car detailing, servicing and modification. Ceramic coating, PPF, wrapping. Detailing by GrandPride.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --bg:#0a0a0a; --bg2:#111; --gold:#F5C518; --gold-dim:#c9a417;
-    --text:#f4f4f0; --muted:#9a9a92; --line:#232320;
-    --serif:'Cormorant Garamond',serif; --sans:'Inter',-apple-system,sans-serif;
-  }
+  :root{--bg:#0a0a0a;--bg2:#111;--gold:#F5C518;--gold-dim:#c9a417;--text:#f4f4f0;--muted:#9a9a92;--line:#232320;--serif:'Cormorant Garamond',serif;--sans:'Inter',-apple-system,sans-serif}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block}
-  .serif{font-family:var(--serif)}
-  .gold{color:var(--gold)}
+  a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+  .serif{font-family:var(--serif)}.gold{color:var(--gold)}
 
-  /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
-      padding:18px 6vw;background:transparent;border-bottom:1px solid transparent;
-      transition:transform .4s ease,padding .3s}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 6vw;background:transparent;transition:transform .4s ease}
   nav.hidden{transform:translateY(-100%)}
-  nav .brand{font-weight:800;font-size:22px;letter-spacing:1.5px;display:flex;align-items:center}
-  nav .brand span{color:var(--gold)}
   nav .brand-logo{height:34px;width:auto;display:block}
   @media(max-width:600px){nav .brand-logo{height:28px}}
   nav .links{display:flex;gap:30px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:400}
-  nav .links a{color:var(--muted);transition:.2s}
-  nav .links a:hover{color:var(--gold)}
-  nav .burger{display:none;font-size:26px;color:var(--text);background:none;border:none;cursor:pointer}
-  @media(max-width:860px){
-    nav .links{position:fixed;inset:0;top:0;background:rgba(10,10,10,.97);flex-direction:column;align-items:center;justify-content:center;
-      gap:32px;font-size:18px;transform:translateX(100%);transition:.35s}
-    nav .links.open{transform:translateX(0)}
-    nav .burger{display:block;z-index:101}
-  }
+  nav .links a{color:var(--text);transition:.2s;text-shadow:0 1px 6px rgba(0,0,0,.5)}nav .links a:hover{color:var(--gold)}
+  nav .burger{display:none;font-size:26px;color:var(--text);background:none;border:none;cursor:pointer;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+  @media(max-width:860px){nav .links{position:fixed;inset:0;background:rgba(10,10,10,.97);flex-direction:column;align-items:center;justify-content:center;gap:32px;font-size:18px;transform:translateX(100%);transition:.35s}nav .links.open{transform:translateX(0)}nav .burger{display:block;z-index:101}}
 
   /* HERO */
-  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;
-    padding:120px 6vw 80px;
-    background:linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,.85)),
-      url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=2000&auto=format&fit=crop') center/cover fixed}
-  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,.85));z-index:1}
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:120px 6vw 80px}
+  .hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(10,10,10,.5),rgba(10,10,10,.85)),url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=2000&auto=format&fit=crop') center/cover}
+  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:none}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.5),rgba(10,10,10,.85));z-index:1}
   .hero .inner{max-width:900px;position:relative;z-index:2}
-  .hero .scroll-cue{z-index:2}
-  .hero .eyebrow{font-size:13px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;font-weight:400}
+  .hero .eyebrow{font-size:13px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
   .hero h1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(42px,8vw,88px);line-height:1.05;margin-bottom:24px}
-  .hero p{font-size:clamp(15px,2.2vw,19px);color:var(--muted);max-width:600px;margin:0 auto 38px;font-weight:300}
+  .hero p{font-size:clamp(15px,2.1vw,18px);color:#d8d8d2;max-width:680px;margin:0 auto 38px;font-weight:300}
   .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-  .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 30px;border-radius:2px;font-size:13px;
-    letter-spacing:.12em;text-transform:uppercase;font-weight:500;transition:.25s;cursor:pointer;border:1px solid transparent}
-  .btn-gold{background:var(--gold);color:#0a0a0a}
-  .btn-gold:hover{background:#fff}
-  .btn-ghost{border-color:rgba(255,255,255,.3);color:var(--text)}
-  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-  .scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:22px;animation:bob 2s infinite}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 30px;border-radius:2px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;transition:.25s;cursor:pointer;border:1px solid transparent}
+  .btn-gold{background:var(--gold);color:#0a0a0a}.btn-gold:hover{background:#fff}
+  .btn-ghost{border-color:rgba(255,255,255,.35);color:var(--text)}.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:22px;z-index:2;animation:bob 2s infinite}
   @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
 
-  /* SECTION SHELL */
   section{padding:clamp(70px,11vw,130px) 6vw}
   .eyebrow2{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:16px;font-weight:500}
   .h2{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(30px,5vw,54px);line-height:1.1;margin-bottom:22px}
-  .lead{color:var(--muted);font-size:clamp(15px,2vw,17px);max-width:560px;font-weight:300}
+  .lead{color:var(--muted);font-size:clamp(15px,2vw,17px);max-width:600px;font-weight:300}
 
-  /* INTRO band */
-  .intro{text-align:center;background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .intro .lead{margin:0 auto}
+  /* centered text band */
+  .band{text-align:center;background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .band .lead{margin:0 auto 30px}
 
-  /* ALTERNATING FEATURE ROWS */
-  .feature{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,80px);align-items:center;max-width:1200px;margin:0 auto}
-  .feature+.feature{margin-top:clamp(60px,10vw,120px)}
-  .feature .img{aspect-ratio:4/3;border-radius:3px;overflow:hidden;background:#1a1a17;position:relative}
-  .feature .img img{width:100%;height:100%;object-fit:cover;transition:.6s}
-  .feature:hover .img img{transform:scale(1.04)}
-  .feature.rev .txt{order:2}.feature.rev .img{order:1}
-  .feature .num{font-family:var(--serif);font-style:italic;color:var(--gold-dim);font-size:20px;margin-bottom:10px}
-  @media(max-width:800px){.feature{grid-template-columns:1fr}.feature.rev .txt,.feature.rev .img{order:0}}
+  /* workshop with looping photos */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,72px);align-items:center;max-width:1200px;margin:0 auto}
+  .split.rev .txt{order:2}.split.rev .media{order:1}
+  @media(max-width:820px){.split{grid-template-columns:1fr}.split.rev .txt,.split.rev .media{order:0}}
+  .slideshow{position:relative;aspect-ratio:4/3;border-radius:4px;overflow:hidden;background:#1a1a17}
+  .slideshow img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+  .slideshow img.active{opacity:1}
+  .single-img{aspect-ratio:4/3;border-radius:4px;overflow:hidden;background:#1a1a17}
+  .single-img img{width:100%;height:100%;object-fit:cover;transition:.6s}
+  .split:hover .single-img img{transform:scale(1.04)}
 
-  /* SERVICES GRID */
-  .services{background:var(--bg2);border-top:1px solid var(--line)}
-  .svc-head{text-align:center;max-width:640px;margin:0 auto clamp(40px,7vw,70px)}
-  .svc-head .lead{margin:0 auto}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1200px;margin:0 auto}
-  @media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:520px){.grid4{grid-template-columns:1fr}}
-  .svc{border:1px solid var(--line);border-radius:3px;padding:34px 26px;background:var(--bg);transition:.3s;position:relative;overflow:hidden}
-  .svc:hover{border-color:var(--gold-dim);transform:translateY(-4px)}
-  .svc .ic{font-size:34px;color:var(--gold);margin-bottom:18px}
-  .svc h3{font-family:var(--serif);font-size:26px;font-weight:600;margin-bottom:10px}
-  .svc p{color:var(--muted);font-size:14px;font-weight:300;line-height:1.6}
+  /* full-width feature photo */
+  .feature-photo{height:60vh;background-size:cover;background-position:center;background-attachment:fixed}
 
-  /* BRAND LOGOS */
-  .brands{text-align:center;border-top:1px solid var(--line)}
-  .brand-row{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,60px);align-items:center;justify-content:center;margin-top:44px;
-    font-family:var(--serif);font-style:italic;font-size:clamp(18px,3vw,26px);color:var(--muted)}
-  .brand-row span{opacity:.7;transition:.25s;cursor:default}
-  .brand-row span:hover{opacity:1;color:var(--gold)}
+  /* brands */
+  .brands{text-align:center;border-top:1px solid var(--line);background:var(--bg2)}
+  .brand-row{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,60px);align-items:center;justify-content:center;margin-top:44px;font-family:var(--serif);font-style:italic;font-size:clamp(18px,3vw,26px);color:var(--muted)}
+  .brand-row span{opacity:.75;transition:.25s}.brand-row span:hover{opacity:1;color:var(--gold)}
 
-  /* CTA band */
-  .cta{text-align:center;background:linear-gradient(180deg,rgba(10,10,10,.6),rgba(10,10,10,.9)),
-    url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop') center/cover fixed}
-  .cta .h2{margin-bottom:18px}
-
-  /* CONTACT / FOOTER */
   footer{background:#070707;border-top:1px solid var(--line);padding:clamp(60px,9vw,90px) 6vw 40px}
   .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto}
   @media(max-width:760px){.foot-grid{grid-template-columns:1fr;gap:34px}}
-  footer .brand{font-weight:800;font-size:26px;letter-spacing:1px;margin-bottom:14px}
-  footer .brand span{color:var(--gold)}
-  footer p,footer a{color:var(--muted);font-size:14px;font-weight:300}
-  footer a:hover{color:var(--gold)}
+  footer .brand{font-weight:800;font-size:26px;letter-spacing:1px;margin-bottom:14px}footer .brand span{color:var(--gold)}
+  footer p,footer a{color:var(--muted);font-size:14px;font-weight:300}footer a:hover{color:var(--gold)}
   .foot-h{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--text);margin-bottom:16px;font-weight:600}
   .foot-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
   .foot-row i{color:var(--gold);font-size:17px;flex:0 0 auto}
@@ -128,14 +84,13 @@
 </style>
 </head>
 <body>
-
 <nav id="nav">
   <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo"></a>
   <div class="links" id="navLinks">
     <a href="/" onclick="closeNav()">Home</a>
     <a href="about.html" onclick="closeNav()">About</a>
     <a href="services.html" onclick="closeNav()">Services</a>
-    <a href="services.html" onclick="closeNav()">Brands</a>
+    <a href="pricing.html" onclick="closeNav()">Pricing</a>
     <a href="/warranty/" onclick="closeNav()">Warranty</a>
     <a href="contact.html" onclick="closeNav()">Contact</a>
   </div>
@@ -144,113 +99,75 @@
 
 <!-- HERO -->
 <header class="hero" id="home">
-  <video id="heroVideo" class="hero-video" muted autoplay loop playsinline style="display:none"></video>
+  <div class="hero-bg" id="heroBg"></div>
+  <video id="heroVideo" class="hero-video" muted autoplay loop playsinline></video>
   <div class="inner">
-    <div class="eyebrow" data-c="hero_eyebrow">Detailing by GrandPride</div>
-    <h1 data-c="hero_title">Your Personalized<br>Detailer</h1>
-    <p data-c="hero_text">Premium ceramic coating, paint protection film, wrapping and detailing — crafted for those who treat their car as more than transport.</p>
+    <div class="eyebrow" data-c="hero_eyebrow">Welcome to GrandLab Detailing</div>
+    <h1 data-c="hero_title">Your Personalized Detailer</h1>
+    <p data-c="hero_text">Kuala Lumpur's premier one-stop garage, headquartered in Petaling Jaya — where car detailing, servicing and modification come together under one roof. From ceramic coating and paint protection to mechanical care and bespoke upgrades, we look after every aspect of your vehicle with precision and pride.</p>
     <div class="btns">
-      <a class="btn btn-gold" href="services.html"><i class="ti ti-sparkles"></i> Explore Services</a>
+      <a class="btn btn-gold" href="services.html"><i class="ti ti-sparkles"></i> See Our Services</a>
       <a class="btn btn-ghost" href="https://wa.me/60169618299" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp"></i> Book Now</a>
     </div>
   </div>
-  <a href="#about" class="scroll-cue"><i class="ti ti-chevron-down"></i></a>
+  <a href="#invest" class="scroll-cue"><i class="ti ti-chevron-down"></i></a>
 </header>
 
-<!-- INTRO -->
-<section class="intro" id="about">
-  <div class="eyebrow2" data-c="intro_eyebrow">Welcome to GrandLab</div>
-  <h2 class="h2" data-c="intro_title">Protecting your investment</h2>
-  <p class="lead" data-c="intro_text">Your car is an investment — and it deserves care that matches. At GrandLab, every vehicle receives a personalized approach, using premium products and meticulous craftsmanship to keep it looking its absolute best, for years to come.</p>
+<!-- PROTECTING YOUR INVESTMENT -->
+<section class="band" id="invest">
+  <h2 class="h2" data-c="pi_title">Protecting your investment</h2>
+  <p class="lead" data-c="pi_text">Your car is more than transport — it's an investment worth protecting. Our full range of services is designed to keep it performing, protected and looking its very best, year after year.</p>
+  <a class="btn btn-gold" href="services.html"><i class="ti ti-arrow-right"></i> See Our Services</a>
 </section>
 
-<!-- FEATURES -->
+<!-- OUR WORKSHOP (looping photos) -->
 <section>
-  <div class="feature">
+  <div class="split">
     <div class="txt">
-      <div class="num">01</div>
-      <div class="eyebrow2" data-c="f1_label">Ceramic Coating</div>
-      <h2 class="h2" data-c="f1_title">A lasting, liquid shield</h2>
-      <p class="lead" data-c="f1_text">Gyeon and Koch Chemie ceramic coatings bond to your paint, delivering deep gloss, hydrophobic protection and years of durability — backed by our own e-Warranty.</p>
+      <div class="eyebrow2">The Facility</div>
+      <h2 class="h2" data-c="ws_title">Our Workshop</h2>
+      <p class="lead" data-c="ws_text">Step into our Petaling Jaya facility — a fully-equipped, one-stop garage built for everything your car needs. Detailing bays, a dedicated coating and PPF area, and a full service workshop, all staffed by a skilled in-house team who treat every vehicle as their own.</p>
+      <a class="btn btn-ghost" href="about.html" style="margin-top:24px"><i class="ti ti-arrow-right"></i> Learn More</a>
     </div>
-    <div class="img"><img data-cimg="f1_img" src="https://images.unsplash.com/photo-1605515298946-d664fd6a2f0e?q=80&w=1400&auto=format&fit=crop" alt="Ceramic coating"></div>
-  </div>
-
-  <div class="feature rev">
-    <div class="txt">
-      <div class="num">02</div>
-      <div class="eyebrow2" data-c="f2_label">Paint Protection Film</div>
-      <h2 class="h2" data-c="f2_title">Invisible armour</h2>
-      <p class="lead" data-c="f2_text">ONE+ PPF guards against stone chips, scratches and road debris with a self-healing, near-invisible layer — preserving your paint underneath.</p>
+    <div class="media">
+      <div class="slideshow" id="wsShow"><!-- images injected --></div>
     </div>
-    <div class="img"><img data-cimg="f2_img" src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?q=80&w=1400&auto=format&fit=crop" alt="Paint protection film"></div>
-  </div>
-
-  <div class="feature">
-    <div class="txt">
-      <div class="num">03</div>
-      <div class="eyebrow2" data-c="f3_label">Wrapping</div>
-      <h2 class="h2" data-c="f3_title">Reinvent your look</h2>
-      <p class="lead" data-c="f3_text">Transform your car with NAKA and KTN wrapping films — a spectrum of colours and finishes, precision-applied to turn heads and protect the original paint.</p>
-    </div>
-    <div class="img"><img data-cimg="f3_img" src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?q=80&w=1400&auto=format&fit=crop" alt="Car wrapping"></div>
-  </div>
-
-  <div class="feature rev">
-    <div class="txt">
-      <div class="num">04</div>
-      <div class="eyebrow2" data-c="f4_label">Detailing</div>
-      <h2 class="h2" data-c="f4_title">Showroom, every time</h2>
-      <p class="lead" data-c="f4_text">From deep interior cleaning to paint correction and our signature wash packages, our detailing brings back that just-delivered feeling.</p>
-    </div>
-    <div class="img"><img data-cimg="f4_img" src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?q=80&w=1400&auto=format&fit=crop" alt="Car detailing"></div>
   </div>
 </section>
 
-<!-- SERVICES GRID -->
-<section class="services" id="services">
-  <div class="svc-head">
-    <div class="eyebrow2">What We Offer</div>
-    <h2 class="h2">Our Services</h2>
-    <p class="lead">A complete range of care, tailored to your vehicle and how you drive.</p>
-  </div>
-  <div class="grid4">
-    <div class="svc"><div class="ic"><i class="ti ti-shield-check"></i></div><h3 data-c="svc1_title">Coating</h3><p data-c="svc1_text">Gyeon &amp; Koch Chemie ceramic coatings — gloss and protection that lasts years.</p></div>
-    <div class="svc"><div class="ic"><i class="ti ti-armchair"></i></div><h3 data-c="svc2_title">PPF</h3><p data-c="svc2_text">ONE+ paint protection film — self-healing, invisible defence against chips.</p></div>
-    <div class="svc"><div class="ic"><i class="ti ti-spray"></i></div><h3 data-c="svc3_title">Wrapping</h3><p data-c="svc3_text">NAKA &amp; KTN films — change your colour, protect your paint.</p></div>
-    <div class="svc"><div class="ic"><i class="ti ti-droplet"></i></div><h3 data-c="svc4_title">Detailing</h3><p data-c="svc4_text">Interior, exterior &amp; paint correction — showroom condition restored.</p></div>
-  </div>
-  <div style="text-align:center;margin-top:clamp(36px,6vw,54px)">
-    <a class="btn btn-gold" href="services.html"><i class="ti ti-arrow-right"></i> See Our Services</a>
+<!-- GRANDPRIDE LOUNGE -->
+<section style="padding-top:0">
+  <div class="split rev">
+    <div class="txt">
+      <div class="eyebrow2">Relax With Us</div>
+      <h2 class="h2" data-c="lg_title">The GrandPride Lounge</h2>
+      <p class="lead" data-c="lg_text">While we care for your car, relax in the GrandPride Lounge — a comfortable space designed for our clients to unwind, work, or simply enjoy a coffee while the work is done. Premium care extends beyond the vehicle.</p>
+      <a class="btn btn-ghost" href="about.html" style="margin-top:24px"><i class="ti ti-arrow-right"></i> Find Out More</a>
+    </div>
+    <div class="media">
+      <div class="single-img"><img data-cimg="lg_img" src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1400&auto=format&fit=crop" alt="GrandPride Lounge"></div>
+    </div>
   </div>
 </section>
+
+<!-- FEATURE PHOTO -->
+<div class="feature-photo" id="featPhoto" style="background-image:linear-gradient(rgba(10,10,10,.3),rgba(10,10,10,.3)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop')"></div>
 
 <!-- BRANDS -->
-<section class="brands" id="brands">
+<section class="brands">
   <div class="eyebrow2">Trusted Products</div>
   <h2 class="h2">The brands we work with</h2>
-  <div class="brand-row">
+  <div class="brand-row" id="brandRow">
     <span>Gyeon</span><span>Koch Chemie</span><span>ONE+</span><span>NAKA</span><span>KTN</span>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta">
-  <div class="eyebrow2">Ready when you are</div>
-  <h2 class="h2" data-c="cta_title">Give your car the GrandLab treatment</h2>
-  <p class="lead" style="margin:0 auto 34px" data-c="cta_text">Book a consultation and let us tailor the right care for your vehicle.</p>
-  <div class="btns">
-    <a class="btn btn-gold" href="https://wa.me/60169618299" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp"></i> WhatsApp Us</a>
-    <a class="btn btn-ghost" href="/warranty/"><i class="ti ti-shield-check"></i> Check Warranty</a>
-  </div>
-</section>
-
-<!-- FOOTER / CONTACT -->
+<!-- FOOTER -->
 <footer id="contact">
   <div class="foot-grid">
     <div>
       <div class="brand">GRAND<span>LAB</span></div>
-      <p>Your personalized detailer. Premium coating, PPF, wrapping and detailing — detailing by GrandPride.</p>
+      <p>Petaling Jaya's one-stop garage — detailing, servicing &amp; modification. Detailing by GrandPride.</p>
       <div class="socials">
         <a href="https://wa.me/60169618299" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
         <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
@@ -269,74 +186,53 @@
       <div class="foot-row"><i class="ti ti-shield-check"></i><a href="/warranty/">Check e-Warranty</a></div>
     </div>
   </div>
-  <div class="copyright">
-    &copy; <span id="yr"></span> GrandPride Luxury Travel Sdn Bhd (1297143-K) &bull; All rights reserved
-  </div>
+  <div class="copyright">&copy; <span id="yr"></span> GrandPride Luxury Travel Sdn Bhd (1297143-K) &bull; All rights reserved</div>
 </footer>
-
-<script>
-  document.getElementById('yr').textContent=new Date().getFullYear();
-  function toggleNav(){
-    const l=document.getElementById('navLinks'), i=document.getElementById('burgerIcon');
-    l.classList.toggle('open');
-    i.className = l.classList.contains('open') ? 'ti ti-x' : 'ti ti-menu-2';
-  }
-  function closeNav(){
-    document.getElementById('navLinks').classList.remove('open');
-    document.getElementById('burgerIcon').className='ti ti-menu-2';
-  }
-  // NVN-style nav: hide when scrolling down, reveal when scrolling up
-  const navEl=document.getElementById('nav');
-  let lastY=window.scrollY;
-  function onScroll(){
-    const y=window.scrollY;
-    if(y>lastY && y>120){          // scrolling down, past the top area → hide
-      navEl.classList.add('hidden');
-    } else {                        // scrolling up → show
-      navEl.classList.remove('hidden');
-    }
-    lastY=y;
-  }
-  addEventListener('scroll',onScroll,{passive:true});
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-(async function(){
-  try{
-    const sb=supabase.createClient("https://eychljpzorzmaveixlnu.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5Y2hsanB6b3J6bWF2ZWl4bG51Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDk2NjQsImV4cCI6MjA5NzIyNTY2NH0.6dA1zhz5ZIwf8byFB8vhfOzPI-uPPdPihEr1b8GG_oA",{auth:{persistSession:false}});
-    const {data}=await sb.from('gl_site_content').select('key,value');
-    if(!data) return;
-    const C={}; data.forEach(r=>C[r.key]=r.value);
-    // text nodes tagged with data-c
-    document.querySelectorAll('[data-c]').forEach(el=>{
-      const v=C[el.dataset.c]; if(v!=null && v!=='') el.textContent=v;
-    });
-    // images tagged with data-cimg
-    document.querySelectorAll('[data-cimg]').forEach(el=>{
-      const v=C[el.dataset.cimg]; if(v) el.src=v;
-    });
-    // hero background — photo or looping video
-    const heroEl=document.querySelector('.hero'), vidEl=document.getElementById('heroVideo');
-    if(C.hero_media_type==='video' && C.hero_video){
-      if(vidEl){ vidEl.src=C.hero_video; vidEl.style.display='block'; vidEl.play&&vidEl.play().catch(()=>{}); }
-      if(heroEl) heroEl.style.backgroundImage='none';
-    } else if(C.hero_img){
-      if(vidEl) vidEl.style.display='none';
-      if(heroEl) heroEl.style.backgroundImage="linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,.85)),url('"+C.hero_img+"')";
-    }
-    // brands line (split on ·)
-    if(C.brands){ const br=document.querySelector('.brand-row');
-      if(br) br.innerHTML=C.brands.split('·').map(b=>'<span>'+b.trim().replace(/[<>]/g,'')+'</span>').join(''); }
-    // contact: phone, whatsapp, address, instagram
-    if(C.contact_phone){ document.querySelectorAll('a[href^="tel:"]').forEach(a=>{a.textContent=C.contact_phone;a.href='tel:'+C.contact_phone.replace(/[^0-9+]/g,'');}); }
-    if(C.contact_whatsapp){ const w='https://wa.me/'+C.contact_whatsapp.replace(/[^0-9]/g,'');
-      document.querySelectorAll('a[href*="wa.me"]').forEach(a=>a.href=w); }
-    if(C.contact_address){ const ad=document.querySelector('.foot-row span'); /* first foot-row = address */ }
-    if(C.contact_instagram){ document.querySelectorAll('a[href*="instagram.com"]').forEach(a=>a.href=C.contact_instagram); }
-  }catch(e){ /* site still works with built-in defaults */ }
-})();
-</script>
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  function toggleNav(){const l=document.getElementById('navLinks'),i=document.getElementById('burgerIcon');l.classList.toggle('open');i.className=l.classList.contains('open')?'ti ti-x':'ti ti-menu-2';}
+  function closeNav(){document.getElementById('navLinks').classList.remove('open');document.getElementById('burgerIcon').className='ti ti-menu-2';}
+  // hide-on-scroll nav
+  const navEl=document.getElementById('nav');let lastY=scrollY;
+  addEventListener('scroll',()=>{const y=scrollY;if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');lastY=y;},{passive:true});
 
+  // slideshow engine
+  function startSlideshow(container,urls){
+    if(!urls.length){return;}
+    container.innerHTML=urls.map((u,i)=>'<img src="'+u+'" class="'+(i===0?'active':'')+'" alt="Workshop">').join('');
+    const imgs=container.querySelectorAll('img');if(imgs.length<2)return;
+    let idx=0;setInterval(()=>{imgs[idx].classList.remove('active');idx=(idx+1)%imgs.length;imgs[idx].classList.add('active');},3500);
+  }
+  // default workshop photos (overridden by admin content)
+  let wsDefault=['https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=1400&auto=format&fit=crop','https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1400&auto=format&fit=crop','https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=1400&auto=format&fit=crop'];
+  startSlideshow(document.getElementById('wsShow'),wsDefault);
+
+  // load editable content from Supabase
+  (async function(){
+    try{
+      const sb=supabase.createClient("https://eychljpzorzmaveixlnu.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5Y2hsanB6b3J6bWF2ZWl4bG51Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDk2NjQsImV4cCI6MjA5NzIyNTY2NH0.6dA1zhz5ZIwf8byFB8vhfOzPI-uPPdPihEr1b8GG_oA",{auth:{persistSession:false}});
+      const {data}=await sb.from('gl_site_content').select('key,value');if(!data)return;
+      const C={};data.forEach(r=>C[r.key]=r.value);
+      document.querySelectorAll('[data-c]').forEach(el=>{const v=C[el.dataset.c];if(v!=null&&v!=='')el.textContent=v;});
+      document.querySelectorAll('[data-cimg]').forEach(el=>{const v=C[el.dataset.cimg];if(v)el.src=v;});
+      // hero photo or video
+      const bg=document.getElementById('heroBg'),vid=document.getElementById('heroVideo');
+      if(C.hero_media_type==='video'&&C.hero_video){vid.src=C.hero_video;vid.style.display='block';bg.style.display='none';vid.play&&vid.play().catch(()=>{});}
+      else if(C.hero_img){bg.style.background="linear-gradient(180deg,rgba(10,10,10,.5),rgba(10,10,10,.85)),url('"+C.hero_img+"') center/cover";}
+      // workshop looping photos (| separated)
+      if(C.ws_photos){const arr=C.ws_photos.split('|').map(x=>x.trim()).filter(Boolean);if(arr.length)startSlideshow(document.getElementById('wsShow'),arr);}
+      // feature photo
+      if(C.feat_img){document.getElementById('featPhoto').style.backgroundImage="linear-gradient(rgba(10,10,10,.3),rgba(10,10,10,.3)),url('"+C.feat_img+"')";}
+      // brands
+      if(C.brands){document.getElementById('brandRow').innerHTML=C.brands.split('·').map(b=>'<span>'+b.trim().replace(/[<>]/g,'')+'</span>').join('');}
+      // contact
+      if(C.contact_whatsapp){const w='https://wa.me/'+C.contact_whatsapp.replace(/[^0-9]/g,'');document.querySelectorAll('a[href*="wa.me"]').forEach(a=>a.href=w);}
+      if(C.contact_phone){document.querySelectorAll('a[href^="tel:"]').forEach(a=>{a.textContent=C.contact_phone;a.href='tel:'+C.contact_phone.replace(/[^0-9+]/g,'');});}
+      if(C.contact_instagram){document.querySelectorAll('a[href*="instagram.com"]').forEach(a=>a.href=C.contact_instagram);}
+    }catch(e){}
+  })();
+</script>
 </body>
 </html>

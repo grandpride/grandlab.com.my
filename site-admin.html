@@ -23,6 +23,10 @@
   .upbtn{margin-top:8px;background:var(--card2);border:1px solid var(--line);color:var(--text);border-radius:9px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
   .upbtn:hover{border-color:var(--gold)}
   .vidprev{margin-top:10px;width:100%;border-radius:9px;border:1px solid var(--line);max-height:180px;object-fit:cover}
+  .ggrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+  .gthumb{position:relative;aspect-ratio:1}
+  .gthumb img{width:100%;height:100%;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+  .gthumb button{position:absolute;top:3px;right:3px;background:rgba(0,0,0,.7);color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:13px;cursor:pointer;line-height:1}
   textarea{resize:vertical;min-height:70px;line-height:1.5}
   .imgprev{margin-top:8px;aspect-ratio:16/8;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#000}
   .imgprev img{width:100%;height:100%;object-fit:cover}
@@ -143,6 +147,28 @@ const SCHEMA=[
    ['sp4_text1','Paragraph 1','area'],['sp4_text2','Paragraph 2','area'],
    ['sp4_tags','Product tags (separate with · )','line'],['sp4_img','Image URL','img'],
  ]},
+ {h:'— WORKSHOP PAGE —',f:[]},
+ {h:'Workshop · Text',f:[
+   ['wp_hero_title','Hero title','line'],['wp_hero_text','Hero sub-text','area'],
+   ['wp_intro_title','Intro heading','line'],['wp_intro_text','Intro text','area'],
+ ]},
+ {h:'Workshop · Hero slideshow photos',f:[
+   ['wp_slides','Slideshow photos','gallery'],
+ ]},
+ {h:'Workshop · Grid gallery photos',f:[
+   ['wp_grid','Grid photos','gallery'],
+ ]},
+ {h:'— LOUNGE PAGE —',f:[]},
+ {h:'Lounge · Text',f:[
+   ['lp_hero_title','Hero title','line'],['lp_hero_text','Hero sub-text','area'],
+   ['lp_intro_title','Intro heading','line'],['lp_intro_text','Intro text','area'],
+ ]},
+ {h:'Lounge · Hero slideshow photos',f:[
+   ['lp_slides','Slideshow photos','gallery'],
+ ]},
+ {h:'Lounge · Grid gallery photos',f:[
+   ['lp_grid','Grid photos','gallery'],
+ ]},
 ];
 
 let DATA={};
@@ -178,6 +204,16 @@ function render(){
           <option value="video"${v==='video'?' selected':''}>Video (loop)</option>
         </select>
         <div class="hint2">Choose whether the top banner shows a photo or a looping video.</div>`;
+      if(type==='gallery'){
+        const urls=(v||'').split('|').map(x=>x.trim()).filter(Boolean);
+        const thumbs=urls.map((u,i)=>`<div class="gthumb"><img src="${esc(u)}"><button type="button" onclick="galRemove('${key}',${i})">&times;</button></div>`).join('');
+        return `<label>${esc(label)}</label>
+          <input type="hidden" data-k="${key}" value="${esc(v||'')}">
+          <div class="ggrid" id="gal_${key}">${thumbs}</div>
+          <button type="button" class="upbtn" onclick="galPick('${key}')"><i class="ti ti-photo-plus"></i> Add photos</button>
+          <div class="hint2">Recommended: 1600px wide, under 1&nbsp;MB each, JPG. Add several — they'll loop / fill the gallery.</div>
+          <div id="galstat_${key}" class="hint2"></div>`;
+      }
       if(type==='video') return `<label>${esc(label)}</label>
         <input data-k="${key}" value="${esc(v)}" oninput="onEdit()" placeholder="video URL (or upload below)">
         <button type="button" class="upbtn" onclick="document.getElementById('vidfile').click()"><i class="ti ti-upload"></i> Upload MP4</button>
@@ -209,6 +245,31 @@ async function uploadVideo(file,key){
       st.innerHTML='<span style="color:#3ec76e">✓ Uploaded. Remember to Save.</span>';
     } else { st.innerHTML='<span style="color:#e0533d">Upload failed — check the gl-videos bucket exists and is public.</span>'; }
   }catch(e){ st.innerHTML='<span style="color:#e0533d">Error: '+e.message+'</span>'; }
+}
+
+// ---- gallery (multi-photo) helpers ----
+function galInput(key){ return document.querySelector('input[data-k="'+key+'"]'); }
+function galUrls(key){ const v=galInput(key).value; return v?v.split('|').map(x=>x.trim()).filter(Boolean):[]; }
+function galRender(key){
+  const urls=galUrls(key);
+  document.getElementById('gal_'+key).innerHTML=urls.map((u,i)=>'<div class="gthumb"><img src="'+u+'"><button type="button" onclick="galRemove(\''+key+'\','+i+')">&times;</button></div>').join('');
+}
+function galRemove(key,i){ const u=galUrls(key); u.splice(i,1); galInput(key).value=u.join('|'); galRender(key); onEdit(); }
+function galPick(key){
+  const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.multiple=true;
+  inp.onchange=async()=>{ await galUpload(key,inp.files); }; inp.click();
+}
+async function galUpload(key,files){
+  const st=document.getElementById('galstat_'+key); st.textContent='Uploading '+files.length+' photo(s)…';
+  let cur=galUrls(key), done=0;
+  for(const f of files){
+    try{
+      const path='site-'+Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+((f.name.split('.').pop()||'jpg').toLowerCase());
+      const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-images/'+path,{method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:'Bearer '+SUPABASE_ANON},body:f});
+      if(r.ok){ cur.push(SUPABASE_URL+'/storage/v1/object/public/gl-images/'+path); done++; galInput(key).value=cur.join('|'); galRender(key); }
+    }catch(e){}
+  }
+  onEdit(); st.innerHTML='<span style="color:#3ec76e">✓ Added '+done+' photo(s). Remember to Save.</span>';
 }
 
 async function saveAll(){

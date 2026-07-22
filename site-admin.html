@@ -219,7 +219,7 @@ function render(){
       if(type==='img') return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit();previewImg('${key}')">
         <div class="imgprev"><img id="prev_${key}" src="${esc(v)}" onerror="this.style.opacity=.2"></div>`;
       if(type==='fontpick'){
-        const fonts=['Cormorant Garamond','Playfair Display','Inter','Montserrat','Poppins','Oswald','Raleway','Lora','Merriweather','Roboto','Bebas Neue','Archivo'];
+        const fonts=['Iceland','Work Sans'];
         return `<label>${esc(label)}</label>
           <select data-k="${key}" oninput="onEdit();fontPreview()">${fonts.map(f=>`<option value="${esc(f)}"${v===f?' selected':''} style="font-family:'${esc(f)}'">${esc(f)}</option>`).join('')}</select>`;
       }
@@ -307,7 +307,7 @@ async function galUpload(key,files){
 
 // load all curated google fonts for admin preview
 (function(){
-  const fams=['Cormorant Garamond','Playfair Display','Inter','Montserrat','Poppins','Oswald','Raleway','Lora','Merriweather','Roboto','Bebas Neue','Archivo'];
+  const fams=['Iceland','Work Sans'];
   const l=document.createElement('link'); l.rel='stylesheet';
   l.href='https://fonts.googleapis.com/css2?'+fams.map(f=>'family='+f.replace(/ /g,'+')+':wght@400;600;700').join('&')+'&display=swap';
   document.head.appendChild(l);

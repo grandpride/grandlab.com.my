@@ -83,6 +83,13 @@ const $=id=>document.getElementById(id);
 
 // structure of the editor: sections -> fields (key,label,type)
 const SCHEMA=[
+ {h:'— FONTS & SIZING —',f:[]},
+ {h:'Fonts',f:[
+   ['font_heading','Heading font','fontpick'],
+   ['font_body','Body font','fontpick'],
+   ['font_heading_scale','Heading size (50–150%)','scaleH'],
+   ['font_body_scale','Body size (80–130%)','scaleB'],
+ ]},
  {h:'Hero (top banner)',f:[
    ['hero_eyebrow','Small text above title','line'],
    ['hero_title','Main headline','line'],
@@ -198,6 +205,19 @@ function render(){
       if(type==='area') return `<label>${esc(label)}</label><textarea data-k="${key}" oninput="onEdit()">${esc(v)}</textarea>`;
       if(type==='img') return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit();previewImg('${key}')">
         <div class="imgprev"><img id="prev_${key}" src="${esc(v)}" onerror="this.style.opacity=.2"></div>`;
+      if(type==='fontpick'){
+        const fonts=['Cormorant Garamond','Playfair Display','Inter','Montserrat','Poppins','Oswald','Raleway','Lora','Merriweather','Roboto','Bebas Neue','Archivo'];
+        return `<label>${esc(label)}</label>
+          <select data-k="${key}" oninput="onEdit();fontPreview()">${fonts.map(f=>`<option value="${esc(f)}"${v===f?' selected':''} style="font-family:'${esc(f)}'">${esc(f)}</option>`).join('')}</select>`;
+      }
+      if(type==='scaleH'||type==='scaleB'){
+        const min=type==='scaleH'?50:80, max=type==='scaleH'?150:130;
+        return `<label>${esc(label)}</label>
+          <div style="display:flex;align-items:center;gap:12px">
+            <input type="range" min="${min}" max="${max}" value="${esc(v||'100')}" data-k="${key}" oninput="onEdit();document.getElementById('sv_${key}').textContent=this.value+'%'" style="flex:1">
+            <span id="sv_${key}" style="min-width:44px;text-align:right;color:var(--gold);font-weight:700">${esc(v||'100')}%</span>
+          </div>`;
+      }
       if(type==='mediatype') return `<label>${esc(label)}</label>
         <select data-k="${key}" oninput="onEdit()">
           <option value="image"${v==='image'?' selected':''}>Photo</option>
@@ -271,6 +291,15 @@ async function galUpload(key,files){
   }
   onEdit(); st.innerHTML='<span style="color:#3ec76e">✓ Added '+done+' photo(s). Remember to Save.</span>';
 }
+
+// load all curated google fonts for admin preview
+(function(){
+  const fams=['Cormorant Garamond','Playfair Display','Inter','Montserrat','Poppins','Oswald','Raleway','Lora','Merriweather','Roboto','Bebas Neue','Archivo'];
+  const l=document.createElement('link'); l.rel='stylesheet';
+  l.href='https://fonts.googleapis.com/css2?'+fams.map(f=>'family='+f.replace(/ /g,'+')+':wght@400;600;700').join('&')+'&display=swap';
+  document.head.appendChild(l);
+})();
+function fontPreview(){/* dropdown option font-family already previews */}
 
 async function saveAll(){
   $('saveBtn').disabled=true; $('msg').textContent='Saving…'; $('msg').className='msg';

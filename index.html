@@ -3,56 +3,302 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GrandLab — Premium Car Detailing</title>
-<meta name="description" content="GrandLab — premium car detailing, ceramic coating, paint protection film and wrapping. Detailing by GrandPride.">
+<title>GrandLab — Your Personalized Detailer</title>
+<meta name="description" content="GrandLab — premium car detailing, ceramic coating, paint protection film (PPF) and wrapping in Petaling Jaya. Your personalized detailer. Detailing by GrandPride.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  :root{--bg:#080808;--card:#141414;--gold:#F5C518;--text:#fff;--muted:#9a9a9a;--line:#2a2a2a}
-  html,body{height:100%}
-  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-       display:flex;flex-direction:column;min-height:100dvh}
-  .wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 22px}
-  .logo{font-weight:900;font-size:clamp(38px,9vw,68px);letter-spacing:2px;line-height:1}
-  .logo span{color:var(--gold)}
-  .tag{color:var(--muted);letter-spacing:.32em;text-transform:uppercase;font-size:clamp(10px,2.4vw,13px);margin-top:14px}
-  .soon{margin-top:40px;font-size:clamp(15px,3.6vw,19px);color:var(--text);font-weight:600}
-  .sub{margin-top:10px;color:var(--muted);font-size:14px;max-width:440px;line-height:1.6}
-  .links{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#080808;text-decoration:none;
-       font-weight:800;font-size:14px;padding:13px 20px;border-radius:12px}
-  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
-  .btn:active{transform:scale(.98)}
-  .contact{margin-top:38px;display:flex;gap:22px;flex-wrap:wrap;justify-content:center;color:var(--muted);font-size:13px}
-  .contact a{color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-  .contact a:hover{color:var(--gold)}
-  footer{border-top:1px solid var(--line);padding:20px;text-align:center;color:var(--muted);font-size:12px}
-  .glow{position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 50% 32%,rgba(245,197,24,.10),transparent 55%)}
+  :root{
+    --bg:#0a0a0a; --bg2:#111; --gold:#F5C518; --gold-dim:#c9a417;
+    --text:#f4f4f0; --muted:#9a9a92; --line:#232320;
+    --serif:'Cormorant Garamond',serif; --sans:'Inter',-apple-system,sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .serif{font-family:var(--serif)}
+  .gold{color:var(--gold)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+      padding:18px 6vw;background:rgba(10,10,10,.7);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:.3s}
+  nav .brand{font-weight:800;font-size:22px;letter-spacing:1.5px}
+  nav .brand span{color:var(--gold)}
+  nav .links{display:flex;gap:30px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:400}
+  nav .links a{color:var(--muted);transition:.2s}
+  nav .links a:hover{color:var(--gold)}
+  nav .burger{display:none;font-size:26px;color:var(--text);background:none;border:none;cursor:pointer}
+  @media(max-width:860px){
+    nav .links{position:fixed;inset:0;top:0;background:rgba(10,10,10,.97);flex-direction:column;align-items:center;justify-content:center;
+      gap:32px;font-size:18px;transform:translateX(100%);transition:.35s}
+    nav .links.open{transform:translateX(0)}
+    nav .burger{display:block;z-index:101}
+  }
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;
+    padding:120px 6vw 80px;
+    background:linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,.85)),
+      url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=2000&auto=format&fit=crop') center/cover fixed}
+  .hero .inner{max-width:900px}
+  .hero .eyebrow{font-size:13px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;font-weight:400}
+  .hero h1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(42px,8vw,88px);line-height:1.05;margin-bottom:24px}
+  .hero p{font-size:clamp(15px,2.2vw,19px);color:var(--muted);max-width:600px;margin:0 auto 38px;font-weight:300}
+  .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 30px;border-radius:2px;font-size:13px;
+    letter-spacing:.12em;text-transform:uppercase;font-weight:500;transition:.25s;cursor:pointer;border:1px solid transparent}
+  .btn-gold{background:var(--gold);color:#0a0a0a}
+  .btn-gold:hover{background:#fff}
+  .btn-ghost{border-color:rgba(255,255,255,.3);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:22px;animation:bob 2s infinite}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  /* SECTION SHELL */
+  section{padding:clamp(70px,11vw,130px) 6vw}
+  .eyebrow2{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:16px;font-weight:500}
+  .h2{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(30px,5vw,54px);line-height:1.1;margin-bottom:22px}
+  .lead{color:var(--muted);font-size:clamp(15px,2vw,17px);max-width:560px;font-weight:300}
+
+  /* INTRO band */
+  .intro{text-align:center;background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .intro .lead{margin:0 auto}
+
+  /* ALTERNATING FEATURE ROWS */
+  .feature{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,80px);align-items:center;max-width:1200px;margin:0 auto}
+  .feature+.feature{margin-top:clamp(60px,10vw,120px)}
+  .feature .img{aspect-ratio:4/3;border-radius:3px;overflow:hidden;background:#1a1a17;position:relative}
+  .feature .img img{width:100%;height:100%;object-fit:cover;transition:.6s}
+  .feature:hover .img img{transform:scale(1.04)}
+  .feature.rev .txt{order:2}.feature.rev .img{order:1}
+  .feature .num{font-family:var(--serif);font-style:italic;color:var(--gold-dim);font-size:20px;margin-bottom:10px}
+  @media(max-width:800px){.feature{grid-template-columns:1fr}.feature.rev .txt,.feature.rev .img{order:0}}
+
+  /* SERVICES GRID */
+  .services{background:var(--bg2);border-top:1px solid var(--line)}
+  .svc-head{text-align:center;max-width:640px;margin:0 auto clamp(40px,7vw,70px)}
+  .svc-head .lead{margin:0 auto}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1200px;margin:0 auto}
+  @media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.grid4{grid-template-columns:1fr}}
+  .svc{border:1px solid var(--line);border-radius:3px;padding:34px 26px;background:var(--bg);transition:.3s;position:relative;overflow:hidden}
+  .svc:hover{border-color:var(--gold-dim);transform:translateY(-4px)}
+  .svc .ic{font-size:34px;color:var(--gold);margin-bottom:18px}
+  .svc h3{font-family:var(--serif);font-size:26px;font-weight:600;margin-bottom:10px}
+  .svc p{color:var(--muted);font-size:14px;font-weight:300;line-height:1.6}
+
+  /* BRAND LOGOS */
+  .brands{text-align:center;border-top:1px solid var(--line)}
+  .brand-row{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,60px);align-items:center;justify-content:center;margin-top:44px;
+    font-family:var(--serif);font-style:italic;font-size:clamp(18px,3vw,26px);color:var(--muted)}
+  .brand-row span{opacity:.7;transition:.25s;cursor:default}
+  .brand-row span:hover{opacity:1;color:var(--gold)}
+
+  /* CTA band */
+  .cta{text-align:center;background:linear-gradient(180deg,rgba(10,10,10,.6),rgba(10,10,10,.9)),
+    url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop') center/cover fixed}
+  .cta .h2{margin-bottom:18px}
+
+  /* CONTACT / FOOTER */
+  footer{background:#070707;border-top:1px solid var(--line);padding:clamp(60px,9vw,90px) 6vw 40px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto}
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr;gap:34px}}
+  footer .brand{font-weight:800;font-size:26px;letter-spacing:1px;margin-bottom:14px}
+  footer .brand span{color:var(--gold)}
+  footer p,footer a{color:var(--muted);font-size:14px;font-weight:300}
+  footer a:hover{color:var(--gold)}
+  .foot-h{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--text);margin-bottom:16px;font-weight:600}
+  .foot-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .foot-row i{color:var(--gold);font-size:17px;flex:0 0 auto}
+  .socials{display:flex;gap:14px;margin-top:8px}
+  .socials a{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.25s}
+  .socials a:hover{border-color:var(--gold);color:var(--gold)}
+  .copyright{text-align:center;color:var(--muted);font-size:12px;margin-top:50px;padding-top:24px;border-top:1px solid var(--line)}
 </style>
 </head>
 <body>
-<div class="glow"></div>
-<div class="wrap">
-  <div class="logo">GRAND<span>LAB</span></div>
-  <div class="tag">Detailing by GrandPride</div>
 
-  <div class="soon">Premium Car Detailing &bull; Coating &bull; PPF &bull; Wrapping</div>
-  <div class="sub">Our new website is on the way. In the meantime, check your warranty or reach us directly.</div>
+<nav id="nav">
+  <a class="brand" href="/">GRAND<span>LAB</span></a>
+  <div class="links" id="navLinks">
+    <a href="#home" onclick="closeNav()">Home</a>
+    <a href="#about" onclick="closeNav()">About</a>
+    <a href="#services" onclick="closeNav()">Services</a>
+    <a href="#brands" onclick="closeNav()">Brands</a>
+    <a href="/warranty/" onclick="closeNav()">Warranty</a>
+    <a href="#contact" onclick="closeNav()">Contact</a>
+  </div>
+  <button class="burger" onclick="toggleNav()"><i class="ti ti-menu-2" id="burgerIcon"></i></button>
+</nav>
 
-  <div class="links">
-    <a class="btn" href="/warranty/"><i class="ti ti-shield-check"></i> Check e-Warranty</a>
-    <a class="btn ghost" href="https://wa.me/60169618299" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp"></i> WhatsApp Us</a>
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="inner">
+    <div class="eyebrow" data-c="hero_eyebrow">Detailing by GrandPride</div>
+    <h1 data-c="hero_title">Your Personalized<br>Detailer</h1>
+    <p data-c="hero_text">Premium ceramic coating, paint protection film, wrapping and detailing — crafted for those who treat their car as more than transport.</p>
+    <div class="btns">
+      <a class="btn btn-gold" href="#services"><i class="ti ti-sparkles"></i> Explore Services</a>
+      <a class="btn btn-ghost" href="https://wa.me/60169618299" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp"></i> Book Now</a>
+    </div>
+  </div>
+  <a href="#about" class="scroll-cue"><i class="ti ti-chevron-down"></i></a>
+</header>
+
+<!-- INTRO -->
+<section class="intro" id="about">
+  <div class="eyebrow2">Welcome to GrandLab</div>
+  <h2 class="h2">Protecting your investment</h2>
+  <p class="lead">Your car is an investment — and it deserves care that matches. At GrandLab, every vehicle receives a personalized approach, using premium products and meticulous craftsmanship to keep it looking its absolute best, for years to come.</p>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="feature">
+    <div class="txt">
+      <div class="num">01</div>
+      <div class="eyebrow2">Ceramic Coating</div>
+      <h2 class="h2">A lasting, liquid shield</h2>
+      <p class="lead">Gyeon and Koch Chemie ceramic coatings bond to your paint, delivering deep gloss, hydrophobic protection and years of durability — backed by our own e-Warranty.</p>
+    </div>
+    <div class="img"><img src="https://images.unsplash.com/photo-1605515298946-d664fd6a2f0e?q=80&w=1400&auto=format&fit=crop" alt="Ceramic coating"></div>
   </div>
 
-  <div class="contact">
-    <a href="https://maps.google.com/?q=GrandLab+Detailing+PJS+13+Petaling+Jaya" target="_blank" rel="noopener"><i class="ti ti-map-pin"></i> PJS 13, Petaling Jaya</a>
-    <a href="tel:+60169618299"><i class="ti ti-phone"></i> Call us</a>
+  <div class="feature rev">
+    <div class="txt">
+      <div class="num">02</div>
+      <div class="eyebrow2">Paint Protection Film</div>
+      <h2 class="h2">Invisible armour</h2>
+      <p class="lead">ONE+ PPF guards against stone chips, scratches and road debris with a self-healing, near-invisible layer — preserving your paint underneath.</p>
+    </div>
+    <div class="img"><img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?q=80&w=1400&auto=format&fit=crop" alt="Paint protection film"></div>
   </div>
-</div>
 
-<footer>
-  &copy; <span id="yr"></span> GrandPride Luxury Travel Sdn Bhd (1297143-K) &bull; All rights reserved
+  <div class="feature">
+    <div class="txt">
+      <div class="num">03</div>
+      <div class="eyebrow2">Wrapping</div>
+      <h2 class="h2">Reinvent your look</h2>
+      <p class="lead">Transform your car with NAKA and KTN wrapping films — a spectrum of colours and finishes, precision-applied to turn heads and protect the original paint.</p>
+    </div>
+    <div class="img"><img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?q=80&w=1400&auto=format&fit=crop" alt="Car wrapping"></div>
+  </div>
+
+  <div class="feature rev">
+    <div class="txt">
+      <div class="num">04</div>
+      <div class="eyebrow2">Detailing</div>
+      <h2 class="h2">Showroom, every time</h2>
+      <p class="lead">From deep interior cleaning to paint correction and our signature wash packages, our detailing brings back that just-delivered feeling.</p>
+    </div>
+    <div class="img"><img src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?q=80&w=1400&auto=format&fit=crop" alt="Car detailing"></div>
+  </div>
+</section>
+
+<!-- SERVICES GRID -->
+<section class="services" id="services">
+  <div class="svc-head">
+    <div class="eyebrow2">What We Offer</div>
+    <h2 class="h2">Our Services</h2>
+    <p class="lead">A complete range of care, tailored to your vehicle and how you drive.</p>
+  </div>
+  <div class="grid4">
+    <div class="svc"><div class="ic"><i class="ti ti-shield-check"></i></div><h3>Coating</h3><p>Gyeon &amp; Koch Chemie ceramic coatings — gloss and protection that lasts years.</p></div>
+    <div class="svc"><div class="ic"><i class="ti ti-armchair"></i></div><h3>PPF</h3><p>ONE+ paint protection film — self-healing, invisible defence against chips.</p></div>
+    <div class="svc"><div class="ic"><i class="ti ti-spray"></i></div><h3>Wrapping</h3><p>NAKA &amp; KTN films — change your colour, protect your paint.</p></div>
+    <div class="svc"><div class="ic"><i class="ti ti-droplet"></i></div><h3>Detailing</h3><p>Interior, exterior &amp; paint correction — showroom condition restored.</p></div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section class="brands" id="brands">
+  <div class="eyebrow2">Trusted Products</div>
+  <h2 class="h2">The brands we work with</h2>
+  <div class="brand-row">
+    <span>Gyeon</span><span>Koch Chemie</span><span>ONE+</span><span>NAKA</span><span>KTN</span>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="eyebrow2">Ready when you are</div>
+  <h2 class="h2">Give your car the GrandLab treatment</h2>
+  <p class="lead" style="margin:0 auto 34px">Book a consultation and let us tailor the right care for your vehicle.</p>
+  <div class="btns">
+    <a class="btn btn-gold" href="https://wa.me/60169618299" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp"></i> WhatsApp Us</a>
+    <a class="btn btn-ghost" href="/warranty/"><i class="ti ti-shield-check"></i> Check Warranty</a>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <div class="foot-grid">
+    <div>
+      <div class="brand">GRAND<span>LAB</span></div>
+      <p>Your personalized detailer. Premium coating, PPF, wrapping and detailing — detailing by GrandPride.</p>
+      <div class="socials">
+        <a href="https://wa.me/60169618299" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
+        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+        <a href="tel:+60169618299" aria-label="Call"><i class="ti ti-phone"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="foot-h">Visit Us</div>
+      <div class="foot-row"><i class="ti ti-map-pin"></i><span>PJS 13, Petaling Jaya,<br>Selangor, Malaysia</span></div>
+      <div class="foot-row"><i class="ti ti-clock"></i><span>Open daily — call to confirm hours</span></div>
+    </div>
+    <div>
+      <div class="foot-h">Get In Touch</div>
+      <div class="foot-row"><i class="ti ti-phone"></i><a href="tel:+60169618299">+60 16-961 8299</a></div>
+      <div class="foot-row"><i class="ti ti-brand-whatsapp"></i><a href="https://wa.me/60169618299" target="_blank" rel="noopener">WhatsApp</a></div>
+      <div class="foot-row"><i class="ti ti-shield-check"></i><a href="/warranty/">Check e-Warranty</a></div>
+    </div>
+  </div>
+  <div class="copyright">
+    &copy; <span id="yr"></span> GrandPride Luxury Travel Sdn Bhd (1297143-K) &bull; All rights reserved
+  </div>
 </footer>
-<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+
+<script>
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  function toggleNav(){
+    const l=document.getElementById('navLinks'), i=document.getElementById('burgerIcon');
+    l.classList.toggle('open');
+    i.className = l.classList.contains('open') ? 'ti ti-x' : 'ti ti-menu-2';
+  }
+  function closeNav(){
+    document.getElementById('navLinks').classList.remove('open');
+    document.getElementById('burgerIcon').className='ti ti-menu-2';
+  }
+  // subtle nav shrink on scroll
+  addEventListener('scroll',()=>{
+    const n=document.getElementById('nav');
+    n.style.padding = scrollY>40 ? '12px 6vw' : '18px 6vw';
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(async function(){
+  try{
+    const sb=supabase.createClient("https://eychljpzorzmaveixlnu.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5Y2hsanB6b3J6bWF2ZWl4bG51Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDk2NjQsImV4cCI6MjA5NzIyNTY2NH0.6dA1zhz5ZIwf8byFB8vhfOzPI-uPPdPihEr1b8GG_oA",{auth:{persistSession:false}});
+    const {data}=await sb.from('gl_site_content').select('key,value');
+    if(!data) return;
+    const C={}; data.forEach(r=>C[r.key]=r.value);
+    // text nodes tagged with data-c
+    document.querySelectorAll('[data-c]').forEach(el=>{
+      const v=C[el.dataset.c]; if(v!=null && v!=='') el.textContent=v;
+    });
+    // hero background
+    if(C.hero_img){ const h=document.querySelector('.hero');
+      if(h) h.style.backgroundImage="linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,.85)),url('"+C.hero_img+"')"; }
+  }catch(e){ /* site still works with built-in defaults */ }
+})();
+</script>
+
 </body>
 </html>

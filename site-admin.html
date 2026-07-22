@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GrandLab — Website Editor</title>
+<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#0a0a0a;--card:#151515;--card2:#1c1c1a;--gold:#F5C518;--text:#f4f4f0;--muted:#9a9a92;--line:#2a2a26;--green:#16A34A;--red:#e0533d}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;padding-bottom:80px}
+  .top{background:linear-gradient(180deg,#111,#0a0a0a);border-bottom:1px solid var(--line);padding:16px;text-align:center;position:sticky;top:0;z-index:10}
+  .logo{font-weight:900;font-size:20px;letter-spacing:1px}.logo span{color:var(--gold)}
+  .top .sub{color:var(--muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-top:2px}
+  .wrap{max-width:680px;margin:0 auto;padding:18px 16px}
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+  .sec h2{font-size:14px;color:var(--gold);margin-bottom:14px;letter-spacing:.03em}
+  label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:11px 0 5px}
+  input,textarea{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:9px;color:#fff;padding:11px 12px;font-size:14px;font-family:inherit;outline:none}
+  input:focus,textarea:focus{border-color:var(--gold)}
+  textarea{resize:vertical;min-height:70px;line-height:1.5}
+  .imgprev{margin-top:8px;aspect-ratio:16/8;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#000}
+  .imgprev img{width:100%;height:100%;object-fit:cover}
+  .savebar{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,10,.95);border-top:1px solid var(--line);padding:14px 16px;backdrop-filter:blur(8px);z-index:20}
+  .savebar .inner{max-width:680px;margin:0 auto;display:flex;gap:12px;align-items:center}
+  .btn{background:var(--gold);color:#080808;border:none;border-radius:11px;padding:14px;font-weight:800;font-size:15px;font-family:inherit;cursor:pointer;flex:1}
+  .btn:disabled{opacity:.6}
+  .btn.sec2{background:var(--card2);color:var(--text);border:1px solid var(--line);flex:0 0 auto;padding:14px 18px}
+  .msg{font-size:13px;min-width:0}
+  .msg.ok{color:#3ec76e}.msg.err{color:var(--red)}
+  /* gate */
+  #gate{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px}
+  #gate .box{max-width:340px;width:100%}
+  #gate .err{color:var(--red);font-size:12px;margin:8px 0;min-height:15px}
+  a.back{position:fixed;top:8px;left:8px;z-index:110;background:rgba(0,0,0,.6);color:var(--gold);text-decoration:none;font-size:12px;font-weight:700;padding:6px 11px;border-radius:20px}
+</style>
+</head>
+<body>
+<a class="back" href="https://grandpride.github.io/Grandlab-app/gl-hub.html">← Hub</a>
+
+<div id="gate">
+  <div class="box">
+    <div class="logo" style="text-align:center;margin-bottom:4px">GRAND<span>LAB</span></div>
+    <div class="sub" style="text-align:center;color:var(--muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px">Website Editor</div>
+    <label>Email</label><input id="loginEmail" type="email" autocomplete="username" placeholder="admin@grandpride.com">
+    <label>Password</label><input id="loginPass" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="err" id="loginErr"></div>
+    <button class="btn" style="width:100%;margin-top:6px" onclick="doLogin()">Sign in</button>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+  <div class="top">
+    <div class="logo">GRAND<span>LAB</span></div>
+    <div class="sub">Website Editor</div>
+  </div>
+  <div class="wrap" id="forms"><!-- built by JS --></div>
+</div>
+
+<div class="savebar" id="savebar" style="display:none">
+  <div class="inner">
+    <button class="btn sec2" onclick="window.open('/','_blank')"><i class="ti ti-external-link"></i></button>
+    <div class="msg" id="msg"></div>
+    <button class="btn" id="saveBtn" onclick="saveAll()"><i class="ti ti-device-floppy"></i> Save Changes</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://eychljpzorzmaveixlnu.supabase.co";
+const SUPABASE_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5Y2hsanB6b3J6bWF2ZWl4bG51Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDk2NjQsImV4cCI6MjA5NzIyNTY2NH0.6dA1zhz5ZIwf8byFB8vhfOzPI-uPPdPihEr1b8GG_oA";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{auth:{storageKey:'gl_auth'}});
+const $=id=>document.getElementById(id);
+
+// structure of the editor: sections -> fields (key,label,type)
+const SCHEMA=[
+ {h:'Hero (top banner)',f:[
+   ['hero_eyebrow','Small text above title','line'],
+   ['hero_title','Main headline','line'],
+   ['hero_text','Sub-text','area'],
+   ['hero_img','Background image URL','img'],
+ ]},
+ {h:'Intro band',f:[
+   ['intro_eyebrow','Eyebrow','line'],['intro_title','Heading','line'],['intro_text','Text','area'],
+ ]},
+ {h:'Feature 1 — Coating',f:[
+   ['f1_label','Label','line'],['f1_title','Heading','line'],['f1_text','Text','area'],['f1_img','Image URL','img'],
+ ]},
+ {h:'Feature 2 — PPF',f:[
+   ['f2_label','Label','line'],['f2_title','Heading','line'],['f2_text','Text','area'],['f2_img','Image URL','img'],
+ ]},
+ {h:'Feature 3 — Wrapping',f:[
+   ['f3_label','Label','line'],['f3_title','Heading','line'],['f3_text','Text','area'],['f3_img','Image URL','img'],
+ ]},
+ {h:'Feature 4 — Detailing',f:[
+   ['f4_label','Label','line'],['f4_title','Heading','line'],['f4_text','Text','area'],['f4_img','Image URL','img'],
+ ]},
+ {h:'Service cards',f:[
+   ['svc1_title','Card 1 title','line'],['svc1_text','Card 1 text','area'],
+   ['svc2_title','Card 2 title','line'],['svc2_text','Card 2 text','area'],
+   ['svc3_title','Card 3 title','line'],['svc3_text','Card 3 text','area'],
+   ['svc4_title','Card 4 title','line'],['svc4_text','Card 4 text','area'],
+ ]},
+ {h:'Call-to-action band',f:[
+   ['cta_title','Heading','line'],['cta_text','Text','area'],
+ ]},
+ {h:'Brands line',f:[['brands','Brands (separate with · )','line']]},
+ {h:'Contact',f:[
+   ['contact_phone','Phone (display)','line'],
+   ['contact_whatsapp','WhatsApp number (digits only, e.g. 60169618299)','line'],
+   ['contact_address','Address','area'],
+   ['contact_instagram','Instagram URL','line'],
+ ]},
+];
+
+let DATA={};
+const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+async function boot(){
+  const {data}=await sb.auth.getSession();
+  if(data&&data.session) showApp(); else $('gate').style.display='flex';
+}
+async function doLogin(){
+  const email=$('loginEmail').value.trim(), pass=$('loginPass').value;
+  $('loginErr').textContent='Signing in…';
+  const {error}=await sb.auth.signInWithPassword({email,password:pass});
+  if(error){ $('loginErr').textContent='Login failed: '+error.message; return; }
+  showApp();
+}
+async function showApp(){
+  $('gate').style.display='none'; $('app').style.display='block'; $('savebar').style.display='block';
+  const {data}=await sb.from('gl_site_content').select('key,value');
+  (data||[]).forEach(r=>DATA[r.key]=r.value);
+  render();
+}
+function render(){
+  $('forms').innerHTML=SCHEMA.map(sec=>{
+    const fields=sec.f.map(([key,label,type])=>{
+      const v=DATA[key]||'';
+      if(type==='area') return `<label>${esc(label)}</label><textarea data-k="${key}" oninput="onEdit()">${esc(v)}</textarea>`;
+      if(type==='img') return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit();previewImg('${key}')">
+        <div class="imgprev"><img id="prev_${key}" src="${esc(v)}" onerror="this.style.opacity=.2"></div>`;
+      return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit()">`;
+    }).join('');
+    return `<div class="sec"><h2>${esc(sec.h)}</h2>${fields}</div>`;
+  }).join('');
+}
+function previewImg(k){ const el=$('prev_'+k); if(el){ el.style.opacity=1; el.src=document.querySelector('[data-k="'+k+'"]').value; } }
+let dirty=false;
+function onEdit(){ dirty=true; $('msg').textContent='Unsaved changes'; $('msg').className='msg'; }
+
+async function saveAll(){
+  $('saveBtn').disabled=true; $('msg').textContent='Saving…'; $('msg').className='msg';
+  const rows=[...document.querySelectorAll('[data-k]')].map(el=>({key:el.dataset.k, value:el.value, updated_at:new Date().toISOString()}));
+  const {error}=await sb.from('gl_site_content').upsert(rows);
+  $('saveBtn').disabled=false;
+  if(error){ $('msg').textContent='Failed: '+error.message; $('msg').className='msg err'; return; }
+  dirty=false; $('msg').textContent='✓ Saved — refresh the website to see changes'; $('msg').className='msg ok';
+}
+addEventListener('beforeunload',e=>{ if(dirty){ e.preventDefault(); e.returnValue=''; } });
+boot();
+</script>
+</body>
+</html>

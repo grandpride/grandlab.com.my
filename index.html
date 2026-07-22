@@ -25,9 +25,13 @@
 
   /* NAV */
   nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
-      padding:18px 6vw;background:rgba(10,10,10,.7);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:.3s}
-  nav .brand{font-weight:800;font-size:22px;letter-spacing:1.5px}
+      padding:18px 6vw;background:transparent;border-bottom:1px solid transparent;
+      transition:transform .4s ease,padding .3s}
+  nav.hidden{transform:translateY(-100%)}
+  nav .brand{font-weight:800;font-size:22px;letter-spacing:1.5px;display:flex;align-items:center}
   nav .brand span{color:var(--gold)}
+  nav .brand-logo{height:52px;width:auto;display:block}
+  @media(max-width:600px){nav .brand-logo{height:44px}}
   nav .links{display:flex;gap:30px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:400}
   nav .links a{color:var(--muted);transition:.2s}
   nav .links a:hover{color:var(--gold)}
@@ -123,7 +127,7 @@
 <body>
 
 <nav id="nav">
-  <a class="brand" href="/">GRAND<span>LAB</span></a>
+  <a class="brand" href="/"><img src="GRANDLAB_LOGO_VERTICAL.png" alt="GrandLab" class="brand-logo"></a>
   <div class="links" id="navLinks">
     <a href="#home" onclick="closeNav()">Home</a>
     <a href="#about" onclick="closeNav()">About</a>
@@ -274,11 +278,19 @@
     document.getElementById('navLinks').classList.remove('open');
     document.getElementById('burgerIcon').className='ti ti-menu-2';
   }
-  // subtle nav shrink on scroll
-  addEventListener('scroll',()=>{
-    const n=document.getElementById('nav');
-    n.style.padding = scrollY>40 ? '12px 6vw' : '18px 6vw';
-  });
+  // NVN-style nav: hide when scrolling down, reveal when scrolling up
+  const navEl=document.getElementById('nav');
+  let lastY=window.scrollY;
+  function onScroll(){
+    const y=window.scrollY;
+    if(y>lastY && y>120){          // scrolling down, past the top area → hide
+      navEl.classList.add('hidden');
+    } else {                        // scrolling up → show
+      navEl.classList.remove('hidden');
+    }
+    lastY=y;
+  }
+  addEventListener('scroll',onScroll,{passive:true});
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

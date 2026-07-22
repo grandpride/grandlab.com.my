@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — GrandLab Detailing</title>
+<meta name="description" content="Contact GrandLab Detailing — PJS 13, Petaling Jaya. WhatsApp us for enquiries about coating, PPF, wrapping and detailing.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#0a0a0a;--bg2:#111;--gold:#F5C518;--gold-dim:#c9a417;--text:#f4f4f0;--muted:#9a9a92;--line:#232320;--serif:'Cormorant Garamond',serif;--sans:'Inter',-apple-system,sans-serif}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;--hscale:1;--bscale:1;font-size:calc(1rem * var(--bscale))}
+  a{color:inherit;text-decoration:none}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 6vw;background:transparent;transition:transform .4s ease}
+  nav.hidden{transform:translateY(-100%)}nav.solid{background:rgba(14,14,14,.92);backdrop-filter:blur(12px)}
+  nav .brand-logo{height:34px;width:auto;display:block}
+  @media(max-width:600px){nav .brand-logo{height:28px}}
+  nav .links{display:flex;gap:30px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:400}
+  nav .links a{color:var(--text);transition:.2s;text-shadow:0 1px 6px rgba(0,0,0,.5)}nav .links a:hover{color:var(--gold)}
+  nav .burger{display:none;font-size:26px;color:var(--text);background:none;border:none;cursor:pointer}
+  @media(max-width:860px){nav .links{position:fixed;inset:0;background:rgba(10,10,10,.97);flex-direction:column;align-items:center;justify-content:center;gap:32px;font-size:18px;transform:translateX(100%);transition:.35s}nav .links.open{transform:translateX(0)}nav .burger{display:block;z-index:101}}
+
+  .page-hero{text-align:center;padding:150px 6vw 50px}
+  .page-hero .eyebrow{font-size:13px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+  .page-hero h1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:calc(clamp(40px,7vw,72px) * var(--hscale))}
+  .page-hero p{color:var(--muted);max-width:560px;margin:18px auto 0;font-size:clamp(15px,2vw,17px)}
+
+  .contact-wrap{max-width:900px;margin:0 auto;padding:40px 6vw 90px}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .card-body{padding:clamp(30px,5vw,50px);text-align:center}
+  .card h2{font-family:var(--serif);font-style:italic;font-size:clamp(28px,4vw,42px);margin-bottom:22px}
+  .info{color:var(--muted);font-size:15px;line-height:1.9;margin-bottom:8px}
+  .info b{color:var(--text);font-weight:600}
+  .btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:2px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;transition:.25s;border:1px solid transparent;cursor:pointer}
+  .btn-gold{background:var(--gold);color:#0a0a0a}.btn-gold:hover{background:#fff}
+  .btn-ghost{border-color:var(--line);color:var(--text)}.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .btn-waze{background:#33ccff;color:#003a5c}.btn-waze:hover{filter:brightness(1.1)}
+  .socials{margin-top:24px;display:flex;gap:14px;justify-content:center}
+  .socials a{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text);transition:.25s}
+  .socials a:hover{border-color:var(--gold);color:var(--gold)}
+  .map{width:100%;height:360px;border:0;filter:grayscale(.3) invert(.9) hue-rotate(180deg)}
+  .enquiry{margin-top:38px;padding-top:34px;border-top:1px solid var(--line);text-align:left;max-width:460px;margin-left:auto;margin-right:auto}
+  .enquiry h3{font-family:var(--serif);font-style:italic;font-size:26px;text-align:center;margin-bottom:20px}
+  .enquiry input,.enquiry textarea{width:100%;background:#0a0a0a;border:1px solid var(--line);border-radius:9px;color:#fff;padding:13px 14px;font-size:15px;font-family:inherit;margin-bottom:12px;outline:none}
+  .enquiry input:focus,.enquiry textarea:focus{border-color:var(--gold)}
+  .enquiry textarea{resize:vertical}
+  .fmini{text-align:center;font-size:12px;color:var(--muted);margin-top:10px}
+
+  footer{background:#070707;border-top:1px solid var(--line);padding:60px 6vw 40px;text-align:center}
+  footer .brand{font-weight:800;font-size:24px;letter-spacing:1px;margin-bottom:12px}footer .brand span{color:var(--gold)}
+  footer p,footer a{color:var(--muted);font-size:14px}footer a:hover{color:var(--gold)}
+  .fnav{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:20px 0;font-size:13px;letter-spacing:.05em;text-transform:uppercase}
+  .copyright{color:var(--muted);font-size:12px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo"></a>
+  <div class="links" id="navLinks">
+    <a href="/">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+    <a href="pricing.html">Pricing</a><a href="/warranty/">Warranty</a><a href="contact.html">Contact</a>
+  </div>
+  <button class="burger" onclick="toggleNav()"><i class="ti ti-menu-2" id="burgerIcon"></i></button>
+</nav>
+
+<header class="page-hero">
+  <div class="eyebrow">Get In Touch</div>
+  <h1 data-c="ct_hero_title">Contact</h1>
+  <p data-c="ct_hero_text">Get in touch if you'd like to enquire about our services or have any questions. We'd be delighted to hear from you.</p>
+</header>
+
+<div class="contact-wrap">
+  <div class="card">
+    <div class="card-body">
+      <h2 data-c="ct_outlet_name">GrandLab Detailing (HQ)</h2>
+      <div class="info" data-c="ct_address">5, Jalan 13/2, PJS 13, 46200, Petaling Jaya, Selangor</div>
+      <div class="info" id="hoursRow"><b>Hours:</b> <span data-c="ct_hours">Open daily — call to confirm hours</span></div>
+      <div class="info" id="waRow"><b>WhatsApp:</b> <span id="waText">+60 12-938 4313</span></div>
+      <div class="info" id="emailRow" style="display:none"><b>Email:</b> <a id="emailLink" href="#"></a></div>
+
+      <div class="btn-row">
+        <a class="btn btn-gold" id="waBtn" href="#" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp"></i> WhatsApp Us</a>
+        <a class="btn btn-ghost" id="mapsBtn" href="#" target="_blank" rel="noopener"><i class="ti ti-map-pin"></i> Google Maps</a>
+        <a class="btn btn-waze" id="wazeBtn" href="#" target="_blank" rel="noopener"><i class="ti ti-brand-waze"></i> Waze</a>
+      </div>
+
+      <div class="socials">
+        <a id="igLink" href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+      </div>
+
+      <div class="enquiry">
+        <h3>Make an Enquiry</h3>
+        <input id="fName" placeholder="Your name">
+        <input id="fPhone" placeholder="Your phone (optional)" inputmode="tel">
+        <textarea id="fMsg" rows="4" placeholder="How can we help? (e.g. coating quote for my Honda Civic)"></textarea>
+        <button class="btn btn-gold" style="width:100%;justify-content:center" onclick="sendEnquiry()"><i class="ti ti-brand-whatsapp"></i> Send via WhatsApp</button>
+        <div class="fmini">Opens WhatsApp with your message ready to send.</div>
+      </div>
+    </div>
+    <iframe class="map" id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps?q=5%20Jalan%2013%2F2%20PJS%2013%2046200%20Petaling%20Jaya%20Selangor&output=embed"></iframe>
+  </div>
+</div>
+
+<footer>
+  <div class="brand">GRAND<span>LAB</span></div>
+  <p>Your personalized detailer — detailing by GrandPride.</p>
+  <div class="fnav">
+    <a href="/">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+    <a href="pricing.html">Pricing</a><a href="/warranty/">Warranty</a><a href="contact.html">Contact</a>
+  </div>
+  <div class="copyright">&copy; <span id="yr"></span> GrandPride Luxury Travel Sdn Bhd (1297143-K)</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  function toggleNav(){const l=document.getElementById('navLinks'),i=document.getElementById('burgerIcon');l.classList.toggle('open');i.className=l.classList.contains('open')?'ti ti-x':'ti ti-menu-2';}
+  function sendEnquiry(){
+    const wa=window.__WA||'60129384313';
+    const n=document.getElementById('fName').value.trim();
+    const p=document.getElementById('fPhone').value.trim();
+    const m=document.getElementById('fMsg').value.trim();
+    let t='Hi GrandLab, I would like to make an enquiry.';
+    if(n)t+='\n\nName: '+n;
+    if(p)t+='\nPhone: '+p;
+    if(m)t+='\n\n'+m;
+    window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(t),'_blank');
+  }
+  const navEl=document.getElementById('nav');let lastY=scrollY;
+  addEventListener('scroll',()=>{const y=scrollY;navEl.classList.toggle('solid',y>60);if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');lastY=y;},{passive:true});
+
+  (async function(){
+    try{
+      const sb=supabase.createClient("https://eychljpzorzmaveixlnu.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5Y2hsanB6b3J6bWF2ZWl4bG51Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDk2NjQsImV4cCI6MjA5NzIyNTY2NH0.6dA1zhz5ZIwf8byFB8vhfOzPI-uPPdPihEr1b8GG_oA",{auth:{persistSession:false}});
+      const {data}=await sb.from('gl_site_content').select('key,value');if(!data)return;
+      const C={};data.forEach(r=>C[r.key]=r.value);
+      // fonts
+      (function(){const gf=[C.font_heading,C.font_body].filter(Boolean);
+        if(gf.length){const l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?'+gf.map(f=>'family='+f.replace(/ /g,'+')+':ital,wght@0,400;0,500;0,600;0,700;1,400;1,500').join('&')+'&display=swap';document.head.appendChild(l);}
+        const r=document.documentElement.style;
+        if(C.font_heading)r.setProperty('--serif',"'"+C.font_heading+"', serif");
+        if(C.font_body)r.setProperty('--sans',"'"+C.font_body+"', sans-serif");
+        if(C.font_heading_scale)document.body.style.setProperty('--hscale',Math.max(50,Math.min(150,+C.font_heading_scale))/100);
+        if(C.font_body_scale)document.body.style.setProperty('--bscale',Math.max(80,Math.min(130,+C.font_body_scale))/100);
+      })();
+      document.querySelectorAll('[data-c]').forEach(e=>{const v=C[e.dataset.c];if(v!=null&&v!=='')e.textContent=v;});
+      // whatsapp
+      const wa=(C.ct_whatsapp||'60129384313').replace(/[^0-9]/g,''); window.__WA=wa;
+      document.getElementById('waBtn').href='https://wa.me/'+wa;
+      document.getElementById('waText').textContent='+'+wa;
+      // maps + waze
+      const addr=encodeURIComponent(C.ct_address||'PJS 13 Petaling Jaya');
+      document.getElementById('mapsBtn').href=C.ct_maps||('https://www.google.com/maps/search/?api=1&query='+addr);
+      document.getElementById('wazeBtn').href=C.ct_waze||('https://waze.com/ul?q='+addr);
+      document.getElementById('mapFrame').src='https://www.google.com/maps?q='+addr+'&output=embed';
+      // email (optional)
+      if(C.ct_email){const er=document.getElementById('emailRow');er.style.display='block';const el=document.getElementById('emailLink');el.textContent=C.ct_email;el.href='mailto:'+C.ct_email;}
+      // instagram
+      if(C.ct_instagram)document.getElementById('igLink').href=C.ct_instagram;
+    }catch(e){}
+  })();
+</script>
+</body>
+</html>

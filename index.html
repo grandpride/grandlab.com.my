@@ -6,11 +6,11 @@
 <title>GrandLab Detailing — Your Personalized Detailer | Petaling Jaya</title>
 <meta name="description" content="GrandLab Detailing — Petaling Jaya's one-stop garage for car detailing, servicing and modification. Ceramic coating, PPF, wrapping. Detailing by GrandPride.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Iceland&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  :root{--bg:#0a0a0a;--bg2:#111;--gold:#F5C518;--gold-dim:#c9a417;--text:#f4f4f0;--muted:#9a9a92;--line:#232320;--serif:'Iceland',cursive;--sans:'Work Sans',-apple-system,sans-serif}
+  :root{--bg:#0a0a0a;--bg2:#111;--gold:#F5C518;--gold-dim:#c9a417;--text:#f4f4f0;--muted:#9a9a92;--line:#232320;--serif:'Cormorant Garamond',serif;--sans:'Inter',-apple-system,sans-serif}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;--hpx:48px;--bpx:16px;font-size:var(--bpx)}
   .hero h1{font-size:clamp(32px, 7vw, var(--hpx))}
@@ -50,13 +50,19 @@
 
   /* centered text band */
   .band{text-align:center;background:var(--bg)}
-  .band .lead{margin:0 auto 30px}
-  .band .btn{margin-top:6px}
-  /* optional photo background for the invest band */
+  /* optional photo background for any band/section */
   .band-bg{position:relative;background-size:cover;background-position:center;background-repeat:no-repeat}
-  .band-bg::before{content:"";position:absolute;inset:0;background:rgba(10,10,10,var(--pidim,.68));z-index:0}
+  .band-bg::before{content:"";position:absolute;inset:0;background:rgba(10,10,10,var(--bgdim,.68));z-index:0}
   .band-bg>*{position:relative;z-index:1}
   .band-bg .lead{color:#d8d8d2}
+  .brand-row.logos{gap:clamp(28px,5vw,64px)}
+  .brand-row.logos img{height:clamp(26px,4vw,42px);width:auto;object-fit:contain;opacity:.75;transition:.25s}
+  .brand-row.logos img:hover{opacity:1}
+  footer .foot-logo{height:38px;width:auto;display:block;margin-bottom:14px}
+  footer .foot-grid,footer .copyright{position:relative;z-index:1}
+  footer.has-bg::before{content:"";position:absolute;inset:0;background:rgba(7,7,7,var(--footdim,.82));z-index:0}
+  .band .lead{margin:0 auto 30px}
+  .band .btn{margin-top:6px}
 
   /* workshop with looping photos */
   .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,72px);align-items:center;max-width:1200px;margin:0 auto}
@@ -73,19 +79,11 @@
   .feature-photo{height:60vh;background-size:cover;background-position:center;background-attachment:fixed}
 
   /* brands */
-  .brands{text-align:center;background:var(--bg);position:relative;background-size:cover;background-position:center}
-  .brands.has-bg::before{content:"";position:absolute;inset:0;background:rgba(10,10,10,var(--brdim,.72));z-index:0}
-  .brands>*{position:relative;z-index:1}
-  .brand-logos{display:flex;flex-wrap:wrap;gap:clamp(26px,5vw,64px);align-items:center;justify-content:center;margin-top:44px}
-  .brand-logos img{height:clamp(26px,4vw,44px);width:auto;opacity:.72;filter:brightness(0) invert(1);transition:.25s}
-  .brand-logos img:hover{opacity:1}
+  .brands{text-align:center;background:var(--bg)}
   .brand-row{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,60px);align-items:center;justify-content:center;margin-top:44px;font-family:var(--serif);font-style:italic;font-size:clamp(18px,3vw,26px);color:var(--muted)}
   .brand-row span{opacity:.75;transition:.25s}.brand-row span:hover{opacity:1;color:var(--gold)}
 
   footer{background:#070707;border-top:1px solid var(--line);padding:clamp(60px,9vw,90px) 6vw 40px;position:relative;background-size:cover;background-position:center}
-  footer.has-bg::before{content:"";position:absolute;inset:0;background:rgba(7,7,7,var(--ftdim,.82));z-index:0}
-  footer>*{position:relative;z-index:1}
-  .foot-logo{height:34px;width:auto;display:block;margin-bottom:14px}
   .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto}
   @media(max-width:760px){.foot-grid{grid-template-columns:1fr;gap:34px}}
   footer .brand{font-weight:800;font-size:26px;letter-spacing:1px;margin-bottom:14px}footer .brand span{color:var(--gold)}
@@ -133,7 +131,7 @@
 </section>
 
 <!-- OUR WORKSHOP -->
-<section class="band" id="wsBand">
+<section class="band">
   <div class="eyebrow2">The Facility</div>
   <h2 class="h2" data-c="ws_title">Our Workshop</h2>
   <p class="lead" data-c="ws_text">Step into our Petaling Jaya facility — a fully-equipped, one-stop garage built for everything your car needs. Detailing bays, a dedicated coating and PPF area, and a full service workshop, all staffed by a skilled in-house team who treat every vehicle as their own.</p>
@@ -141,7 +139,7 @@
 </section>
 
 <!-- GRANDPRIDE LOUNGE -->
-<section class="band" id="lgBand">
+<section class="band">
   <div class="eyebrow2">Relax With Us</div>
   <h2 class="h2" data-c="lg_title">The GrandPride Lounge</h2>
   <p class="lead" data-c="lg_text">While we care for your car, relax in the GrandPride Lounge — a comfortable space designed for our clients to unwind, work, or simply enjoy a coffee while the work is done. Premium care extends beyond the vehicle.</p>
@@ -152,20 +150,20 @@
 <div class="feature-photo" id="featPhoto" style="background-image:linear-gradient(rgba(10,10,10,.3),rgba(10,10,10,.3)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop')"></div>
 
 <!-- BRANDS -->
-<section class="brands">
+<section class="brands" id="brandsSec">
   <div class="eyebrow2">Trusted Products</div>
   <h2 class="h2">The brands we work with</h2>
   <div class="brand-row" id="brandRow">
     <span>Gyeon</span><span>Koch Chemie</span><span>ONE+</span><span>NAKA</span><span>KTN</span>
   </div>
-  <div class="brand-logos" id="brandLogos" style="display:none"></div>
 </section>
 
 <!-- FOOTER -->
 <footer id="contact">
   <div class="foot-grid">
     <div>
-      <img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="foot-logo" id="footLogo" onerror="this.style.display='none';document.getElementById('footWord').style.display='block'">
+      <img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="foot-logo" id="footLogo"
+           onerror="this.style.display='none';var w=document.getElementById('footWord');if(w)w.style.display='block'">
       <div class="brand" id="footWord" style="display:none">GRAND<span>LAB</span></div>
       <p>Petaling Jaya's one-stop garage — detailing, servicing &amp; modification. Detailing by GrandPride.</p>
       <div class="socials">
@@ -186,7 +184,7 @@
       <div class="foot-row"><i class="ti ti-shield-check"></i><a href="/warranty/">Check e-Warranty</a></div>
     </div>
   </div>
-  <div class="copyright" id="copyLine">&copy; <span id="yr"></span> GrandPride Luxury Travel Sdn Bhd (1297143-K) &bull; All rights reserved</div>
+  <div class="copyright">&copy; <span id="yr"></span> <span id="copyText">GrandPride Luxury Travel Sdn Bhd (1297143-K) &bull; All rights reserved</span></div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -207,8 +205,7 @@
       const C={};data.forEach(r=>C[r.key]=r.value);
       // ---- apply fonts & sizes ----
       (function(){
-        const BAKED=['Iceland','Work Sans'];
-        const gf=[C.font_heading,C.font_body].filter(Boolean).filter(f=>BAKED.indexOf(f)===-1);
+        const gf=[C.font_heading,C.font_body].filter(Boolean);
         if(gf.length){const l=document.createElement('link');l.rel='stylesheet';
           l.href='https://fonts.googleapis.com/css2?'+gf.map(f=>'family='+f.replace(/ /g,'+')+':ital,wght@0,400;0,500;0,600;0,700;1,400;1,500').join('&')+'&display=swap';
           document.head.appendChild(l);}
@@ -220,44 +217,34 @@
       })();
       document.querySelectorAll('[data-c]').forEach(el=>{const v=C[el.dataset.c];if(v!=null&&v!=='')el.textContent=v;});
       document.querySelectorAll('[data-cimg]').forEach(el=>{const v=C[el.dataset.cimg];if(v)el.src=v;});
-      // ---- section background photos (all optional) ----
-      function bandBg(elId,url,dim){
-        const el=document.getElementById(elId); if(!el||!url) return;
+      // --- section background photos ---
+      function bandBg(id,imgKey,dimKey){
+        const el=document.getElementById(id); if(!el||!C[imgKey]) return;
         el.classList.add('band-bg');
-        el.style.backgroundImage="url('"+url+"')";
-        if(dim!==undefined&&dim!==null&&dim!=='')
-          el.style.setProperty('--pidim',Math.max(0,Math.min(100,+dim))/100);
+        el.style.backgroundImage="url('"+C[imgKey]+"')";
+        if(C[dimKey]!==undefined&&C[dimKey]!=='')
+          el.style.setProperty('--bgdim',Math.max(0,Math.min(100,+C[dimKey]||0))/100);
       }
-      bandBg('invest',C.pi_bg,C.pi_bg_dim);
-      bandBg('wsBand',C.ws_bg,C.ws_bg_dim);
-      bandBg('lgBand',C.lg_bg,C.lg_bg_dim);
-      // brands section background
-      if(C.br_bg){const bs=document.querySelector('.brands');
-        if(bs){bs.classList.add('has-bg');bs.style.backgroundImage="url('"+C.br_bg+"')";
-          if(C.br_bg_dim)bs.style.setProperty('--brdim',Math.max(0,Math.min(100,+C.br_bg_dim))/100);}}
-      // feature photo (the full-width parallax photo)
+      bandBg('invest','pi_bg','pi_bg_dim');
+      bandBg('wsBand','ws_bg','ws_bg_dim');
+      bandBg('lgBand','lg_bg','lg_bg_dim');
+      bandBg('brandsSec','br_bg','br_bg_dim');
+      // --- feature (Porsche) photo ---
       if(C.feature_img){const fp=document.getElementById('featPhoto');
         if(fp)fp.style.backgroundImage="linear-gradient(rgba(10,10,10,.3),rgba(10,10,10,.3)),url('"+C.feature_img+"')";}
-      // brand logos (fall back to the text row when no logos uploaded)
-      if(C.brand_logos){
-        const urls=C.brand_logos.split('|').map(x=>x.trim()).filter(Boolean);
-        if(urls.length){
-          const lr=document.getElementById('brandLogos'),tr=document.getElementById('brandRow');
-          lr.innerHTML=urls.map(u=>'<img src="'+u+'" alt="" loading="lazy">').join('');
-          lr.style.display='flex'; if(tr)tr.style.display='none';
-        }
-      }
-      // footer background photo
-      if(C.ft_bg){const ft=document.querySelector('footer');
-        if(ft){ft.classList.add('has-bg');ft.style.backgroundImage="url('"+C.ft_bg+"')";
-          if(C.ft_bg_dim)ft.style.setProperty('--ftdim',Math.max(0,Math.min(100,+C.ft_bg_dim))/100);}}
-      // footer logo
+      // --- footer background + logo + copyright ---
+      const ft=document.querySelector('footer');
+      if(ft&&C.ft_bg){ft.classList.add('has-bg');ft.style.backgroundImage="url('"+C.ft_bg+"')";
+        if(C.ft_bg_dim!==undefined&&C.ft_bg_dim!=='')
+          ft.style.setProperty('--footdim',Math.max(0,Math.min(100,+C.ft_bg_dim||0))/100);}
       if(C.ft_logo){const fl=document.getElementById('footLogo');
         if(fl){fl.src=C.ft_logo;fl.style.display='block';
-          const fw=document.getElementById('footWord'); if(fw)fw.style.display='none';}}
-      // copyright line
-      if(C.ft_copyright){const cl=document.getElementById('copyLine');
-        if(cl)cl.textContent=C.ft_copyright.replace('{year}',new Date().getFullYear());}
+          const w=document.getElementById('footWord');if(w)w.style.display='none';}}
+      if(C.ft_copyright){const ct=document.getElementById('copyText');
+        if(ct){const yr=new Date().getFullYear();
+          ct.textContent=C.ft_copyright.replace(/\{year\}/g,yr);
+          const ys=document.getElementById('yr');
+          if(ys&&/\{year\}/.test(C.ft_copyright))ys.textContent='';}}
       // hero photo or video
       const bg=document.getElementById('heroBg'),vid=document.getElementById('heroVideo');
       if(C.hero_media_type==='video'&&C.hero_video){vid.src=C.hero_video;vid.style.display='block';bg.style.display='none';vid.play&&vid.play().catch(()=>{});}
@@ -265,7 +252,15 @@
       // feature photo
       if(C.feat_img){document.getElementById('featPhoto').style.backgroundImage="linear-gradient(rgba(10,10,10,.3),rgba(10,10,10,.3)),url('"+C.feat_img+"')";}
       // brands
-      if(C.brands){document.getElementById('brandRow').innerHTML=C.brands.split('·').map(b=>'<span>'+b.trim().replace(/[<>]/g,'')+'</span>').join('');}
+      const brow=document.getElementById('brandRow');
+      if(C.brand_logos&&C.brand_logos.trim()){
+        const urls=C.brand_logos.split('|').map(x=>x.trim()).filter(Boolean);
+        if(urls.length){brow.classList.add('logos');
+          brow.innerHTML=urls.map(u=>'<img src="'+u.replace(/"/g,'')+'" alt="" loading="lazy">').join('');}
+      } else if(C.brands){
+        brow.classList.remove('logos');
+        brow.innerHTML=C.brands.split('·').map(b=>'<span>'+b.trim().replace(/[<>]/g,'')+'</span>').join('');
+      }
       // contact
       if(C.contact_whatsapp){const w='https://wa.me/'+C.contact_whatsapp.replace(/[^0-9]/g,'');document.querySelectorAll('a[href*="wa.me"]').forEach(a=>a.href=w);}
       if(C.contact_phone){document.querySelectorAll('a[href^="tel:"]').forEach(a=>{a.textContent=C.contact_phone;a.href='tel:'+C.contact_phone.replace(/[^0-9+]/g,'');});}

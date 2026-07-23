@@ -116,16 +116,16 @@ const SCHEMA=[
  {t:'Home',h:'Intro band',f:[
    ['intro_eyebrow','Eyebrow','line'],['intro_title','Heading','line'],['intro_text','Text','area'],
  ]},
- {t:'Home',h:'Feature 1 \u2014 Coating',f:[
+ {t:'Home',h:'Feature 1 — Coating',f:[
    ['f1_label','Label','line'],['f1_title','Heading','line'],['f1_text','Text','area'],['f1_img','Image URL','img'],
  ]},
- {t:'Home',h:'Feature 2 \u2014 PPF',f:[
+ {t:'Home',h:'Feature 2 — PPF',f:[
    ['f2_label','Label','line'],['f2_title','Heading','line'],['f2_text','Text','area'],['f2_img','Image URL','img'],
  ]},
- {t:'Home',h:'Feature 3 \u2014 Wrapping',f:[
+ {t:'Home',h:'Feature 3 — Wrapping',f:[
    ['f3_label','Label','line'],['f3_title','Heading','line'],['f3_text','Text','area'],['f3_img','Image URL','img'],
  ]},
- {t:'Home',h:'Feature 4 \u2014 Detailing',f:[
+ {t:'Home',h:'Feature 4 — Detailing',f:[
    ['f4_label','Label','line'],['f4_title','Heading','line'],['f4_text','Text','area'],['f4_img','Image URL','img'],
  ]},
  {t:'Home',h:'Our Workshop band',f:[
@@ -153,8 +153,8 @@ const SCHEMA=[
    ['cta_title','Heading','line'],['cta_text','Text','area'],
  ]},
  {t:'Home',h:'Brands we work with',f:[
-   ['brand_logos','Brand logos (upload \u2014 replaces the text line below)','gallery'],
-   ['brands','Brands as text (used only if no logos uploaded, separate with \u00b7 )','line'],
+   ['brand_logos','Brand logos (upload — replaces the text line below)','gallery'],
+   ['brands','Brands as text (used only if no logos uploaded, separate with · )','line'],
    ['br_bg','Section background photo (blank = black)','img'],
    ['br_bg_dim','Photo darkness 0-100 (blank = 72)','line'],
  ]},
@@ -177,22 +177,22 @@ const SCHEMA=[
  {t:'Services',h:'Coating',f:[
    ['sp1_label','Label','line'],['sp1_title','Heading','line'],
    ['sp1_text1','Paragraph 1','area'],['sp1_text2','Paragraph 2','area'],
-   ['sp1_tags','Product tags (separate with \u00b7 )','line'],['sp1_img','Image URL','img'],
+   ['sp1_tags','Product tags (separate with · )','line'],['sp1_img','Image URL','img'],
  ]},
  {t:'Services',h:'PPF',f:[
    ['sp2_label','Label','line'],['sp2_title','Heading','line'],
    ['sp2_text1','Paragraph 1','area'],['sp2_text2','Paragraph 2','area'],
-   ['sp2_tags','Product tags (separate with \u00b7 )','line'],['sp2_img','Image URL','img'],
+   ['sp2_tags','Product tags (separate with · )','line'],['sp2_img','Image URL','img'],
  ]},
  {t:'Services',h:'Wrapping',f:[
    ['sp3_label','Label','line'],['sp3_title','Heading','line'],
    ['sp3_text1','Paragraph 1','area'],['sp3_text2','Paragraph 2','area'],
-   ['sp3_tags','Product tags (separate with \u00b7 )','line'],['sp3_img','Image URL','img'],
+   ['sp3_tags','Product tags (separate with · )','line'],['sp3_img','Image URL','img'],
  ]},
  {t:'Services',h:'Detailing',f:[
    ['sp4_label','Label','line'],['sp4_title','Heading','line'],
    ['sp4_text1','Paragraph 1','area'],['sp4_text2','Paragraph 2','area'],
-   ['sp4_tags','Product tags (separate with \u00b7 )','line'],['sp4_img','Image URL','img'],
+   ['sp4_tags','Product tags (separate with · )','line'],['sp4_img','Image URL','img'],
  ]},
  {t:'Workshop',h:'Text',open:true,f:[
    ['wp_hero_title','Hero title','line'],['wp_hero_text','Hero sub-text','area'],
@@ -360,7 +360,7 @@ async function imgUpload(key,file){
       inp.value=url; previewImg(key); onEdit();
       st.innerHTML='<span style="color:#3ec76e">\u2713 Uploaded. Remember to Save.</span>';
     } else {
-      st.innerHTML='<span style="color:#e0533d">Upload failed \u2014 check the gl-images bucket is public.</span>';
+      st.innerHTML='<span style="color:#e0533d">Upload failed — check the gl-images bucket is public.</span>';
     }
   }catch(e){ st.innerHTML='<span style="color:#e0533d">Error: '+e.message+'</span>'; }
 }

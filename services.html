@@ -52,6 +52,22 @@
   .svc-block .prods{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
   .svc-block .prods span{border:1px solid var(--line);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text);letter-spacing:.03em}
   .divider{max-width:1200px;margin:0 auto;height:1px;background:var(--line)}
+  /* product logo row under each service block */
+  .svc-logos{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(18px,3vw,34px);margin-top:22px}
+  .svc-logos img{height:clamp(22px,3vw,34px);width:auto;object-fit:contain;opacity:.8;transition:.25s}
+  .svc-logos img:hover{opacity:1}
+  /* overlapping photo/card grid */
+  .grid-sec{padding-top:0}
+  .grid-title{text-align:center;font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(28px,4.5vw,46px);margin-bottom:clamp(30px,5vw,54px)}
+  .ogrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,3vw,34px);max-width:1200px;margin:0 auto}
+  @media(max-width:760px){.ogrid{grid-template-columns:1fr}}
+  .ocell{display:none}
+  .ocell.on{display:block}
+  .ocell .ph{aspect-ratio:16/10;background:#1a1a17 center/cover no-repeat;border-radius:3px}
+  .ocell .card{background:var(--bg2);border:1px solid var(--line);border-radius:4px;margin:-56px 18px 0;padding:clamp(20px,3vw,30px);position:relative;z-index:2}
+  @media(max-width:500px){.ocell .card{margin:-34px 10px 0}}
+  .ocell .card h3{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(20px,2.6vw,27px);margin-bottom:12px}
+  .ocell .card p{color:var(--muted);font-size:14.5px;line-height:1.8}
 
   .cta{text-align:center;background:var(--bg2);border-top:1px solid var(--line)}
   .cta h2{font-family:var(--serif);font-style:italic;font-size:clamp(28px,5vw,46px);margin-bottom:16px}
@@ -93,6 +109,7 @@
       <p data-c="sp1_text1">A ceramic coating chemically bonds to your paint, forming a durable, glass-like layer that protects against UV rays, chemical stains, and the everyday grime of the road — while delivering an unmatched depth of gloss.</p>
       <p data-c="sp1_text2">We apply the full Gyeon Q² range — from Cancoat to the flagship Mohs and Infinite — as well as Koch Chemie ceramic protection. Every coating is applied in a controlled environment after thorough decontamination and paint preparation, and is backed by our own GrandLab e-Warranty.</p>
       <div class="prods"><span>Gyeon Q² Cancoat</span><span>Q² Mohs</span><span>Q² Matte</span><span>Q² Infinite</span><span>Koch Chemie</span></div>
+      <div class="svc-logos" id="svcLogos1"></div>
     </div>
     <div class="img"><img data-cimg="sp1_img" src="https://images.unsplash.com/photo-1605515298946-d664fd6a2f0e?q=80&w=1400&auto=format&fit=crop" alt="Ceramic coating"></div>
   </div>
@@ -106,6 +123,7 @@
       <p data-c="sp2_text1">Paint protection film is a transparent, self-healing layer applied over your paint to absorb the impact of stone chips, scratches and road debris — keeping the surface beneath in factory condition.</p>
       <p data-c="sp2_text2">Our ONE+ PPF is precision-cut to your vehicle and applied by hand, from single high-impact panels to full-body coverage. Available in gloss and matte finishes, it guards the areas most exposed to daily wear without altering the look of your car.</p>
       <div class="prods"><span>ONE+ Gloss</span><span>ONE+ Matte</span><span>Full Front</span><span>Full Body</span></div>
+      <div class="svc-logos" id="svcLogos2"></div>
     </div>
     <div class="img"><img data-cimg="sp2_img" src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?q=80&w=1400&auto=format&fit=crop" alt="Paint protection film"></div>
   </div>
@@ -119,6 +137,7 @@
       <p data-c="sp3_text1">A colour wrap transforms the entire character of your car — and protects the original paint underneath, preserving its value for resale.</p>
       <p data-c="sp3_text2">Using NAKA and KTN wrapping films, we offer a broad spectrum of colours and finishes, from gloss to satin and matte. Each wrap is precision-applied panel by panel for a seamless, factory-like result that turns heads.</p>
       <div class="prods"><span>NAKA Films</span><span>KTN Films</span><span>Gloss</span><span>Satin</span><span>Matte</span></div>
+      <div class="svc-logos" id="svcLogos3"></div>
     </div>
     <div class="img"><img data-cimg="sp3_img" src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?q=80&w=1400&auto=format&fit=crop" alt="Car wrapping"></div>
   </div>
@@ -132,8 +151,23 @@
       <p data-c="sp4_text1">Our detailing service brings your car back to life, inside and out. We begin with a thorough wash and decontamination, then move through paint correction to remove swirls and defects, and finish with deep interior cleaning and protection.</p>
       <p data-c="sp4_text2">From our signature wash packages to full paint correction and interior restoration, every detail is handled with meticulous care — so your car feels just-delivered, every single time.</p>
       <div class="prods"><span>Signature Wash</span><span>Paint Correction</span><span>Interior Detailing</span><span>Decontamination</span></div>
+      <div class="svc-logos" id="svcLogos4"></div>
     </div>
     <div class="img"><img data-cimg="sp4_img" src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?q=80&w=1400&auto=format&fit=crop" alt="Car detailing"></div>
+  </div>
+</section>
+
+<section class="grid-sec" id="gridSec" style="display:none">
+  <h2 class="grid-title" data-c="sg_title">Paint Protection Film (PPF)</h2>
+  <div class="ogrid">
+    <div class="ocell" id="og1"><div class="ph" id="og1ph"></div>
+      <div class="card"><h3 data-c="sg1_title">Preparation</h3><p data-c="sg1_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="og2"><div class="ph" id="og2ph"></div>
+      <div class="card"><h3 data-c="sg2_title">Non-invasive process</h3><p data-c="sg2_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="og3"><div class="ph" id="og3ph"></div>
+      <div class="card"><h3 data-c="sg3_title">Precision fitting</h3><p data-c="sg3_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="og4"><div class="ph" id="og4ph"></div>
+      <div class="card"><h3 data-c="sg4_title">Final inspection</h3><p data-c="sg4_text">Add your text in the admin.</p></div></div>
   </div>
 </section>
 
@@ -198,6 +232,29 @@
     ['sp1_tags','sp2_tags','sp3_tags','sp4_tags'].forEach((k,i)=>{
       if(C[k]&&blocks[i]) blocks[i].innerHTML=C[k].split('·').map(t=>'<span>'+t.trim().replace(/[<>]/g,'')+'</span>').join('');
     });
+    // product logos under each service block
+    [1,2,3,4].forEach(n=>{
+      const el=document.getElementById('svcLogos'+n); if(!el) return;
+      const v=C['sp'+n+'_logos'];
+      if(v&&String(v).trim()){
+        el.innerHTML=String(v).split('|').map(u=>u.trim()).filter(Boolean)
+          .map(u=>'<img src="'+u.replace(/"/g,'')+'" alt="" loading="lazy">').join('');
+      }
+    });
+    // overlapping photo/card grid
+    (function(){
+      let shown=0;
+      [1,2,3,4].forEach(n=>{
+        const cell=document.getElementById('og'+n), ph=document.getElementById('og'+n+'ph');
+        const img=C['sg'+n+'_img'];
+        if(cell&&ph&&img&&String(img).trim()){
+          ph.style.backgroundImage="url('"+String(img).replace(/'/g,'')+"')";
+          cell.classList.add('on'); shown++;
+        }
+      });
+      const sec=document.getElementById('gridSec');
+      if(sec&&shown) sec.style.display='block';
+    })();
   }catch(e){}
 })();
 </script>

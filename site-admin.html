@@ -128,6 +128,21 @@ const SCHEMA=[
  {t:'Home',h:'Feature 4 \u2014 Detailing',f:[
    ['f4_label','Label','line'],['f4_title','Heading','line'],['f4_text','Text','area'],['f4_img','Image URL','img'],
  ]},
+ {t:'Home',h:'Our Workshop band',f:[
+   ['ws_title','Heading','line'],
+   ['ws_text','Text','area'],
+   ['ws_bg','Background photo (blank = black)','img'],
+   ['ws_bg_dim','Photo darkness 0-100 (blank = 68)','line'],
+ ]},
+ {t:'Home',h:'GrandPride Lounge band',f:[
+   ['lg_title','Heading','line'],
+   ['lg_text','Text','area'],
+   ['lg_bg','Background photo (blank = black)','img'],
+   ['lg_bg_dim','Photo darkness 0-100 (blank = 68)','line'],
+ ]},
+ {t:'Home',h:'Feature photo (full-width)',f:[
+   ['feature_img','Photo','img'],
+ ]},
  {t:'Home',h:'Service cards',f:[
    ['svc1_title','Card 1 title','line'],['svc1_text','Card 1 text','area'],
    ['svc2_title','Card 2 title','line'],['svc2_text','Card 2 text','area'],
@@ -137,7 +152,18 @@ const SCHEMA=[
  {t:'Home',h:'Call-to-action band',f:[
    ['cta_title','Heading','line'],['cta_text','Text','area'],
  ]},
- {t:'Home',h:'Brands line',f:[['brands','Brands (separate with \u00b7 )','line']]},
+ {t:'Home',h:'Brands we work with',f:[
+   ['brand_logos','Brand logos (upload \u2014 replaces the text line below)','gallery'],
+   ['brands','Brands as text (used only if no logos uploaded, separate with \u00b7 )','line'],
+   ['br_bg','Section background photo (blank = black)','img'],
+   ['br_bg_dim','Photo darkness 0-100 (blank = 72)','line'],
+ ]},
+ {t:'Home',h:'Footer look',f:[
+   ['ft_logo','Footer logo image','img'],
+   ['ft_bg','Footer background photo (blank = black)','img'],
+   ['ft_bg_dim','Photo darkness 0-100 (blank = 82)','line'],
+   ['ft_copyright','Copyright line (use {year} for the year)','line'],
+ ]},
  {t:'Home',h:'Footer contact',f:[
    ['contact_phone','Phone (display)','line'],
    ['contact_whatsapp','WhatsApp number (digits only, e.g. 60169618299)','line'],

@@ -184,7 +184,7 @@
       <div class="foot-row"><i class="ti ti-shield-check"></i><a href="/warranty/">Check e-Warranty</a></div>
     </div>
   </div>
-  <div class="copyright">&copy; <span id="yr"></span> <span id="copyText">GrandPride Luxury Travel Sdn Bhd (1297143-K) &bull; All rights reserved</span></div>
+  <div class="copyright" id="copyText">&copy; <span id="yr"></span> GrandPride Luxury Travel Sdn Bhd (1297143-K) &bull; All rights reserved</div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -240,11 +240,8 @@
       if(C.ft_logo){const fl=document.getElementById('footLogo');
         if(fl){fl.src=C.ft_logo;fl.style.display='block';
           const w=document.getElementById('footWord');if(w)w.style.display='none';}}
-      if(C.ft_copyright){const ct=document.getElementById('copyText');
-        if(ct){const yr=new Date().getFullYear();
-          ct.textContent=C.ft_copyright.replace(/\{year\}/g,yr);
-          const ys=document.getElementById('yr');
-          if(ys&&/\{year\}/.test(C.ft_copyright))ys.textContent='';}}
+      if(C.ft_copyright&&C.ft_copyright.trim()){const ct=document.getElementById('copyText');
+        if(ct)ct.textContent=C.ft_copyright.replace(/\{year\}/g,new Date().getFullYear());}
       // hero photo or video
       const bg=document.getElementById('heroBg'),vid=document.getElementById('heroVideo');
       if(C.hero_media_type==='video'&&C.hero_video){vid.src=C.hero_video;vid.style.display='block';bg.style.display='none';vid.play&&vid.play().catch(()=>{});}

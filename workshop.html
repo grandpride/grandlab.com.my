@@ -54,6 +54,31 @@
   .gallery .cell img{width:100%;height:100%;object-fit:cover;transition:.5s}
   .gallery .cell:hover img{transform:scale(1.06)}
 
+  /* page-to-page prev/next */
+  .pagenav{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;
+    margin-top:26px;font-family:var(--serif);font-style:italic;font-size:clamp(15px,2vw,19px)}
+  .pagenav a{display:inline-flex;align-items:center;gap:8px;color:var(--text);transition:.2s}
+  .pagenav a:hover{color:var(--gold)}
+  .pagenav .sep{color:var(--line)}
+  .pagenav b{font-weight:700;font-style:normal;letter-spacing:.02em}
+  /* carousel */
+  .carou{max-width:1100px;margin:0 auto}
+  .carou .stage{position:relative;aspect-ratio:16/9;background:#141412;border-radius:3px;overflow:hidden}
+  .carou .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease}
+  .carou .stage img.on{opacity:1}
+  .carou .nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;
+    display:flex;align-items:center;justify-content:center;background:rgba(10,10,10,.45);
+    color:#fff;border:none;cursor:pointer;font-size:22px;z-index:3;transition:.2s}
+  .carou .nav:hover{background:rgba(10,10,10,.8)}
+  .carou .prev{left:0}.carou .next{right:0}
+  .carou .thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+  .carou .thumbs::-webkit-scrollbar{height:4px}
+  .carou .thumbs::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+  .carou .thumbs img{flex:0 0 96px;height:62px;object-fit:cover;opacity:.45;cursor:pointer;
+    border-radius:2px;transition:.2s}
+  .carou .thumbs img:hover{opacity:.8}
+  .carou .thumbs img.on{opacity:1;outline:2px solid var(--gold);outline-offset:-2px}
+  @media(max-width:600px){.carou .thumbs img{flex:0 0 72px;height:48px}}
   .cta{text-align:center}
   .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 30px;border-radius:2px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;transition:.25s;border:1px solid transparent}
   .btn-gold{background:var(--gold);color:#0a0a0a}.btn-gold:hover{background:#fff}
@@ -70,31 +95,33 @@
 <nav id="nav">
   <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo"></a>
   <div class="links" id="navLinks">
-    <a href="/">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
-    <a href="pricing.html">Pricing</a><a href="/warranty/">Warranty</a><a href="contact.html">Contact</a>
+    <a href="/">Home</a><a href="brand.html">Brand</a><a href="services.html">Services</a>
+    <a href="membership.html">GrandLab Membership Club</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a>
   </div>
   <button class="burger" id="burgerBtn" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<header class="hero">
-  <div class="slides" id="heroSlides"></div>
-  <div class="inner">
-    <div class="eyebrow">GrandLab</div>
-    <h1 data-c="wp_hero_title">Our Workshop</h1>
-    <p data-c="wp_hero_text">A fully-equipped, one-stop garage in the heart of Petaling Jaya.</p>
-  </div>
-</header>
-
-<section>
+<section style="padding-top:clamp(120px,14vw,170px)">
   <div class="intro">
-    <div class="eyebrow2">About</div>
+    <div class="eyebrow2">GrandLab</div>
     <h2 data-c="wp_intro_title">Everything under one roof</h2>
     <p data-c="wp_intro_text">Placeholder intro text.</p>
+    <div class="pagenav">
+    <a href="brand.html"><i class="ti ti-arrow-left"></i> Previous <b>Brand</b></a>
+    <span class="sep">|</span>
+    <a href="lounge.html">Next <b>Lounge</b> <i class="ti ti-arrow-right"></i></a>
+    </div>
   </div>
 </section>
 
 <section style="padding-top:0">
-  <div class="gallery" id="grid"></div>
+  <div class="carou" id="carou" style="display:none">
+    <div class="stage">
+      <button class="nav prev" aria-label="Previous photo"><i class="ti ti-chevron-left"></i></button>
+      <button class="nav next" aria-label="Next photo"><i class="ti ti-chevron-right"></i></button>
+    </div>
+    <div class="thumbs"></div>
+  </div>
 </section>
 
 <section class="cta">
@@ -105,8 +132,8 @@
   <div class="brand">GRAND<span>LAB</span></div>
   <p>Your personalized detailer — detailing by GrandPride.</p>
   <div class="fnav">
-    <a href="/">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
-    <a href="pricing.html">Pricing</a><a href="/warranty/">Warranty</a><a href="contact.html">Contact</a>
+    <a href="/">Home</a><a href="brand.html">Brand</a><a href="services.html">Services</a>
+    <a href="membership.html">GrandLab Membership Club</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a>
   </div>
   <p><i class="ti ti-map-pin"></i> PJS 13, Petaling Jaya &nbsp;·&nbsp; <a href="tel:+60169618299">+60 16-961 8299</a></p>
   <div class="copyright">&copy; <span id="yr"></span> GrandPride Luxury Travel Sdn Bhd (1297143-K)</div>
@@ -119,8 +146,30 @@
   const navEl=document.getElementById('nav');let lastY=scrollY;
   addEventListener('scroll',()=>{const y=scrollY;navEl.classList.toggle('solid',y>60);if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');lastY=y;},{passive:true});
 
-  function runSlides(el,urls){if(!urls.length)return;el.innerHTML=urls.map((u,i)=>'<img src="'+u+'" class="'+(i===0?'active':'')+'">').join('');const imgs=el.querySelectorAll('img');if(imgs.length<2)return;let i=0;setInterval(()=>{imgs[i].classList.remove('active');i=(i+1)%imgs.length;imgs[i].classList.add('active');},4000);}
-  function buildGrid(el,urls){el.innerHTML=urls.map(u=>'<div class="cell"><img src="'+u+'" loading="lazy"></div>').join('');}
+
+  function buildCarousel(rootId,urls){
+    const root=document.getElementById(rootId); if(!root||!urls.length) return;
+    const stage=root.querySelector('.stage'), thumbs=root.querySelector('.thumbs');
+    stage.querySelectorAll('img').forEach(n=>n.remove());
+    thumbs.innerHTML='';
+    urls.forEach((u,i)=>{
+      const im=document.createElement('img'); im.src=u; im.loading=i?'lazy':'eager';
+      if(!i)im.className='on'; stage.appendChild(im);
+      const th=document.createElement('img'); th.src=u; th.loading='lazy';
+      if(!i)th.className='on'; th.addEventListener('click',()=>go(i)); thumbs.appendChild(th);
+    });
+    const big=[...stage.querySelectorAll('img')], tn=[...thumbs.querySelectorAll('img')];
+    let cur=0;
+    function go(n){
+      cur=(n+big.length)%big.length;
+      big.forEach((e,i)=>e.classList.toggle('on',i===cur));
+      tn.forEach((e,i)=>e.classList.toggle('on',i===cur));
+      const t=tn[cur]; if(t&&t.scrollIntoView)t.scrollIntoView({block:'nearest',inline:'nearest'});
+    }
+    root.querySelector('.prev').addEventListener('click',()=>go(cur-1));
+    root.querySelector('.next').addEventListener('click',()=>go(cur+1));
+    root.style.display='block';
+  }
 
   (async function(){
     try{
@@ -140,8 +189,8 @@
         if(C.font_body_px) document.body.style.setProperty('--bpx',(+C.font_body_px||16)+'px');
       })();
       document.querySelectorAll('[data-c]').forEach(e=>{const v=C[e.dataset.c];if(v!=null&&v!=='')e.textContent=v;});
-      if(C.wp_slides)runSlides(document.getElementById('heroSlides'),C.wp_slides.split('|').map(x=>x.trim()).filter(Boolean));
-      if(C.wp_grid)buildGrid(document.getElementById('grid'),C.wp_grid.split('|').map(x=>x.trim()).filter(Boolean));
+      {const a=(C.wp_grid||'')+'|'+(C.wp_slides||'');
+       buildCarousel('carou',a.split('|').map(x=>x.trim()).filter(Boolean));}
     }catch(e){}
   })();
 </script>

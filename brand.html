@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The GrandPride Lounge — GrandLab</title>
-<meta name="description" content="A comfortable space to relax while we care for your car.">
+<title>Our Brand — GrandLab</title>
+<meta name="description" content="The GrandLab brand — our customers, our people, our products and our facility in Petaling Jaya.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Iceland&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
@@ -89,6 +89,24 @@
   footer p,footer a{color:var(--muted);font-size:14px}footer a:hover{color:var(--gold)}
   .fnav{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:20px 0;font-size:13px;letter-spacing:.05em;text-transform:uppercase}
   .copyright{color:var(--muted);font-size:12px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+
+  /* brand page: alternating full-bleed photo / text rows */
+  .brand-intro{max-width:760px;margin:0 auto;text-align:center;padding:clamp(120px,14vw,170px) 6vw clamp(40px,6vw,70px)}
+  .brand-intro h1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(30px,5.5vw,56px);margin-bottom:20px}
+  .brand-intro p{color:var(--muted);font-size:clamp(15px,2vw,17px)}
+  .pagenav{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;
+    margin-top:26px;font-family:var(--serif);font-style:italic;font-size:clamp(15px,2vw,19px)}
+  .pagenav a{display:inline-flex;align-items:center;gap:8px;color:var(--text);transition:.2s}
+  .pagenav a:hover{color:var(--gold)}
+  .pagenav b{font-weight:700;font-style:normal;letter-spacing:.02em}
+  .prow{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;min-height:clamp(300px,42vw,520px)}
+  .prow .ph{background:#141412 center/cover no-repeat;min-height:clamp(220px,34vw,520px)}
+  .prow .tx{display:flex;flex-direction:column;justify-content:center;padding:clamp(34px,6vw,80px)}
+  .prow .tx h2{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(24px,3.6vw,42px);margin-bottom:18px}
+  .prow .tx p{color:var(--muted);font-size:15px;line-height:1.85}
+  .prow .tx a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+  .prow.rev .ph{order:2}.prow.rev .tx{order:1}
+  @media(max-width:820px){.prow{grid-template-columns:1fr}.prow.rev .ph,.prow.rev .tx{order:0}}
 </style>
 </head>
 <body>
@@ -101,37 +119,52 @@
   <button class="burger" id="burgerBtn" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<section style="padding-top:clamp(120px,14vw,170px)">
-  <div class="intro">
-    <div class="eyebrow2">GrandLab</div>
-    <h2 data-c="lp_intro_title">Everything under one roof</h2>
-    <p data-c="lp_intro_text">Placeholder intro text.</p>
-    <div class="pagenav">
-    <a href="workshop.html"><i class="ti ti-arrow-left"></i> Previous <b>Workshop</b></a>
-    </div>
+<header class="brand-intro">
+  <h1 data-c="br_title">Our Brand</h1>
+  <p data-c="br_text">GrandLab is built on four connected pillars: our customers, our people, our products and our facility. Every car that comes through our doors in Petaling Jaya is treated as if it were our own — and we work to build relationships that last well beyond a single visit.</p>
+  <div class="pagenav">
+    <a href="workshop.html">Next <b>Workshop</b> <i class="ti ti-arrow-right"></i></a>
   </div>
-</section>
+</header>
 
-<section style="padding-top:0">
-  <div class="carou" id="carou" style="display:none">
-    <div class="stage">
-      <button class="nav prev" aria-label="Previous photo"><i class="ti ti-chevron-left"></i></button>
-      <button class="nav next" aria-label="Next photo"><i class="ti ti-chevron-right"></i></button>
-    </div>
-    <div class="thumbs"></div>
+<div class="prow">
+  <div class="ph" id="brph1"></div>
+  <div class="tx">
+    <h2 data-c="br1_title">Our Customers</h2>
+    <p data-c="br1_text">Our customers sit at the centre of everything we do. From the first WhatsApp enquiry to the moment the keys go back, we want the experience to feel considered and unhurried. We explain what a car actually needs rather than what is easiest to sell, and we would rather talk someone out of a service than take on work that will not benefit their vehicle.</p>
   </div>
-</section>
+</div>
 
-<section class="cta">
-  <a class="btn btn-gold" href="https://wa.me/60169618299" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp"></i> Book a Visit</a>
-</section>
+<div class="prow rev">
+  <div class="ph" id="brph2"></div>
+  <div class="tx">
+    <h2 data-c="br2_title">Our People</h2>
+    <p data-c="br2_text">Detailing is a craft, and craft comes down to the people holding the machine polisher. Our team is trained in-house on coating preparation, paint correction, film application and interior work, and no one works unsupervised on a customer car until their finish is consistent. The same faces are here year after year, which is why the standard stays where it is.</p>
+  </div>
+</div>
+
+<div class="prow">
+  <div class="ph" id="brph3"></div>
+  <div class="tx">
+    <h2 data-c="br3_title">Our Products</h2>
+    <p data-c="br3_text">We only work with products we are willing to warranty. That means the full Gyeon Q&sup2; ceramic range and Koch Chemie for coating, ONE+ for paint protection film, and NAKA and KTN for wrapping. Each is chosen for how it performs in Malaysian heat, humidity and rain rather than for what is cheapest to stock, and every coating we apply is backed by our own GrandLab e-Warranty.</p>
+  </div>
+</div>
+
+<div class="prow rev">
+  <div class="ph" id="brph4"></div>
+  <div class="tx">
+    <h2 data-c="br4_title">Our Facility</h2>
+    <p data-c="br4_text">Coating and film work need a clean, controlled space, so our PJS 13 facility is built around that — dedicated detailing bays, a separate coating and PPF area, and a full mechanical workshop under the same roof. While your car is with us, the <a href="lounge.html">GrandPride Lounge</a> is a comfortable place to wait, work or simply have a coffee. See the <a href="workshop.html">workshop</a> for yourself.</p>
+  </div>
+</div>
 
 <footer>
   <div class="brand">GRAND<span>LAB</span></div>
   <p>Your personalized detailer — detailing by GrandPride.</p>
   <div class="fnav">
-    <a href="/">Home</a><a href="brand.html">Brand</a><a href="services.html">Services</a>
-    <a href="membership.html">GrandLab Membership Club</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a>
+    <a href="/">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+    <a href="pricing.html">Pricing</a><a href="/warranty/">Warranty</a><a href="contact.html">Contact</a>
   </div>
   <p><i class="ti ti-map-pin"></i> PJS 13, Petaling Jaya &nbsp;·&nbsp; <a href="tel:+60169618299">+60 16-961 8299</a></p>
   <div class="copyright">&copy; <span id="yr"></span> GrandPride Luxury Travel Sdn Bhd (1297143-K)</div>
@@ -145,29 +178,6 @@
   addEventListener('scroll',()=>{const y=scrollY;navEl.classList.toggle('solid',y>60);if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');lastY=y;},{passive:true});
 
 
-  function buildCarousel(rootId,urls){
-    const root=document.getElementById(rootId); if(!root||!urls.length) return;
-    const stage=root.querySelector('.stage'), thumbs=root.querySelector('.thumbs');
-    stage.querySelectorAll('img').forEach(n=>n.remove());
-    thumbs.innerHTML='';
-    urls.forEach((u,i)=>{
-      const im=document.createElement('img'); im.src=u; im.loading=i?'lazy':'eager';
-      if(!i)im.className='on'; stage.appendChild(im);
-      const th=document.createElement('img'); th.src=u; th.loading='lazy';
-      if(!i)th.className='on'; th.addEventListener('click',()=>go(i)); thumbs.appendChild(th);
-    });
-    const big=[...stage.querySelectorAll('img')], tn=[...thumbs.querySelectorAll('img')];
-    let cur=0;
-    function go(n){
-      cur=(n+big.length)%big.length;
-      big.forEach((e,i)=>e.classList.toggle('on',i===cur));
-      tn.forEach((e,i)=>e.classList.toggle('on',i===cur));
-      const t=tn[cur]; if(t&&t.scrollIntoView)t.scrollIntoView({block:'nearest',inline:'nearest'});
-    }
-    root.querySelector('.prev').addEventListener('click',()=>go(cur-1));
-    root.querySelector('.next').addEventListener('click',()=>go(cur+1));
-    root.style.display='block';
-  }
 
   (async function(){
     try{
@@ -187,8 +197,10 @@
         if(C.font_body_px) document.body.style.setProperty('--bpx',(+C.font_body_px||16)+'px');
       })();
       document.querySelectorAll('[data-c]').forEach(e=>{const v=C[e.dataset.c];if(v!=null&&v!=='')e.textContent=v;});
-      {const a=(C.lp_grid||'')+'|'+(C.lp_slides||'');
-       buildCarousel('carou',a.split('|').map(x=>x.trim()).filter(Boolean));}
+      [1,2,3,4].forEach(n=>{
+        const el=document.getElementById('brph'+n), v=C['br'+n+'_img'];
+        if(el&&v&&String(v).trim()) el.style.backgroundImage="url('"+String(v).replace(/'/g,'')+"')";
+      });
     }catch(e){}
   })();
 </script>

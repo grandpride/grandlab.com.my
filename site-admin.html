@@ -91,7 +91,7 @@ const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{auth:{storageKey:'gl_
 const $=id=>document.getElementById(id);
 
 // structure of the editor: sections -> fields (key,label,type)
-const TABS=['Home','Services','Workshop','Lounge','Contact','Fonts'];
+const TABS=['Home','Brand','Services','Workshop','Lounge','Contact','Fonts'];
 const SCHEMA=[
  {t:'Home',h:'1. Hero image + welcome text',open:true,f:[
    ['hero_media_type','Top banner: photo or video','mediatype'],
@@ -156,6 +156,30 @@ const SCHEMA=[
    ['sp_hero_eyebrow','Eyebrow','line'],['sp_hero_title','Title','line'],
    ['sp_hero_text','Sub-text','area'],['sp_hero_img','Hero image URL','img'],
  ]},
+ {t:'Brand',h:'Page intro',open:true,f:[
+   ['br_title','Page heading','line'],
+   ['br_text','Intro paragraph','area'],
+ ]},
+ {t:'Brand',h:'1. Our Customers',f:[
+   ['br1_img','Photo','img'],
+   ['br1_title','Heading','line'],
+   ['br1_text','Text','area'],
+ ]},
+ {t:'Brand',h:'2. Our People',f:[
+   ['br2_img','Photo','img'],
+   ['br2_title','Heading','line'],
+   ['br2_text','Text','area'],
+ ]},
+ {t:'Brand',h:'3. Our Products',f:[
+   ['br3_img','Photo','img'],
+   ['br3_title','Heading','line'],
+   ['br3_text','Text','area'],
+ ]},
+ {t:'Brand',h:'4. Our Facility',f:[
+   ['br4_img','Photo','img'],
+   ['br4_title','Heading','line'],
+   ['br4_text','Text','area'],
+ ]},
  {t:'Services',h:'Photo grid (2x2 with cards)',f:[
    ['sg_title','Section heading','line'],
    ['sg1_img','Photo 1','img'],
@@ -196,24 +220,18 @@ const SCHEMA=[
    ['sp4_logos','Product logos (upload, shown under the tags)','gallery'],
  ]},
  {t:'Workshop',h:'Text',open:true,f:[
-   ['wp_hero_title','Hero title','line'],['wp_hero_text','Hero sub-text','area'],
-   ['wp_intro_title','Intro heading','line'],['wp_intro_text','Intro text','area'],
+   ['wp_intro_title','Page heading','line'],['wp_intro_text','Page text','area'],
  ]},
- {t:'Workshop',h:'Hero slideshow photos',open:true,f:[
-   ['wp_slides','Slideshow photos','gallery'],
- ]},
- {t:'Workshop',h:'Grid gallery photos',f:[
-   ['wp_grid','Grid photos','gallery'],
+ {t:'Workshop',h:'Carousel photos',open:true,f:[
+   ['wp_grid','Carousel photos (first group)','gallery'],
+   ['wp_slides','Carousel photos (second group)','gallery'],
  ]},
  {t:'Lounge',h:'Text',open:true,f:[
-   ['lp_hero_title','Hero title','line'],['lp_hero_text','Hero sub-text','area'],
-   ['lp_intro_title','Intro heading','line'],['lp_intro_text','Intro text','area'],
+   ['lp_intro_title','Page heading','line'],['lp_intro_text','Page text','area'],
  ]},
- {t:'Lounge',h:'Hero slideshow photos',open:true,f:[
-   ['lp_slides','Slideshow photos','gallery'],
- ]},
- {t:'Lounge',h:'Grid gallery photos',f:[
-   ['lp_grid','Grid photos','gallery'],
+ {t:'Lounge',h:'Carousel photos',open:true,f:[
+   ['lp_grid','Carousel photos (first group)','gallery'],
+   ['lp_slides','Carousel photos (second group)','gallery'],
  ]},
  {t:'Contact',h:'Details',open:true,f:[
    ['ct_hero_title','Page title','line'],

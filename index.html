@@ -7,11 +7,11 @@
 <title>GrandLab Detailing — Your Personalized Detailer | Petaling Jaya</title>
 <meta name="description" content="GrandLab Detailing — Petaling Jaya's one-stop garage for car detailing, servicing and modification. Ceramic coating, PPF, wrapping. Detailing by GrandPride.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Iceland&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  :root{--bg:#0a0a0a;--bg2:#111;--gold:#F5C518;--gold-dim:#c9a417;--text:#f4f4f0;--muted:#9a9a92;--line:#232320;--serif:'Cormorant Garamond',serif;--sans:'Inter',-apple-system,sans-serif}
+  :root{--bg:#0a0a0a;--bg2:#111;--gold:#F5C518;--gold-dim:#c9a417;--text:#f4f4f0;--muted:#9a9a92;--line:#232320;--serif:'Iceland',cursive;--sans:'Work Sans',-apple-system,sans-serif}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;--hpx:48px;--bpx:16px;font-size:var(--bpx)}
   .hero h1{font-size:clamp(32px, 7vw, var(--hpx))}
@@ -30,7 +30,7 @@
   nav .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   nav .burger.open span:nth-child(2){opacity:0}
   nav .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  @media(max-width:860px){nav .links{position:fixed;inset:0;background:rgba(10,10,10,.97);flex-direction:column;align-items:center;justify-content:center;gap:32px;font-size:18px;transform:translateX(100%);transition:.35s}nav .links.open{transform:translateX(0)}nav .burger{display:block}nav{justify-content:center}nav .brand{position:static}nav .burger{position:absolute;right:6vw;top:50%;transform:translateY(-50%);z-index:101}nav .brand-logo{max-width:min(200px,55vw)}}
+  @media(max-width:860px){nav .links{position:fixed;inset:0;background:rgba(10,10,10,.97);flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,4vh,30px);font-family:var(--serif);font-size:clamp(28px,7vw,44px);font-weight:500;letter-spacing:.04em;transform:translateX(100%);transition:.35s;padding:0 6vw}nav .links.open{transform:translateX(0)}nav .burger{display:block}nav{justify-content:center}nav .brand{position:static;z-index:101}nav .burger{position:absolute;right:6vw;top:50%;transform:translateY(-50%);z-index:101}nav .brand-logo{max-width:min(200px,55vw)}}
 
   /* HERO */
   .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:120px 6vw 80px}
@@ -211,7 +211,8 @@
       const C={};data.forEach(r=>C[r.key]=r.value);
       // ---- apply fonts & sizes ----
       (function(){
-        const gf=[C.font_heading,C.font_body].filter(Boolean);
+        const BAKED=['Iceland','Work Sans'];
+        const gf=[C.font_heading,C.font_body].filter(Boolean).filter(f=>BAKED.indexOf(f)===-1);
         if(gf.length){const l=document.createElement('link');l.rel='stylesheet';
           l.href='https://fonts.googleapis.com/css2?'+gf.map(f=>'family='+f.replace(/ /g,'+')+':ital,wght@0,400;0,500;0,600;0,700;1,400;1,500').join('&')+'&display=swap';
           document.head.appendChild(l);}

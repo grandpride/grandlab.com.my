@@ -20,8 +20,12 @@
   @media(max-width:600px){nav .brand-logo{height:28px}}
   nav .links{display:flex;gap:30px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:400}
   nav .links a{color:var(--text);transition:.2s;text-shadow:0 1px 6px rgba(0,0,0,.5)}nav .links a:hover{color:var(--gold)}
-  nav .burger{display:none;font-size:26px;color:var(--text);background:none;border:none;cursor:pointer}
-  @media(max-width:860px){nav .links{position:fixed;inset:0;background:rgba(10,10,10,.97);flex-direction:column;align-items:center;justify-content:center;gap:32px;font-size:18px;transform:translateX(100%);transition:.35s}nav .links.open{transform:translateX(0)}nav .burger{display:block;z-index:101}}
+  nav .burger{display:none;background:none;border:none;cursor:pointer;padding:6px;width:34px;height:34px;position:relative;z-index:101}
+  nav .burger span{display:block;width:22px;height:2px;background:var(--text);margin:5px auto;border-radius:2px;transition:transform .3s ease,opacity .2s ease;box-shadow:0 1px 4px rgba(0,0,0,.5)}
+  nav .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  nav .burger.open span:nth-child(2){opacity:0}
+  nav .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  @media(max-width:860px){nav .links{position:fixed;inset:0;background:rgba(10,10,10,.97);flex-direction:column;align-items:center;justify-content:center;gap:32px;font-size:18px;transform:translateX(100%);transition:.35s}nav .links.open{transform:translateX(0)}nav .burger{display:block}nav{justify-content:center}nav .brand{position:static}nav .burger{position:absolute;right:6vw;top:50%;transform:translateY(-50%);z-index:101}nav .brand-logo{max-width:min(200px,55vw)}}
 
   .page-hero{text-align:center;padding:150px 6vw 50px}
   .page-hero .eyebrow{font-size:13px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
@@ -64,7 +68,7 @@
     <a href="/">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
     <a href="pricing.html">Pricing</a><a href="/warranty/">Warranty</a><a href="contact.html">Contact</a>
   </div>
-  <button class="burger" onclick="toggleNav()"><i class="ti ti-menu-2" id="burgerIcon"></i></button>
+  <button class="burger" id="burgerBtn" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <header class="page-hero">
@@ -119,7 +123,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   document.getElementById('yr').textContent=new Date().getFullYear();
-  function toggleNav(){const l=document.getElementById('navLinks'),i=document.getElementById('burgerIcon');l.classList.toggle('open');i.className=l.classList.contains('open')?'ti ti-x':'ti ti-menu-2';}
+  function toggleNav(){const l=document.getElementById('navLinks'),b=document.getElementById('burgerBtn');l.classList.toggle('open');if(b)b.classList.toggle('open',l.classList.contains('open'));}
   function sendEnquiry(){
     const wa=window.__WA||'60129384313';
     const n=document.getElementById('fName').value.trim();

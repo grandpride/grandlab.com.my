@@ -91,7 +91,7 @@ const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{auth:{storageKey:'gl_
 const $=id=>document.getElementById(id);
 
 // structure of the editor: sections -> fields (key,label,type)
-const TABS=['Home','Brand','Services','Workshop','Lounge','Contact','Fonts'];
+const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','Contact','Fonts'];
 const SCHEMA=[
  {t:'Home',h:'1. Hero image + welcome text',open:true,f:[
    ['hero_media_type','Top banner: photo or video','mediatype'],
@@ -229,9 +229,54 @@ const SCHEMA=[
  {t:'Lounge',h:'Text',open:true,f:[
    ['lp_intro_title','Page heading','line'],['lp_intro_text','Page text','area'],
  ]},
+ {t:'Lounge',h:'Outlet card',f:[
+   ['lo1_img','Outlet photo','img'],
+   ['lo1_name','Outlet name','line'],
+   ['lo1_text','Short text','area'],
+ ]},
  {t:'Lounge',h:'Carousel photos',open:true,f:[
    ['lp_grid','Carousel photos (first group)','gallery'],
    ['lp_slides','Carousel photos (second group)','gallery'],
+ ]},
+ {t:'Suppliers',h:'Page intro',open:true,f:[
+   ['su_title','Page heading','line'],
+   ['su_text','Intro paragraph','area'],
+ ]},
+ {t:'Suppliers',h:'Supplier 1',open:true,f:[
+   ['su1_name','Name (leave blank to hide this card)','line'],
+   ['su1_logo','Logo','img'],
+   ['su1_text','Description','area'],
+   ['su1_url','Website or Instagram URL','line'],
+ ]},
+ {t:'Suppliers',h:'Supplier 2',open:true,f:[
+   ['su2_name','Name (leave blank to hide this card)','line'],
+   ['su2_logo','Logo','img'],
+   ['su2_text','Description','area'],
+   ['su2_url','Website or Instagram URL','line'],
+ ]},
+ {t:'Suppliers',h:'Supplier 3',f:[
+   ['su3_name','Name (leave blank to hide this card)','line'],
+   ['su3_logo','Logo','img'],
+   ['su3_text','Description','area'],
+   ['su3_url','Website or Instagram URL','line'],
+ ]},
+ {t:'Suppliers',h:'Supplier 4',f:[
+   ['su4_name','Name (leave blank to hide this card)','line'],
+   ['su4_logo','Logo','img'],
+   ['su4_text','Description','area'],
+   ['su4_url','Website or Instagram URL','line'],
+ ]},
+ {t:'Suppliers',h:'Supplier 5',f:[
+   ['su5_name','Name (leave blank to hide this card)','line'],
+   ['su5_logo','Logo','img'],
+   ['su5_text','Description','area'],
+   ['su5_url','Website or Instagram URL','line'],
+ ]},
+ {t:'Suppliers',h:'Supplier 6',f:[
+   ['su6_name','Name (leave blank to hide this card)','line'],
+   ['su6_logo','Logo','img'],
+   ['su6_text','Description','area'],
+   ['su6_url','Website or Instagram URL','line'],
  ]},
  {t:'Contact',h:'Details',open:true,f:[
    ['ct_hero_title','Page title','line'],

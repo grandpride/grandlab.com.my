@@ -52,6 +52,12 @@
   .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 30px;border-radius:2px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;transition:.25s;cursor:pointer;border:1px solid transparent}
   .btn-gold{background:var(--gold);color:#0a0a0a}.btn-gold:hover{background:#fff}
   .btn-ghost{border-color:rgba(255,255,255,.35);color:var(--text)}.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  /* branded pill button: GrandLab droplet cap + stretching yellow bar */
+  .btn-brand{position:relative;background:transparent;color:#0a0a0a;border:none;border-radius:0;padding:0;gap:0;height:52px;transition:.25s}
+  .btn-brand:hover{filter:brightness(1.07)}
+  .btn-brand .drop{flex:none;width:49px;align-self:stretch;background:url('gl-btn-cap.png') left center/100% 100% no-repeat}
+  .btn-brand .lbl{align-self:stretch;display:flex;align-items:center;background:#F9CD17;padding:0 0 0 4px;white-space:nowrap}
+  .btn-brand .arw{align-self:stretch;display:flex;align-items:center;background:#F9CD17;padding:0 24px 0 14px;font-size:16px;line-height:1;border-radius:0 8px 8px 0}
   .scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:22px;z-index:2;animation:bob 2s infinite}
   @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
 
@@ -145,7 +151,7 @@
 <section class="band" id="invest">
   <h2 class="h2" data-c="pi_title">Protecting your investment</h2>
   <p class="lead" data-c="pi_text">Your car is more than transport — it's an investment worth protecting. Our full range of services is designed to keep it performing, protected and looking its very best, year after year.</p>
-  <a class="btn btn-gold" href="services.html"><i class="ti ti-arrow-right"></i> See Our Services</a>
+  <a class="btn btn-brand" href="services.html"><span class="drop" aria-hidden="true"></span><span class="lbl">See Our Services</span><i class="ti ti-arrow-right arw"></i></a>
 </section>
 
 <!-- OUR WORKSHOP -->
@@ -155,7 +161,7 @@
   <div class="eyebrow2">The Facility</div>
   <h2 class="h2" data-c="ws_title">Our Workshop</h2>
   <p class="lead" data-c="ws_text">Step into our Petaling Jaya facility — a fully-equipped, one-stop garage built for everything your car needs. Detailing bays, a dedicated coating and PPF area, and a full service workshop, all staffed by a skilled in-house team who treat every vehicle as their own.</p>
-  <a class="btn btn-ghost" href="workshop.html"><i class="ti ti-arrow-right"></i> Learn More</a>
+  <a class="btn btn-brand" href="workshop.html"><span class="drop" aria-hidden="true"></span><span class="lbl">Learn More</span><i class="ti ti-arrow-right arw"></i></a>
 </section>
 
 <!-- GRANDPRIDE LOUNGE -->
@@ -165,7 +171,7 @@
   <div class="eyebrow2">Relax With Us</div>
   <h2 class="h2" data-c="lg_title">The GrandPride Lounge</h2>
   <p class="lead" data-c="lg_text">While we care for your car, relax in the GrandPride Lounge — a comfortable space designed for our clients to unwind, work, or simply enjoy a coffee while the work is done. Premium care extends beyond the vehicle.</p>
-  <a class="btn btn-ghost" href="lounge.html"><i class="ti ti-arrow-right"></i> Find Out More</a>
+  <a class="btn btn-brand" href="lounge.html"><span class="drop" aria-hidden="true"></span><span class="lbl">Find Out More</span><i class="ti ti-arrow-right arw"></i></a>
 </section>
 
 <!-- FEATURE PHOTO -->

@@ -91,6 +91,56 @@ const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{auth:{storageKey:'gl_
 const $=id=>document.getElementById(id);
 
 // structure of the editor: sections -> fields (key,label,type)
+const SIZEHINT={
+  hero_img:'1920 &times; 1080 px (16:9), landscape. Keep under 500 KB.',
+  hero_video:'1920 &times; 1080 px, MP4, <b>max 8 MB</b>, 10&ndash;20 sec, no sound.',
+  pi_bg:'1920 &times; 900 px, landscape. Full-width band &mdash; keep the subject centred.',
+  ws_bg:'1920 &times; 900 px, landscape. Full-width band &mdash; keep the subject centred.',
+  lg_bg:'1920 &times; 900 px, landscape. Full-width band &mdash; keep the subject centred.',
+  feature_img:'1920 &times; 900 px, landscape. Full-width band &mdash; keep the subject centred.',
+  pi_video:'1920 &times; 1080 px, MP4, <b>max 8 MB</b>, 10&ndash;20 sec, no sound.',
+  ws_video:'1920 &times; 1080 px, MP4, <b>max 8 MB</b>, 10&ndash;20 sec, no sound.',
+  lg_video:'1920 &times; 1080 px, MP4, <b>max 8 MB</b>, 10&ndash;20 sec, no sound.',
+  feature_video:'1920 &times; 1080 px, MP4, <b>max 8 MB</b>, 10&ndash;20 sec, no sound.',
+  brand_logos:'600 &times; 200 px each, PNG with transparent background. Logos display at the same height.',
+  br_bg:'1920 &times; 1080 px, landscape. Text sits over this, so avoid busy areas.',
+  ft_logo:'600 &times; 160 px, PNG with transparent background. Displays about 38 px tall.',
+  ft_bg:'1920 &times; 1080 px, landscape. Darkened behind the footer text.',
+  sp_hero_img:'1920 &times; 1080 px, landscape. Text sits over this.',
+  br1_img:'1200 &times; 900 px (4:3), landscape. Fills half the row.',
+  br2_img:'1200 &times; 900 px (4:3), landscape. Fills half the row.',
+  br3_img:'1200 &times; 900 px (4:3), landscape. Fills half the row.',
+  br4_img:'1200 &times; 900 px (4:3), landscape. Fills half the row.',
+  sg1_img:'1200 &times; 750 px (16:10), landscape. A card overlaps the bottom.',
+  sg2_img:'1200 &times; 750 px (16:10), landscape. A card overlaps the bottom.',
+  sg3_img:'1200 &times; 750 px (16:10), landscape. A card overlaps the bottom.',
+  sg4_img:'1200 &times; 750 px (16:10), landscape. A card overlaps the bottom.',
+  sp1_img:'1400 &times; 1050 px (4:3), landscape.',
+  sp2_img:'1400 &times; 1050 px (4:3), landscape.',
+  sp3_img:'1400 &times; 1050 px (4:3), landscape.',
+  sp4_img:'1400 &times; 1050 px (4:3), landscape.',
+  sp1_logos:'400 &times; 140 px each, PNG with transparent background.',
+  sp2_logos:'400 &times; 140 px each, PNG with transparent background.',
+  sp3_logos:'400 &times; 140 px each, PNG with transparent background.',
+  sp4_logos:'400 &times; 140 px each, PNG with transparent background.',
+  wp_grid:'1600 &times; 900 px (16:9), landscape. All carousel photos should be the same shape.',
+  wp_slides:'1600 &times; 900 px (16:9), landscape. All carousel photos should be the same shape.',
+  lp_grid:'1600 &times; 900 px (16:9), landscape. All carousel photos should be the same shape.',
+  lp_slides:'1600 &times; 900 px (16:9), landscape. All carousel photos should be the same shape.',
+  lo1_img:'1200 &times; 900 px (4:3), landscape.',
+  su1_logo:'600 &times; 200 px, PNG with transparent background.',
+  su2_logo:'600 &times; 200 px, PNG with transparent background.',
+  su3_logo:'600 &times; 200 px, PNG with transparent background.',
+  su4_logo:'600 &times; 200 px, PNG with transparent background.',
+  su5_logo:'600 &times; 200 px, PNG with transparent background.',
+  su6_logo:'600 &times; 200 px, PNG with transparent background.',
+  ct_logo_whatsapp:'240 &times; 240 px square, PNG. Cropped to a circle.',
+  ct_logo_facebook:'240 &times; 240 px square, PNG. Cropped to a circle.',
+  ct_logo_instagram:'240 &times; 240 px square, PNG. Cropped to a circle.',
+  ct_logo_tiktok:'240 &times; 240 px square, PNG. Cropped to a circle.',
+  ct_logo_maps:'240 &times; 240 px square, PNG. Cropped to a circle.',
+  ct_logo_waze:'240 &times; 240 px square, PNG. Cropped to a circle.'
+};
 const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','Contact','Fonts'];
 const SCHEMA=[
  {t:'Home',h:'1. Hero image + welcome text',open:true,f:[
@@ -411,6 +461,7 @@ function render(){
       if(type==='area') return `<label>${esc(label)}</label><textarea data-k="${key}" oninput="onEdit()">${esc(v)}</textarea>`;
       if(type==='img') return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit();previewImg('${key}')" placeholder="photo URL (or upload below)">
         <button type="button" class="upbtn" onclick="imgPick('${key}')"><i class="ti ti-upload"></i> Upload photo</button>
+        ${SIZEHINT[key]?`<div class="hint2"><i class="ti ti-photo"></i> ${SIZEHINT[key]}</div>`:''}
         <div class="hint2" id="imgstat_${key}"></div>
         <div class="imgprev"><img id="prev_${key}" src="${esc(v)}" onerror="this.style.opacity=.2"></div>`;
       if(type==='fontpick'){
@@ -440,14 +491,14 @@ function render(){
           <input type="hidden" data-k="${key}" value="${esc(v||'')}">
           <div class="ggrid" id="gal_${key}">${thumbs}</div>
           <button type="button" class="upbtn" onclick="galPick('${key}')"><i class="ti ti-photo-plus"></i> Add photos</button>
-          <div class="hint2">Recommended: 1600px wide, under 1&nbsp;MB each, JPG. Add several — they'll loop / fill the gallery.</div>
+          <div class="hint2"><i class="ti ti-photo"></i> ${SIZEHINT[key]||'1600 px wide, JPG, under 1 MB each.'} Add several &mdash; they display in the order shown.</div>
           <div id="galstat_${key}" class="hint2"></div>`;
       }
       if(type==='video') return `<label>${esc(label)}</label>
         <input data-k="${key}" value="${esc(v)}" oninput="onEdit()" placeholder="video URL (or upload below)">
         <button type="button" class="upbtn" onclick="document.getElementById('vidfile_${key}').click()"><i class="ti ti-upload"></i> Upload MP4</button>
         <input id="vidfile_${key}" type="file" accept="video/mp4" style="display:none" onchange="uploadVideo(this.files[0],'${key}')">
-        <div class="hint2">Recommended: 1920×1080, <b>max 8&nbsp;MB</b>, 10–20&nbsp;sec, MP4. Larger files load slowly.</div>
+        <div class="hint2"><i class="ti ti-video"></i> ${SIZEHINT[key]||'1920 &times; 1080 px, MP4, <b>max 8 MB</b>, 10&ndash;20 sec.'} Larger files load slowly.</div>
         <div id="vidstat_${key}" class="hint2"></div>
         ${v?`<video src="${esc(v)}" class="vidprev" muted autoplay loop playsinline></video>`:''}`;
       return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit()">`;

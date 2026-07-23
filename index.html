@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
 <title>GrandLab Detailing — Your Personalized Detailer | Petaling Jaya</title>
 <meta name="description" content="GrandLab Detailing — Petaling Jaya's one-stop garage for car detailing, servicing and modification. Ceramic coating, PPF, wrapping. Detailing by GrandPride.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,7 +93,8 @@
   .foot-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
   .foot-row i{color:var(--gold);font-size:17px;flex:0 0 auto}
   .socials{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
-  .socials a{flex:0 0 40px;width:40px;height:40px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.25s;overflow:hidden;text-decoration:none}
+  .socials a{flex:0 0 40px;width:40px;height:40px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.25s;overflow:hidden;text-decoration:none;font-size:0;line-height:0}
+  .socials a i{font-size:18px;line-height:1;flex:none}
   .socials a:hover{border-color:var(--gold);color:var(--gold)}
   .copyright{text-align:center;color:var(--muted);font-size:12px;margin-top:50px;padding-top:24px;border-top:1px solid var(--line)}
 </style>
@@ -174,13 +176,13 @@
     </div>
     <div>
       <div class="foot-h">Visit Us</div>
-      <div class="foot-row"><i class="ti ti-map-pin"></i><span>PJS 13, Petaling Jaya,<br>Selangor, Malaysia</span></div>
-      <div class="foot-row"><i class="ti ti-clock"></i><span>Open daily — call to confirm hours</span></div>
+      <div class="foot-row"><i class="ti ti-map-pin"></i><span id="footAddr">PJS 13, Petaling Jaya,<br>Selangor, Malaysia</span></div>
+      <div class="foot-row"><i class="ti ti-clock"></i><span id="footHours">Open daily — call to confirm hours</span></div>
     </div>
     <div>
       <div class="foot-h">Get In Touch</div>
-      <div class="foot-row"><i class="ti ti-phone"></i><a href="tel:+60169618299">+60 16-961 8299</a></div>
-      <div class="foot-row"><i class="ti ti-brand-whatsapp"></i><a href="https://wa.me/60169618299" target="_blank" rel="noopener">WhatsApp</a></div>
+      <div class="foot-row"><i class="ti ti-phone"></i><a id="footPhone" href="tel:+60169618299">+60 16-961 8299</a></div>
+      <div class="foot-row"><i class="ti ti-brand-whatsapp"></i><a id="footWa" href="https://wa.me/60169618299" target="_blank" rel="noopener">WhatsApp</a></div>
       <div class="foot-row"><i class="ti ti-shield-check"></i><a href="/warranty/">Check e-Warranty</a></div>
     </div>
   </div>
@@ -242,6 +244,21 @@
           const w=document.getElementById('footWord');if(w)w.style.display='none';}}
       if(C.ft_copyright&&C.ft_copyright.trim()){const ct=document.getElementById('copyText');
         if(ct)ct.textContent=C.ft_copyright.replace(/\{year\}/g,new Date().getFullYear());}
+      // --- footer contact details ---
+      const setTxt=(id,val,html)=>{const el=document.getElementById(id);
+        if(el&&val&&String(val).trim()){ if(html)el.innerHTML=String(val).replace(/[<>]/g,m=>m==='<'?'&lt;':'&gt;').replace(/\n/g,'<br>'); else el.textContent=val; }};
+      setTxt('footAddr',C.contact_address,true);
+      setTxt('footHours',C.contact_hours,true);
+      if(C.contact_phone){const el=document.getElementById('footPhone');
+        if(el){el.textContent=C.contact_phone;el.href='tel:'+String(C.contact_phone).replace(/[^0-9+]/g,'');}}
+      if(C.contact_whatsapp){const el=document.getElementById('footWa');
+        if(el)el.href='https://wa.me/'+String(C.contact_whatsapp).replace(/[^0-9]/g,'');}
+      document.querySelectorAll('.socials a[aria-label=\"WhatsApp\"]').forEach(a=>{
+        if(C.contact_whatsapp)a.href='https://wa.me/'+String(C.contact_whatsapp).replace(/[^0-9]/g,'');});
+      document.querySelectorAll('.socials a[aria-label=\"Call\"]').forEach(a=>{
+        if(C.contact_phone)a.href='tel:'+String(C.contact_phone).replace(/[^0-9+]/g,'');});
+      document.querySelectorAll('.socials a[aria-label=\"Instagram\"]').forEach(a=>{
+        if(C.contact_instagram)a.href=C.contact_instagram;});
       // hero photo or video
       const bg=document.getElementById('heroBg'),vid=document.getElementById('heroVideo');
       if(C.hero_media_type==='video'&&C.hero_video){vid.src=C.hero_video;vid.style.display='block';bg.style.display='none';vid.play&&vid.play().catch(()=>{});}

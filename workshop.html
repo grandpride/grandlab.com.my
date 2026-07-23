@@ -15,18 +15,20 @@
   body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;--hpx:48px;--bpx:16px;font-size:var(--bpx)}
   a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
   nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 6vw;background:transparent;transition:transform .4s ease}
-  nav.hidden{transform:translateY(-100%)}nav.solid{background:rgba(14,14,14,.92);backdrop-filter:blur(12px)}
+  nav.hidden{transform:translateY(-100%)}
+  nav:has(.links.open),nav.menu-open{transform:none!important}nav.solid{background:rgba(14,14,14,.92);backdrop-filter:blur(12px)}
   nav .brand-logo{height:34px;width:auto;display:block}
   @media(max-width:600px){nav .brand-logo{height:28px}}
   nav .links{display:flex;gap:30px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:400}
   nav .links a{color:var(--text);transition:.2s;text-shadow:0 1px 6px rgba(0,0,0,.5)}nav .links a:hover{color:var(--gold)}
-  nav .burger{display:none;background:none;border:none;cursor:pointer;padding:0;width:40px;height:32px;position:relative;z-index:101}
+  nav .burger{display:none;background:none;border:none;outline:none;-webkit-tap-highlight-color:transparent;cursor:pointer;padding:0;width:40px;height:32px;position:relative;z-index:102}
+  nav .burger:focus,nav .burger:focus-visible{outline:none}
   nav .burger span{display:block;width:34px;height:2px;background:var(--text);margin:0 0 9px auto;border-radius:0;transition:transform .3s ease,opacity .2s ease,width .3s ease;box-shadow:0 1px 4px rgba(0,0,0,.5)}
   nav .burger span:nth-child(3){width:22px;margin-bottom:0}
   nav .burger.open span:nth-child(1){transform:translateY(11px) rotate(45deg)}
   nav .burger.open span:nth-child(2){opacity:0}
   nav .burger.open span:nth-child(3){width:34px;transform:translateY(-11px) rotate(-45deg)}
-  @media(max-width:860px){nav .links{position:fixed;inset:0;background:rgba(10,10,10,.97);flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,4vh,30px);font-family:var(--serif);font-size:clamp(28px,7vw,44px);font-weight:500;letter-spacing:.04em;transform:translateX(100%);transition:.35s;padding:0 6vw}nav .links.open{transform:translateX(0)}nav .burger{display:block}nav{justify-content:center}nav .brand{position:static;z-index:101}nav .burger{position:absolute;right:6vw;top:50%;transform:translateY(-50%);z-index:101}nav .brand-logo{max-width:min(200px,55vw)}}
+  @media(max-width:860px){nav .links{position:fixed;inset:0;background:#0a0a0a;flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,4vh,30px);font-family:var(--serif);font-size:clamp(28px,7vw,44px);font-weight:500;letter-spacing:.04em;transform:translateX(100%);transition:transform .35s ease;padding:0 6vw;z-index:100;overflow-y:auto}nav .links.open{transform:translateX(0)}nav .burger{display:block}nav{justify-content:center}nav .brand{position:relative;z-index:102}nav .burger{position:fixed;right:6vw;top:26px;transform:none;z-index:102}nav .brand-logo{max-width:min(200px,55vw)}}
 
   /* hero slideshow */
   .hero{position:relative;height:70vh;min-height:440px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
@@ -113,7 +115,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   document.getElementById('yr').textContent=new Date().getFullYear();
-  function toggleNav(){const l=document.getElementById('navLinks'),b=document.getElementById('burgerBtn');l.classList.toggle('open');if(b)b.classList.toggle('open',l.classList.contains('open'));}
+  function toggleNav(){const l=document.getElementById('navLinks'),b=document.getElementById('burgerBtn');l.classList.toggle('open');const op=l.classList.contains('open');if(b)b.classList.toggle('open',op);const nv=document.getElementById('nav');if(nv)nv.classList.toggle('menu-open',op);document.body.style.overflow=op?'hidden':'';}
   const navEl=document.getElementById('nav');let lastY=scrollY;
   addEventListener('scroll',()=>{const y=scrollY;navEl.classList.toggle('solid',y>60);if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');lastY=y;},{passive:true});
 

@@ -43,6 +43,15 @@
   .info{color:var(--muted);font-size:15px;line-height:1.9;margin-bottom:8px}
   .info b{color:var(--text);font-weight:600}
   .btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+  .iconrows{display:flex;flex-direction:column;gap:16px;align-items:center;margin-top:30px}
+  .iconrow{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .cbtn{width:58px;height:58px;border-radius:50%;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--text);
+    background:#111;transition:.25s;overflow:hidden;flex:none}
+  .cbtn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+  .cbtn img{width:100%;height:100%;object-fit:cover;display:block}
+  .cbtn .lbl{display:none}
+  @media(max-width:480px){.cbtn{width:52px;height:52px;font-size:22px}}
   .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:2px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;transition:.25s;border:1px solid transparent;cursor:pointer}
   .btn-gold{background:var(--gold);color:#0a0a0a}.btn-gold:hover{background:#fff}
   .btn-ghost{border-color:var(--line);color:var(--text)}.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
@@ -50,7 +59,7 @@
   .socials{margin-top:24px;display:flex;gap:14px;justify-content:center}
   .socials a{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text);transition:.25s}
   .socials a:hover{border-color:var(--gold);color:var(--gold)}
-  .map{width:100%;height:360px;border:0;filter:grayscale(.3) invert(.9) hue-rotate(180deg)}
+  .map{width:100%;height:360px;border:0}
   .enquiry{margin-top:38px;padding-top:34px;border-top:1px solid var(--line);text-align:left;max-width:460px;margin-left:auto;margin-right:auto}
   .enquiry h3{font-family:var(--serif);font-style:italic;font-size:26px;text-align:center;margin-bottom:20px}
   .enquiry input,.enquiry textarea{width:100%;background:#0a0a0a;border:1px solid var(--line);border-radius:9px;color:#fff;padding:13px 14px;font-size:15px;font-family:inherit;margin-bottom:12px;outline:none}
@@ -91,14 +100,19 @@
       <div class="info" id="waRow"><b>WhatsApp:</b> <span id="waText">+60 12-938 4313</span></div>
       <div class="info" id="emailRow" style="display:none"><b>Email:</b> <a id="emailLink" href="#"></a></div>
 
-      <div class="btn-row">
-        <a class="btn btn-gold" id="waBtn" href="#" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp"></i> WhatsApp Us</a>
-        <a class="btn btn-ghost" id="mapsBtn" href="#" target="_blank" rel="noopener"><i class="ti ti-map-pin"></i> Google Maps</a>
-        <a class="btn btn-waze" id="wazeBtn" href="#" target="_blank" rel="noopener"><i class="ti ti-brand-waze"></i> Waze</a>
-      </div>
-
-      <div class="socials">
-        <a id="igLink" href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+      <div class="iconrows">
+        <div class="iconrow">
+          <a class="cbtn" id="waBtn" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
+        </div>
+        <div class="iconrow">
+          <a class="cbtn" id="fbBtn" href="#" target="_blank" rel="noopener" aria-label="Facebook" style="display:none"><i class="ti ti-brand-facebook"></i></a>
+          <a class="cbtn" id="igBtn" href="#" target="_blank" rel="noopener" aria-label="Instagram" style="display:none"><i class="ti ti-brand-instagram"></i></a>
+          <a class="cbtn" id="ttBtn" href="#" target="_blank" rel="noopener" aria-label="TikTok" style="display:none"><i class="ti ti-brand-tiktok"></i></a>
+        </div>
+        <div class="iconrow">
+          <a class="cbtn" id="mapsBtn" href="#" target="_blank" rel="noopener" aria-label="Google Maps"><i class="ti ti-map-pin"></i></a>
+          <a class="cbtn" id="wazeBtn" href="#" target="_blank" rel="noopener" aria-label="Waze"><i class="ti ti-brand-waze"></i></a>
+        </div>
       </div>
 
       <div class="enquiry">
@@ -164,6 +178,26 @@
       const wa=(C.ct_whatsapp||'60129384313').replace(/[^0-9]/g,''); window.__WA=wa;
       document.getElementById('waBtn').href='https://wa.me/'+wa;
       document.getElementById('waText').textContent='+'+wa;
+      // circular buttons: optional uploaded logo replaces the icon
+      function skin(id,logoKey){
+        const el=document.getElementById(id); if(!el) return;
+        const u=C[logoKey];
+        if(u&&String(u).trim()){
+          el.innerHTML='<img src="'+String(u).replace(/"/g,'')+'" alt="">';
+          el.style.border='none';
+        }
+      }
+      function social(id,urlKey,logoKey){
+        const el=document.getElementById(id); if(!el) return;
+        const u=C[urlKey];
+        if(u&&String(u).trim()){ el.href=String(u); el.style.display='flex'; skin(id,logoKey); }
+      }
+      skin('waBtn','ct_logo_whatsapp');
+      skin('mapsBtn','ct_logo_maps');
+      skin('wazeBtn','ct_logo_waze');
+      social('fbBtn','ct_facebook','ct_logo_facebook');
+      social('igBtn','ct_instagram','ct_logo_instagram');
+      social('ttBtn','ct_tiktok','ct_logo_tiktok');
       // maps + waze
       const addr=encodeURIComponent(C.ct_address||'PJS 13 Petaling Jaya');
       document.getElementById('mapsBtn').href=C.ct_maps||('https://www.google.com/maps/search/?api=1&query='+addr);
@@ -171,8 +205,6 @@
       document.getElementById('mapFrame').src='https://www.google.com/maps?q='+addr+'&output=embed';
       // email (optional)
       if(C.ct_email){const er=document.getElementById('emailRow');er.style.display='block';const el=document.getElementById('emailLink');el.textContent=C.ct_email;el.href='mailto:'+C.ct_email;}
-      // instagram
-      if(C.ct_instagram)document.getElementById('igLink').href=C.ct_instagram;
     }catch(e){}
   })();
 </script>

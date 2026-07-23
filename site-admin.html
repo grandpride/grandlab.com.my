@@ -13,7 +13,15 @@
   .logo{font-weight:900;font-size:20px;letter-spacing:1px}.logo span{color:var(--gold)}
   .top .sub{color:var(--muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-top:2px}
   .wrap{max-width:680px;margin:0 auto;padding:18px 16px}
-  .sec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0;margin-bottom:12px;overflow:hidden}
+.sechead{width:100%;background:none;border:0;color:var(--text);font-size:15px;font-weight:700;text-align:left;padding:16px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;font-family:inherit}
+.sechead:hover{background:var(--card2)}
+.sechead i{color:var(--gold);font-size:18px;flex:none}
+.secbody{padding:0 18px 18px}
+.tabbar{position:sticky;top:0;z-index:20;display:flex;gap:6px;overflow-x:auto;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch}
+.tabbar::-webkit-scrollbar{display:none}
+.tabbtn{flex:none;background:var(--card);border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit}
+.tabbtn.on{background:var(--gold);border-color:var(--gold);color:#111}
   .sec h2{font-size:14px;color:var(--gold);margin-bottom:14px;letter-spacing:.03em}
   label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:11px 0 5px}
   input,textarea{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:9px;color:#fff;padding:11px 12px;font-size:14px;font-family:inherit;outline:none}
@@ -63,6 +71,7 @@
     <div class="logo">GRAND<span>LAB</span></div>
     <div class="sub">Website Editor</div>
   </div>
+  <div class="tabbar" id="tabbar"><!-- built by JS --></div>
   <div class="wrap" id="forms"><!-- built by JS --></div>
 </div>
 
@@ -82,15 +91,15 @@ const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{auth:{storageKey:'gl_
 const $=id=>document.getElementById(id);
 
 // structure of the editor: sections -> fields (key,label,type)
+const TABS=['Home','Services','Workshop','Lounge','Contact','Fonts'];
 const SCHEMA=[
- {h:'— FONTS & SIZING —',f:[]},
- {h:'Fonts',f:[
+ {t:'Fonts',h:'Fonts',f:[
    ['font_heading','Heading font','fontpick'],
    ['font_body','Body font','fontpick'],
    ['font_heading_px','Heading size (px)','pxH'],
    ['font_body_px','Body size (px)','pxB'],
  ]},
- {h:'Hero (top banner)',f:[
+ {t:'Home',h:'Hero (top banner)',open:true,f:[
    ['hero_eyebrow','Small text above title','line'],
    ['hero_title','Main headline','line'],
    ['hero_text','Sub-text','area'],
@@ -98,92 +107,88 @@ const SCHEMA=[
    ['hero_img','Background image URL','img'],
    ['hero_video','Background video (upload MP4)','video'],
  ]},
- {h:'Protecting your investment band',f:[
+ {t:'Home',h:'Protecting your investment band',f:[
    ['pi_title','Heading','line'],
    ['pi_text','Text','area'],
    ['pi_bg','Background photo URL (leave blank for plain black)','img'],
    ['pi_bg_dim','Photo darkness 0-100 (blank = 68)','line'],
  ]},
- {h:'Intro band',f:[
+ {t:'Home',h:'Intro band',f:[
    ['intro_eyebrow','Eyebrow','line'],['intro_title','Heading','line'],['intro_text','Text','area'],
  ]},
- {h:'Feature 1 — Coating',f:[
+ {t:'Home',h:'Feature 1 \u2014 Coating',f:[
    ['f1_label','Label','line'],['f1_title','Heading','line'],['f1_text','Text','area'],['f1_img','Image URL','img'],
  ]},
- {h:'Feature 2 — PPF',f:[
+ {t:'Home',h:'Feature 2 \u2014 PPF',f:[
    ['f2_label','Label','line'],['f2_title','Heading','line'],['f2_text','Text','area'],['f2_img','Image URL','img'],
  ]},
- {h:'Feature 3 — Wrapping',f:[
+ {t:'Home',h:'Feature 3 \u2014 Wrapping',f:[
    ['f3_label','Label','line'],['f3_title','Heading','line'],['f3_text','Text','area'],['f3_img','Image URL','img'],
  ]},
- {h:'Feature 4 — Detailing',f:[
+ {t:'Home',h:'Feature 4 \u2014 Detailing',f:[
    ['f4_label','Label','line'],['f4_title','Heading','line'],['f4_text','Text','area'],['f4_img','Image URL','img'],
  ]},
- {h:'Service cards',f:[
+ {t:'Home',h:'Service cards',f:[
    ['svc1_title','Card 1 title','line'],['svc1_text','Card 1 text','area'],
    ['svc2_title','Card 2 title','line'],['svc2_text','Card 2 text','area'],
    ['svc3_title','Card 3 title','line'],['svc3_text','Card 3 text','area'],
    ['svc4_title','Card 4 title','line'],['svc4_text','Card 4 text','area'],
  ]},
- {h:'Call-to-action band',f:[
+ {t:'Home',h:'Call-to-action band',f:[
    ['cta_title','Heading','line'],['cta_text','Text','area'],
  ]},
- {h:'Brands line',f:[['brands','Brands (separate with · )','line']]},
- {h:'Contact',f:[
+ {t:'Home',h:'Brands line',f:[['brands','Brands (separate with \u00b7 )','line']]},
+ {t:'Home',h:'Footer contact',f:[
    ['contact_phone','Phone (display)','line'],
    ['contact_whatsapp','WhatsApp number (digits only, e.g. 60169618299)','line'],
    ['contact_address','Address','area'],
    ['contact_instagram','Instagram URL','line'],
  ]},
- {h:'— SERVICES PAGE —',f:[]},
- {h:'Services · Page hero',f:[
+ {t:'Services',h:'Page hero',open:true,f:[
    ['sp_hero_eyebrow','Eyebrow','line'],['sp_hero_title','Title','line'],
    ['sp_hero_text','Sub-text','area'],['sp_hero_img','Hero image URL','img'],
  ]},
- {h:'Services · Coating',f:[
+ {t:'Services',h:'Coating',f:[
    ['sp1_label','Label','line'],['sp1_title','Heading','line'],
    ['sp1_text1','Paragraph 1','area'],['sp1_text2','Paragraph 2','area'],
-   ['sp1_tags','Product tags (separate with · )','line'],['sp1_img','Image URL','img'],
+   ['sp1_tags','Product tags (separate with \u00b7 )','line'],['sp1_img','Image URL','img'],
  ]},
- {h:'Services · PPF',f:[
+ {t:'Services',h:'PPF',f:[
    ['sp2_label','Label','line'],['sp2_title','Heading','line'],
    ['sp2_text1','Paragraph 1','area'],['sp2_text2','Paragraph 2','area'],
-   ['sp2_tags','Product tags (separate with · )','line'],['sp2_img','Image URL','img'],
+   ['sp2_tags','Product tags (separate with \u00b7 )','line'],['sp2_img','Image URL','img'],
  ]},
- {h:'Services · Wrapping',f:[
+ {t:'Services',h:'Wrapping',f:[
    ['sp3_label','Label','line'],['sp3_title','Heading','line'],
    ['sp3_text1','Paragraph 1','area'],['sp3_text2','Paragraph 2','area'],
-   ['sp3_tags','Product tags (separate with · )','line'],['sp3_img','Image URL','img'],
+   ['sp3_tags','Product tags (separate with \u00b7 )','line'],['sp3_img','Image URL','img'],
  ]},
- {h:'Services · Detailing',f:[
+ {t:'Services',h:'Detailing',f:[
    ['sp4_label','Label','line'],['sp4_title','Heading','line'],
    ['sp4_text1','Paragraph 1','area'],['sp4_text2','Paragraph 2','area'],
-   ['sp4_tags','Product tags (separate with · )','line'],['sp4_img','Image URL','img'],
+   ['sp4_tags','Product tags (separate with \u00b7 )','line'],['sp4_img','Image URL','img'],
  ]},
- {h:'— WORKSHOP PAGE —',f:[]},
- {h:'Workshop · Text',f:[
+ {t:'Workshop',h:'Text',open:true,f:[
    ['wp_hero_title','Hero title','line'],['wp_hero_text','Hero sub-text','area'],
    ['wp_intro_title','Intro heading','line'],['wp_intro_text','Intro text','area'],
  ]},
- {h:'Workshop · Hero slideshow photos',f:[
+ {t:'Workshop',h:'Hero slideshow photos',open:true,f:[
    ['wp_slides','Slideshow photos','gallery'],
  ]},
- {h:'Workshop · Grid gallery photos',f:[
+ {t:'Workshop',h:'Grid gallery photos',f:[
    ['wp_grid','Grid photos','gallery'],
  ]},
- {h:'— LOUNGE PAGE —',f:[]},
- {h:'Lounge · Text',f:[
+ {t:'Lounge',h:'Text',open:true,f:[
    ['lp_hero_title','Hero title','line'],['lp_hero_text','Hero sub-text','area'],
    ['lp_intro_title','Intro heading','line'],['lp_intro_text','Intro text','area'],
  ]},
- {h:'Lounge · Hero slideshow photos',f:[
+ {t:'Lounge',h:'Hero slideshow photos',open:true,f:[
    ['lp_slides','Slideshow photos','gallery'],
  ]},
- {h:'Lounge · Grid gallery photos',f:[
+ {t:'Lounge',h:'Grid gallery photos',f:[
    ['lp_grid','Grid photos','gallery'],
  ]},
- {h:'— CONTACT PAGE —',f:[]},
- {h:'Contact · Details',f:[
+ {t:'Contact',h:'Details',open:true,f:[
    ['ct_hero_title','Page title','line'],
    ['ct_hero_text','Intro text','area'],
    ['ct_outlet_name','Outlet name','line'],
@@ -217,8 +222,18 @@ async function showApp(){
   (data||[]).forEach(r=>DATA[r.key]=r.value);
   render();
 }
+let ACTIVE_TAB = localStorage.getItem('gl_admin_tab') || 'Home';
+if(TABS.indexOf(ACTIVE_TAB)===-1) ACTIVE_TAB='Home';
+const OPEN={};
+function setTab(t){ syncDom(); ACTIVE_TAB=t; try{localStorage.setItem('gl_admin_tab',t);}catch(e){} render(); window.scrollTo(0,0); }
+function toggleSec(id){ syncDom(); OPEN[id]=!OPEN[id]; render(); }
 function render(){
-  $('forms').innerHTML=SCHEMA.map(sec=>{
+  $('tabbar').innerHTML=TABS.map(t=>
+    `<button type="button" class="tabbtn${t===ACTIVE_TAB?' on':''}" onclick="setTab('${t}')">${esc(t)}</button>`
+  ).join('');
+  $('forms').innerHTML=SCHEMA.filter(sec=>sec.t===ACTIVE_TAB).map((sec,si)=>{
+    const secId=ACTIVE_TAB+'_'+si;
+    if(!(secId in OPEN)) OPEN[secId] = !!sec.open;
     const fields=sec.f.map(([key,label,type])=>{
       const v=DATA[key]||'';
       if(type==='area') return `<label>${esc(label)}</label><textarea data-k="${key}" oninput="onEdit()">${esc(v)}</textarea>`;
@@ -265,12 +280,23 @@ function render(){
         ${v?`<video src="${esc(v)}" class="vidprev" muted autoplay loop playsinline></video>`:''}`;
       return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit()">`;
     }).join('');
-    return `<div class="sec"><h2>${esc(sec.h)}</h2>${fields}</div>`;
+    const isOpen=OPEN[secId];
+    return `<div class="sec">
+      <button type="button" class="sechead" onclick="toggleSec('${secId}')">
+        <span>${esc(sec.h)}</span>
+        <i class="ti ti-chevron-${isOpen?'up':'down'}"></i>
+      </button>
+      <div class="secbody" style="display:${isOpen?'block':'none'}">${fields}</div>
+    </div>`;
   }).join('');
+  document.querySelectorAll('.sec .ggrid').forEach(g=>{
+    const k=g.id.replace('gal_',''); if(k) galRender(k);
+  });
 }
 function previewImg(k){ const el=$('prev_'+k); if(el){ el.style.opacity=1; el.src=document.querySelector('[data-k="'+k+'"]').value; } }
 let dirty=false;
-function onEdit(){ dirty=true; $('msg').textContent='Unsaved changes'; $('msg').className='msg'; }
+function syncDom(){ document.querySelectorAll('[data-k]').forEach(el=>{ DATA[el.dataset.k]=el.value; }); }
+function onEdit(){ syncDom(); dirty=true; $('msg').textContent='Unsaved changes'; $('msg').className='msg'; }
 
 async function uploadVideo(file,key){
   if(!file) return;
@@ -349,7 +375,11 @@ function fontPreview(){/* dropdown option font-family already previews */}
 
 async function saveAll(){
   $('saveBtn').disabled=true; $('msg').textContent='Saving…'; $('msg').className='msg';
-  const rows=[...document.querySelectorAll('[data-k]')].map(el=>({key:el.dataset.k, value:el.value, updated_at:new Date().toISOString()}));
+  syncDom();
+  const ALLKEYS=[]; SCHEMA.forEach(sec=>sec.f.forEach(fd=>ALLKEYS.push(fd[0])));
+  const now=new Date().toISOString();
+  const rows=ALLKEYS.filter(k=>DATA[k]!==undefined)
+                    .map(k=>({key:k, value:DATA[k]===null?'':String(DATA[k]), updated_at:now}));
   const {error}=await sb.from('gl_site_content').upsert(rows);
   $('saveBtn').disabled=false;
   if(error){ $('msg').textContent='Failed: '+error.message; $('msg').className='msg err'; return; }

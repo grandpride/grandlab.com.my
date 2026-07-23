@@ -98,6 +98,12 @@ const SCHEMA=[
    ['hero_img','Background image URL','img'],
    ['hero_video','Background video (upload MP4)','video'],
  ]},
+ {h:'Protecting your investment band',f:[
+   ['pi_title','Heading','line'],
+   ['pi_text','Text','area'],
+   ['pi_bg','Background photo URL (leave blank for plain black)','img'],
+   ['pi_bg_dim','Photo darkness 0-100 (blank = 68)','line'],
+ ]},
  {h:'Intro band',f:[
    ['intro_eyebrow','Eyebrow','line'],['intro_title','Heading','line'],['intro_text','Text','area'],
  ]},
@@ -216,7 +222,9 @@ function render(){
     const fields=sec.f.map(([key,label,type])=>{
       const v=DATA[key]||'';
       if(type==='area') return `<label>${esc(label)}</label><textarea data-k="${key}" oninput="onEdit()">${esc(v)}</textarea>`;
-      if(type==='img') return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit();previewImg('${key}')">
+      if(type==='img') return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit();previewImg('${key}')" placeholder="photo URL (or upload below)">
+        <button type="button" class="upbtn" onclick="imgPick('${key}')"><i class="ti ti-upload"></i> Upload photo</button>
+        <div class="hint2" id="imgstat_${key}"></div>
         <div class="imgprev"><img id="prev_${key}" src="${esc(v)}" onerror="this.style.opacity=.2"></div>`;
       if(type==='fontpick'){
         const fonts=['Iceland','Work Sans'];
@@ -278,6 +286,30 @@ async function uploadVideo(file,key){
       const inp=document.querySelector('[data-k="'+key+'"]'); inp.value=url; onEdit();
       st.innerHTML='<span style="color:#3ec76e">✓ Uploaded. Remember to Save.</span>';
     } else { st.innerHTML='<span style="color:#e0533d">Upload failed — check the gl-videos bucket exists and is public.</span>'; }
+  }catch(e){ st.innerHTML='<span style="color:#e0533d">Error: '+e.message+'</span>'; }
+}
+
+// ---- single photo upload (img fields) ----
+function imgPick(key){
+  const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*';
+  inp.onchange=async()=>{ if(inp.files&&inp.files[0]) await imgUpload(key,inp.files[0]); }; inp.click();
+}
+async function imgUpload(key,file){
+  const st=document.getElementById('imgstat_'+key);
+  st.textContent='Uploading…';
+  try{
+    const ext=(file.name.split('.').pop()||'jpg').toLowerCase();
+    const path='site-'+Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+ext;
+    const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-images/'+path,
+      {method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:'Bearer '+SUPABASE_ANON},body:file});
+    if(r.ok){
+      const url=SUPABASE_URL+'/storage/v1/object/public/gl-images/'+path;
+      const inp=document.querySelector('input[data-k="'+key+'"]');
+      inp.value=url; previewImg(key); onEdit();
+      st.innerHTML='<span style="color:#3ec76e">\u2713 Uploaded. Remember to Save.</span>';
+    } else {
+      st.innerHTML='<span style="color:#e0533d">Upload failed \u2014 check the gl-images bucket is public.</span>';
+    }
   }catch(e){ st.innerHTML='<span style="color:#e0533d">Error: '+e.message+'</span>'; }
 }
 

@@ -52,6 +52,11 @@
   .band{text-align:center;background:var(--bg)}
   .band .lead{margin:0 auto 30px}
   .band .btn{margin-top:6px}
+  /* optional photo background for the invest band */
+  .band-bg{position:relative;background-size:cover;background-position:center;background-repeat:no-repeat}
+  .band-bg::before{content:"";position:absolute;inset:0;background:rgba(10,10,10,var(--pidim,.68));z-index:0}
+  .band-bg>*{position:relative;z-index:1}
+  .band-bg .lead{color:#d8d8d2}
 
   /* workshop with looping photos */
   .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,72px);align-items:center;max-width:1200px;margin:0 auto}
@@ -205,6 +210,10 @@
       })();
       document.querySelectorAll('[data-c]').forEach(el=>{const v=C[el.dataset.c];if(v!=null&&v!=='')el.textContent=v;});
       document.querySelectorAll('[data-cimg]').forEach(el=>{const v=C[el.dataset.cimg];if(v)el.src=v;});
+      // invest band background photo (optional)
+      if(C.pi_bg){const iv=document.getElementById('invest');
+        if(iv){iv.classList.add('band-bg');iv.style.backgroundImage="url('"+C.pi_bg+"')";
+          if(C.pi_bg_dim){iv.style.setProperty('--pidim',Math.max(0,Math.min(100,+C.pi_bg_dim))/100);}}}
       // hero photo or video
       const bg=document.getElementById('heroBg'),vid=document.getElementById('heroVideo');
       if(C.hero_media_type==='video'&&C.hero_video){vid.src=C.hero_video;vid.style.display='block';bg.style.display='none';vid.play&&vid.play().catch(()=>{});}

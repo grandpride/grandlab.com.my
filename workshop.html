@@ -172,6 +172,7 @@
     root.querySelector('.prev').addEventListener('click',()=>go(cur-1));
     root.querySelector('.next').addEventListener('click',()=>go(cur+1));
     root.style.display='block';
+    if(big.length>1) setInterval(()=>go(cur+1),5000);
   }
 
   (async function(){

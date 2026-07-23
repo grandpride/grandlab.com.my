@@ -34,11 +34,15 @@
   @media(max-width:860px){nav .links{position:fixed;inset:0;background:rgba(10,10,10,.97);flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,4vh,30px);font-family:var(--serif);font-size:clamp(28px,7vw,44px);font-weight:500;letter-spacing:.04em;transform:translateX(100%);transition:.35s;padding:0 6vw}nav .links.open{transform:translateX(0)}nav .burger{display:block}nav{justify-content:center}nav .brand{position:static;z-index:101}nav .burger{position:absolute;right:6vw;top:50%;transform:translateY(-50%);z-index:101}nav .brand-logo{max-width:min(200px,55vw)}}
 
   /* HERO */
-  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:120px 6vw 80px}
-  .hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(10,10,10,.45) 0%,rgba(10,10,10,.7) 70%,rgba(10,10,10,1) 100%),url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=2000&auto=format&fit=crop') center/cover}
+  .hero{height:68vh;min-height:420px;display:flex;align-items:flex-end;justify-content:center;text-align:center;position:relative;padding:0}
+  .hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(10,10,10,.28) 0%,rgba(10,10,10,.2) 55%,rgba(10,10,10,.92) 100%),url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=2000&auto=format&fit=crop') center/cover}
   .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:none}
   .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.35) 0%,rgba(10,10,10,.55) 65%,rgba(10,10,10,1) 100%);z-index:1}
   .hero .inner{max-width:900px;position:relative;z-index:2}
+  .welcome{max-width:860px;margin:0 auto;text-align:center;padding:clamp(48px,7vw,80px) 6vw clamp(20px,3vw,32px)}
+  .welcome .eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+  .welcome h1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(28px,5vw,52px);line-height:1.1;margin-bottom:18px}
+  .welcome p{font-size:clamp(15px,1.7vw,17px);color:var(--muted);max-width:680px;margin:0 auto;font-weight:300;line-height:1.8}
   .hero .eyebrow{font-size:13px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
   .hero h1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(42px,8vw,88px);line-height:1.05;margin-bottom:24px}
   .hero p{font-size:clamp(15px,2.1vw,18px);color:#d8d8d2;max-width:680px;margin:0 auto 38px;font-weight:300}
@@ -122,13 +126,14 @@
 <header class="hero" id="home">
   <div class="hero-bg" id="heroBg"></div>
   <video id="heroVideo" class="hero-video" muted autoplay loop playsinline></video>
-  <div class="inner">
-    <div class="eyebrow" data-c="hero_eyebrow">Welcome to GrandLab Detailing</div>
-    <h1 data-c="hero_title">Your Personalized Detailer</h1>
-    <p data-c="hero_text">Kuala Lumpur's premier one-stop garage, headquartered in Petaling Jaya — where car detailing, servicing and modification come together under one roof. From ceramic coating and paint protection to mechanical care and bespoke upgrades, we look after every aspect of your vehicle with precision and pride.</p>
-  </div>
-  <a href="#invest" class="scroll-cue"><i class="ti ti-chevron-down"></i></a>
+  <a href="#welcome" class="scroll-cue"><i class="ti ti-chevron-down"></i></a>
 </header>
+
+<section class="welcome" id="welcome">
+  <div class="eyebrow" data-c="hero_eyebrow">Welcome to GrandLab Detailing</div>
+  <h1 data-c="hero_title">Your Personalized Detailer</h1>
+  <p data-c="hero_text">Kuala Lumpur's premier one-stop garage, headquartered in Petaling Jaya — where car detailing, servicing and modification come together under one roof. From ceramic coating and paint protection to mechanical care and bespoke upgrades, we look after every aspect of your vehicle with precision and pride.</p>
+</section>
 
 <!-- PROTECTING YOUR INVESTMENT -->
 <section class="band" id="invest">
@@ -268,7 +273,7 @@
       // hero photo or video
       const bg=document.getElementById('heroBg'),vid=document.getElementById('heroVideo');
       if(C.hero_media_type==='video'&&C.hero_video){vid.src=C.hero_video;vid.style.display='block';bg.style.display='none';vid.play&&vid.play().catch(()=>{});}
-      else if(C.hero_img){bg.style.background="linear-gradient(180deg,rgba(10,10,10,.45) 0%,rgba(10,10,10,.7) 70%,rgba(10,10,10,1) 100%),url('"+C.hero_img+"') center/cover";}
+      else if(C.hero_img){bg.style.background="linear-gradient(180deg,rgba(10,10,10,.28) 0%,rgba(10,10,10,.2) 55%,rgba(10,10,10,.92) 100%),url('"+C.hero_img+"') center/cover";}
       // feature photo
       if(C.feat_img){document.getElementById('featPhoto').style.backgroundImage="linear-gradient(rgba(10,10,10,.3),rgba(10,10,10,.3)),url('"+C.feat_img+"')";}
       // brands

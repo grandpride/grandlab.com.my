@@ -104,20 +104,28 @@ const SCHEMA=[
  {t:'Home',h:'2. Protecting your investment',f:[
    ['pi_title','Heading','line'],
    ['pi_text','Text','area'],
+   ['pi_media_type','Band shows photo or video','mediatype'],
    ['pi_bg','Photo band above this section','img'],
+   ['pi_video','Video band (MP4)','video'],
  ]},
  {t:'Home',h:'3. Our Workshop',f:[
    ['ws_title','Heading','line'],
    ['ws_text','Text','area'],
+   ['ws_media_type','Band shows photo or video','mediatype'],
    ['ws_bg','Photo band above this section','img'],
+   ['ws_video','Video band (MP4)','video'],
  ]},
  {t:'Home',h:'4. The GrandPride Lounge',f:[
    ['lg_title','Heading','line'],
    ['lg_text','Text','area'],
+   ['lg_media_type','Band shows photo or video','mediatype'],
    ['lg_bg','Photo band above this section','img'],
+   ['lg_video','Video band (MP4)','video'],
  ]},
  {t:'Home',h:'5. Photo band before brands',f:[
+   ['feature_media_type','Band shows photo or video','mediatype'],
    ['feature_img','Photo','img'],
+   ['feature_video','Video band (MP4)','video'],
  ]},
  {t:'Home',h:'6. Brands we work with',f:[
    ['brand_logos','Brand logos (upload — replaces the text line below)','gallery'],
@@ -273,10 +281,10 @@ function render(){
       }
       if(type==='video') return `<label>${esc(label)}</label>
         <input data-k="${key}" value="${esc(v)}" oninput="onEdit()" placeholder="video URL (or upload below)">
-        <button type="button" class="upbtn" onclick="document.getElementById('vidfile').click()"><i class="ti ti-upload"></i> Upload MP4</button>
-        <input id="vidfile" type="file" accept="video/mp4" style="display:none" onchange="uploadVideo(this.files[0],'${key}')">
+        <button type="button" class="upbtn" onclick="document.getElementById('vidfile_${key}').click()"><i class="ti ti-upload"></i> Upload MP4</button>
+        <input id="vidfile_${key}" type="file" accept="video/mp4" style="display:none" onchange="uploadVideo(this.files[0],'${key}')">
         <div class="hint2">Recommended: 1920×1080, <b>max 8&nbsp;MB</b>, 10–20&nbsp;sec, MP4. Larger files load slowly.</div>
-        <div id="vidstat" class="hint2"></div>
+        <div id="vidstat_${key}" class="hint2"></div>
         ${v?`<video src="${esc(v)}" class="vidprev" muted autoplay loop playsinline></video>`:''}`;
       return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit()">`;
     }).join('');
@@ -300,11 +308,11 @@ function onEdit(){ syncDom(); dirty=true; $('msg').textContent='Unsaved changes'
 
 async function uploadVideo(file,key){
   if(!file) return;
-  const st=document.getElementById('vidstat');
+  const st=document.getElementById('vidstat_'+key)||document.getElementById('vidstat');
   if(file.size>8*1024*1024){ st.innerHTML='<span style="color:#e0533d">That file is '+(file.size/1048576).toFixed(1)+' MB — please keep under 8 MB.</span>'; }
   st.textContent='Uploading… ('+(file.size/1048576).toFixed(1)+' MB)';
   try{
-    const path='hero-'+Date.now()+'.mp4';
+    const path=key.replace(/[^a-z0-9_]/gi,'')+'-'+Date.now()+'.mp4';
     const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-videos/'+path,{
       method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:'Bearer '+SUPABASE_ANON},body:file});
     if(r.ok){

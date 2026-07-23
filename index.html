@@ -88,7 +88,8 @@
   .split:hover .single-img img{transform:scale(1.04)}
 
   /* full-width feature photo */
-  .photo-band{height:clamp(260px,46vh,520px);background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#0f0f0d;display:none}
+  .photo-band{position:relative;overflow:hidden;height:clamp(260px,46vh,520px);background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#0f0f0d;display:none}
+  .band-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
   .photo-band.on{display:block}
 
   /* brands */
@@ -139,7 +140,7 @@
 </section>
 
 <!-- PROTECTING YOUR INVESTMENT -->
-<div class="photo-band" id="piPhoto"></div>
+<div class="photo-band" id="piPhoto"><video id="piPhotoVid" class="band-video" muted autoplay loop playsinline preload="none"></video></div>
 
 <section class="band" id="invest">
   <h2 class="h2" data-c="pi_title">Protecting your investment</h2>
@@ -148,7 +149,7 @@
 </section>
 
 <!-- OUR WORKSHOP -->
-<div class="photo-band" id="wsPhoto"></div>
+<div class="photo-band" id="wsPhoto"><video id="wsPhotoVid" class="band-video" muted autoplay loop playsinline preload="none"></video></div>
 
 <section class="band" id="wsBand">
   <div class="eyebrow2">The Facility</div>
@@ -158,7 +159,7 @@
 </section>
 
 <!-- GRANDPRIDE LOUNGE -->
-<div class="photo-band" id="lgPhoto"></div>
+<div class="photo-band" id="lgPhoto"><video id="lgPhotoVid" class="band-video" muted autoplay loop playsinline preload="none"></video></div>
 
 <section class="band" id="lgBand">
   <div class="eyebrow2">Relax With Us</div>
@@ -168,7 +169,7 @@
 </section>
 
 <!-- FEATURE PHOTO -->
-<div class="photo-band" id="featPhoto"></div>
+<div class="photo-band" id="featPhoto"><video id="featPhotoVid" class="band-video" muted autoplay loop playsinline preload="none"></video></div>
 
 <!-- BRANDS -->
 <section class="brands" id="brandsSec">
@@ -240,18 +241,26 @@
       document.querySelectorAll('[data-c]').forEach(el=>{const v=C[el.dataset.c];if(v!=null&&v!=='')el.textContent=v;});
       document.querySelectorAll('[data-cimg]').forEach(el=>{const v=C[el.dataset.cimg];if(v)el.src=v;});
       // --- standalone photo bands (NVN-style) ---
-      function photoBand(id,key){
+      function photoBand(id,imgKey,vidKey,typeKey){
         const el=document.getElementById(id); if(!el) return;
-        const url=C[key];
-        if(url&&String(url).trim()){
-          el.style.backgroundImage="url('"+String(url).replace(/'/g,"")+"')";
+        const vid=document.getElementById(id+'Vid');
+        const img=C[imgKey], mp4=C[vidKey], type=C[typeKey];
+        if(type==='video'&&mp4&&String(mp4).trim()){
+          if(vid){vid.src=String(mp4);vid.style.display='block';
+            vid.play&&vid.play().catch(()=>{});}
+          el.style.backgroundImage='';
+          el.classList.add('on'); return;
+        }
+        if(vid){vid.style.display='none';vid.removeAttribute('src');}
+        if(img&&String(img).trim()){
+          el.style.backgroundImage="url('"+String(img).replace(/'/g,"")+"')";
           el.classList.add('on');
         } else { el.classList.remove('on'); }
       }
-      photoBand('piPhoto','pi_bg');
-      photoBand('wsPhoto','ws_bg');
-      photoBand('lgPhoto','lg_bg');
-      photoBand('featPhoto','feature_img');
+      photoBand('piPhoto','pi_bg','pi_video','pi_media_type');
+      photoBand('wsPhoto','ws_bg','ws_video','ws_media_type');
+      photoBand('lgPhoto','lg_bg','lg_video','lg_media_type');
+      photoBand('featPhoto','feature_img','feature_video','feature_media_type');
       // brands section keeps its optional background behind the logos
       (function(){const el=document.getElementById('brandsSec');
         if(el&&C.br_bg&&String(C.br_bg).trim()){
@@ -289,8 +298,6 @@
       const bg=document.getElementById('heroBg'),vid=document.getElementById('heroVideo');
       if(C.hero_media_type==='video'&&C.hero_video){vid.src=C.hero_video;vid.style.display='block';bg.style.display='none';vid.play&&vid.play().catch(()=>{});}
       else if(C.hero_img){bg.style.background="linear-gradient(180deg,rgba(10,10,10,.28) 0%,rgba(10,10,10,.2) 55%,rgba(10,10,10,.92) 100%),url('"+C.hero_img+"') center/cover";}
-      // feature photo
-      if(C.feat_img){document.getElementById('featPhoto').style.backgroundImage="linear-gradient(rgba(10,10,10,.3),rgba(10,10,10,.3)),url('"+C.feat_img+"')";}
       // brands
       const brow=document.getElementById('brandRow');
       if(C.brand_logos&&C.brand_logos.trim()){

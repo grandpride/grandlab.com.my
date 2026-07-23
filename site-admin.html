@@ -91,7 +91,7 @@ const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{auth:{storageKey:'gl_
 const $=id=>document.getElementById(id);
 
 // structure of the editor: sections -> fields (key,label,type)
-const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','Contact','Fonts'];
+const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','Contact','Fonts'];
 const SCHEMA=[
  {t:'Home',h:'1. Hero image + welcome text',open:true,f:[
    ['hero_media_type','Top banner: photo or video','mediatype'],
@@ -277,6 +277,78 @@ const SCHEMA=[
    ['su6_logo','Logo','img'],
    ['su6_text','Description','area'],
    ['su6_url','Website or Instagram URL','line'],
+ ]},
+ {t:'FAQs',h:'Page intro',open:true,f:[
+   ['fq_title','Page heading','line'],
+   ['fq_text','Intro paragraph','area'],
+ ]},
+ {t:'FAQs',h:'Question 1',f:[
+   ['fq1_q','Question','line'],
+   ['fq1_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 2',f:[
+   ['fq2_q','Question','line'],
+   ['fq2_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 3',f:[
+   ['fq3_q','Question','line'],
+   ['fq3_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 4',f:[
+   ['fq4_q','Question','line'],
+   ['fq4_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 5',f:[
+   ['fq5_q','Question','line'],
+   ['fq5_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 6',f:[
+   ['fq6_q','Question','line'],
+   ['fq6_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 7',f:[
+   ['fq7_q','Question','line'],
+   ['fq7_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 8',f:[
+   ['fq8_q','Question','line'],
+   ['fq8_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 9',f:[
+   ['fq9_q','Question','line'],
+   ['fq9_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 10',f:[
+   ['fq10_q','Question','line'],
+   ['fq10_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 11',f:[
+   ['fq11_q','Question','line'],
+   ['fq11_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 12',f:[
+   ['fq12_q','Question','line'],
+   ['fq12_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 13',f:[
+   ['fq13_q','Question','line'],
+   ['fq13_a','Answer','area'],
+ ]},
+ {t:'FAQs',h:'Question 14',f:[
+   ['fq14_q','Question','line'],
+   ['fq14_a','Answer','area'],
+ ]},
+ {t:'Reviews',h:'Page intro',open:true,f:[
+   ['rv_title','Page heading','line'],
+   ['rv_text','Intro paragraph','area'],
+ ]},
+ {t:'Reviews',h:'Rating summary',open:true,f:[
+   ['rv_score','Star rating (e.g. 4.9)','line'],
+   ['rv_count','Number of reviews','line'],
+   ['rv_url','Link for "Leave us a review"','line'],
+ ]},
+ {t:'Reviews',h:'Widget embed code',open:true,f:[
+   ['rv_embed','Paste the Google reviews widget embed code here','area'],
  ]},
  {t:'Contact',h:'Details',open:true,f:[
    ['ct_hero_title','Page title','line'],

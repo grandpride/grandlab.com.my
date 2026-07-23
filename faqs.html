@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Our Workshop — GrandLab</title>
-<meta name="description" content="A fully-equipped, one-stop garage in the heart of Petaling Jaya.">
+<title>FAQs — GrandLab</title>
+<meta name="description" content="Answers to common questions about ceramic coating, paint protection film, wrapping and detailing at GrandLab.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Iceland&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
@@ -89,6 +89,24 @@
   footer p,footer a{color:var(--muted);font-size:14px}footer a:hover{color:var(--gold)}
   .fnav{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:20px 0;font-size:13px;letter-spacing:.05em;text-transform:uppercase}
   .copyright{color:var(--muted);font-size:12px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+
+  .pg-intro{max-width:760px;margin:0 auto;text-align:center;padding:clamp(120px,14vw,170px) 6vw clamp(30px,5vw,50px)}
+  .pg-intro h1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(30px,5.5vw,56px);margin-bottom:20px}
+  .pg-intro p{color:var(--muted);font-size:clamp(15px,2vw,17px)}
+  .faqs{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(30px,5vw,60px);
+    max-width:1100px;margin:0 auto;padding:clamp(20px,4vw,50px) 6vw clamp(60px,9vw,110px)}
+  @media(max-width:820px){.faqs{grid-template-columns:1fr}}
+  .faq{border-bottom:1px solid var(--line)}
+  .faq button{width:100%;background:none;border:none;color:var(--text);cursor:pointer;
+    display:flex;align-items:flex-start;justify-content:space-between;gap:16px;text-align:left;
+    padding:20px 0;font-family:var(--serif);font-style:italic;font-size:clamp(15px,1.9vw,18px);
+    font-weight:500;letter-spacing:.02em;line-height:1.4}
+  .faq button:hover{color:var(--gold)}
+  .faq button i{flex:none;color:var(--gold);font-size:18px;transition:transform .25s}
+  .faq.open button i{transform:rotate(45deg)}
+  .faq .ans{max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .faq.open .ans{max-height:600px}
+  .faq .ans p{color:var(--muted);font-size:14.5px;line-height:1.85;padding:0 0 22px}
 </style>
 </head>
 <body>
@@ -102,31 +120,70 @@
   <button class="burger" id="burgerBtn" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<section style="padding-top:clamp(120px,14vw,170px)">
-  <div class="intro">
-    <div class="eyebrow2">GrandLab</div>
-    <h2 data-c="wp_intro_title">Everything under one roof</h2>
-    <p data-c="wp_intro_text">Placeholder intro text.</p>
-    <div class="pagenav">
-    <a href="brand.html"><i class="ti ti-arrow-left"></i> Previous <b>Brand</b></a>
-    <span class="sep">|</span>
-    <a href="lounge.html">Next <b>Lounge</b> <i class="ti ti-arrow-right"></i></a>
+<header class="pg-intro">
+  <h1 data-c="fq_title">Frequently Asked Questions</h1>
+  <p data-c="fq_text">We get a lot of questions about our services, so we have gathered the most common ones here. If yours is not answered below, do not hesitate to get in touch.</p>
+</header>
+
+<section style="padding:0">
+  <div class="faqs">
+    <div class="faq" id="faq1">
+      <button type="button" onclick="tog(1)"><span data-c="fq1_q">What is ceramic coating?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq1_a">A ceramic coating is a liquid polymer that chemically bonds to your paint, forming a hard, glass-like layer. It protects against UV, chemical stains and road grime, makes washing easier, and adds noticeable depth and gloss. Unlike wax, it does not simply sit on the surface and wash away.</p></div>
+    </div>
+    <div class="faq" id="faq2">
+      <button type="button" onclick="tog(2)"><span data-c="fq2_q">How long does a ceramic coating last?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq2_a">It depends on the product and how the car is cared for. Entry-level coatings such as Gyeon Q² Cancoat typically last around a year, while the flagship Mohs and Infinite can last several years with correct maintenance. Every coating we apply is backed by our GrandLab e-Warranty.</p></div>
+    </div>
+    <div class="faq" id="faq3">
+      <button type="button" onclick="tog(3)"><span data-c="fq3_q">What is paint protection film (PPF)?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq3_a">PPF is a clear, self-healing urethane film applied over your paint. It absorbs the impact of stone chips, light scratches and road debris, keeping the panel underneath in factory condition. It is available in gloss and matte and is effectively invisible once fitted.</p></div>
+    </div>
+    <div class="faq" id="faq4">
+      <button type="button" onclick="tog(4)"><span data-c="fq4_q">Should I choose coating or PPF?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq4_a">They do different jobs. Coating protects against chemical damage, UV and staining, and makes the car easier to clean. PPF protects against physical impact such as stone chips. Many customers do both — PPF on high-impact areas like the front end, coating over the whole car.</p></div>
+    </div>
+    <div class="faq" id="faq5">
+      <button type="button" onclick="tog(5)"><span data-c="fq5_q">Do you need to remove parts to apply PPF?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq5_a">No. Our films are precision-cut to your specific vehicle and applied by hand without removing body panels, mirrors or lights.</p></div>
+    </div>
+    <div class="faq" id="faq6">
+      <button type="button" onclick="tog(6)"><span data-c="fq6_q">How long does the work take?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq6_a">A signature wash is a few hours. Full paint correction and coating usually needs two to three days, since decontamination and correction must be done properly before any coating is applied. Full-body PPF can take longer. We confirm timing when you book.</p></div>
+    </div>
+    <div class="faq" id="faq7">
+      <button type="button" onclick="tog(7)"><span data-c="fq7_q">Does PPF turn yellow over time?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq7_a">Modern film does not. Older generations of film yellowed under UV, but the ONE+ film we use is UV-stable and designed to stay clear for the life of the warranty.</p></div>
+    </div>
+    <div class="faq" id="faq8">
+      <button type="button" onclick="tog(8)"><span data-c="fq8_q">Can I apply ceramic coating over PPF?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq8_a">Yes, and we often recommend it. Coating over film adds chemical resistance and gloss, and makes the film itself easier to clean and maintain.</p></div>
+    </div>
+    <div class="faq" id="faq9">
+      <button type="button" onclick="tog(9)"><span data-c="fq9_q">Why does a brand-new car still need paint correction?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq9_a">New cars often leave the factory or transport with light swirls, and dealer preparation can add more. Any defect sealed under a coating stays there, so we correct the paint first to make sure what gets locked in is a flawless finish.</p></div>
+    </div>
+    <div class="faq" id="faq10">
+      <button type="button" onclick="tog(10)"><span data-c="fq10_q">How do I wash my car after coating or PPF?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq10_a">Use the two-bucket method with a pH-neutral shampoo, and avoid automatic brush washes. Rinse off bird droppings and fuel spills promptly. We will walk you through aftercare when you collect the car.</p></div>
+    </div>
+    <div class="faq" id="faq11">
+      <button type="button" onclick="tog(11)"><span data-c="fq11_q">Do you offer colour change wrapping?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq11_a">Yes. We use NAKA and KTN films across gloss, satin and matte finishes. A wrap also protects the original paint underneath, which helps preserve resale value.</p></div>
+    </div>
+    <div class="faq" id="faq12">
+      <button type="button" onclick="tog(12)"><span data-c="fq12_q">Is there any maintenance needed?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq12_a">Coatings benefit from a periodic maintenance wash and inspection, which is included in our coating packages. We will contact you when yours is due.</p></div>
+    </div>
+    <div class="faq" id="faq13">
+      <button type="button" onclick="tog(13)"><span data-c="fq13_q">Do you work on motorcycles or commercial vehicles?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq13_a">Please get in touch with details of the vehicle and we will let you know what we can do.</p></div>
+    </div>
+    <div class="faq" id="faq14">
+      <button type="button" onclick="tog(14)"><span data-c="fq14_q">Where are you located, and do I need an appointment?</span><i class="ti ti-plus"></i></button>
+      <div class="ans"><p data-c="fq14_a">We are at PJS 13, Petaling Jaya. Appointments are strongly recommended, especially for coating, PPF and wrapping, since those need a dedicated bay. WhatsApp us to arrange a time.</p></div>
     </div>
   </div>
-</section>
-
-<section style="padding-top:0">
-  <div class="carou" id="carou" style="display:none">
-    <div class="stage">
-      <button class="nav prev" aria-label="Previous photo"><i class="ti ti-chevron-left"></i></button>
-      <button class="nav next" aria-label="Next photo"><i class="ti ti-chevron-right"></i></button>
-    </div>
-    <div class="thumbs"></div>
-  </div>
-</section>
-
-<section class="cta">
-  <a class="btn btn-gold" href="https://wa.me/60169618299" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp"></i> Book a Visit</a>
 </section>
 
 <footer>
@@ -141,6 +198,9 @@
   <div class="copyright">&copy; <span id="yr"></span> GrandPride Luxury Travel Sdn Bhd (1297143-K)</div>
 </footer>
 
+<script>
+  function tog(n){const el=document.getElementById('faq'+n);if(el)el.classList.toggle('open');}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   document.getElementById('yr').textContent=new Date().getFullYear();
@@ -149,29 +209,6 @@
   addEventListener('scroll',()=>{const y=scrollY;navEl.classList.toggle('solid',y>60);if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');lastY=y;},{passive:true});
 
 
-  function buildCarousel(rootId,urls){
-    const root=document.getElementById(rootId); if(!root||!urls.length) return;
-    const stage=root.querySelector('.stage'), thumbs=root.querySelector('.thumbs');
-    stage.querySelectorAll('img').forEach(n=>n.remove());
-    thumbs.innerHTML='';
-    urls.forEach((u,i)=>{
-      const im=document.createElement('img'); im.src=u; im.loading=i?'lazy':'eager';
-      if(!i)im.className='on'; stage.appendChild(im);
-      const th=document.createElement('img'); th.src=u; th.loading='lazy';
-      if(!i)th.className='on'; th.addEventListener('click',()=>go(i)); thumbs.appendChild(th);
-    });
-    const big=[...stage.querySelectorAll('img')], tn=[...thumbs.querySelectorAll('img')];
-    let cur=0;
-    function go(n){
-      cur=(n+big.length)%big.length;
-      big.forEach((e,i)=>e.classList.toggle('on',i===cur));
-      tn.forEach((e,i)=>e.classList.toggle('on',i===cur));
-      const t=tn[cur]; if(t&&t.scrollIntoView)t.scrollIntoView({block:'nearest',inline:'nearest'});
-    }
-    root.querySelector('.prev').addEventListener('click',()=>go(cur-1));
-    root.querySelector('.next').addEventListener('click',()=>go(cur+1));
-    root.style.display='block';
-  }
 
   (async function(){
     try{
@@ -190,9 +227,8 @@
         if(C.font_heading_px) document.body.style.setProperty('--hpx',(+C.font_heading_px||48)+'px');
         if(C.font_body_px) document.body.style.setProperty('--bpx',(+C.font_body_px||16)+'px');
       })();
+
       document.querySelectorAll('[data-c]').forEach(e=>{const v=C[e.dataset.c];if(v!=null&&v!=='')e.textContent=v;});
-      {const a=(C.wp_grid||'')+'|'+(C.wp_slides||'');
-       buildCarousel('carou',a.split('|').map(x=>x.trim()).filter(Boolean));}
     }catch(e){}
   })();
 </script>

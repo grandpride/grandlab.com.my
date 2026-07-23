@@ -52,12 +52,13 @@
   .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 30px;border-radius:2px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;transition:.25s;cursor:pointer;border:1px solid transparent}
   .btn-gold{background:var(--gold);color:#0a0a0a}.btn-gold:hover{background:#fff}
   .btn-ghost{border-color:rgba(255,255,255,.35);color:var(--text)}.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-  /* branded pill button: GrandLab droplet cap + stretching yellow bar */
-  .btn-brand{position:relative;background:transparent;color:#0a0a0a;border:none;border-radius:0;padding:0;gap:0;height:52px;transition:.25s}
-  .btn-brand:hover{filter:brightness(1.07)}
-  .btn-brand .drop{flex:none;width:49px;align-self:stretch;background:url('gl-btn-cap.png') left center/100% 100% no-repeat}
-  .btn-brand .lbl{align-self:stretch;display:flex;align-items:center;background:#F9CD17;padding:0 0 0 4px;white-space:nowrap}
-  .btn-brand .arw{align-self:stretch;display:flex;align-items:center;background:#F9CD17;padding:0 24px 0 14px;font-size:16px;line-height:1;border-radius:0 8px 8px 0}
+  /* branded pill button — drawn entirely in CSS, no image */
+  .btn-brand{position:relative;display:inline-flex;align-items:center;background:#F9CD17;color:#0a0a0a;border:none;border-radius:26px 8px 8px 26px;padding:0 26px 0 52px;gap:0;height:52px;transition:.25s}
+  .btn-brand:hover{background:#ffd94a}
+  .btn-brand .drop{position:absolute;left:7px;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:#0a0a0a;display:flex;align-items:center;justify-content:center}
+  .btn-brand .drop::before{content:'';width:19px;height:22px;background:#F9CD17;clip-path:path('M9.5 0C9.5 0 1.4 8.3 1.4 13A8.1 8.1 0 0 0 17.6 13C17.6 8.3 9.5 0 9.5 0Z')}
+  .btn-brand .lbl{display:flex;align-items:center;white-space:nowrap}
+  .btn-brand .arw{flex:none;margin-left:14px;font-size:16px;line-height:1;display:flex;align-items:center}
   .scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:22px;z-index:2;animation:bob 2s infinite}
   @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
 

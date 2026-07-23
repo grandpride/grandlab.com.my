@@ -88,7 +88,8 @@
   .split:hover .single-img img{transform:scale(1.04)}
 
   /* full-width feature photo */
-  .feature-photo{height:60vh;background-size:cover;background-position:center;background-attachment:fixed}
+  .photo-band{height:clamp(260px,46vh,520px);background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#0f0f0d;display:none}
+  .photo-band.on{display:block}
 
   /* brands */
   .brands{text-align:center;background:var(--bg)}
@@ -138,6 +139,8 @@
 </section>
 
 <!-- PROTECTING YOUR INVESTMENT -->
+<div class="photo-band" id="piPhoto"></div>
+
 <section class="band" id="invest">
   <h2 class="h2" data-c="pi_title">Protecting your investment</h2>
   <p class="lead" data-c="pi_text">Your car is more than transport — it's an investment worth protecting. Our full range of services is designed to keep it performing, protected and looking its very best, year after year.</p>
@@ -145,7 +148,9 @@
 </section>
 
 <!-- OUR WORKSHOP -->
-<section class="band">
+<div class="photo-band" id="wsPhoto"></div>
+
+<section class="band" id="wsBand">
   <div class="eyebrow2">The Facility</div>
   <h2 class="h2" data-c="ws_title">Our Workshop</h2>
   <p class="lead" data-c="ws_text">Step into our Petaling Jaya facility — a fully-equipped, one-stop garage built for everything your car needs. Detailing bays, a dedicated coating and PPF area, and a full service workshop, all staffed by a skilled in-house team who treat every vehicle as their own.</p>
@@ -153,7 +158,9 @@
 </section>
 
 <!-- GRANDPRIDE LOUNGE -->
-<section class="band">
+<div class="photo-band" id="lgPhoto"></div>
+
+<section class="band" id="lgBand">
   <div class="eyebrow2">Relax With Us</div>
   <h2 class="h2" data-c="lg_title">The GrandPride Lounge</h2>
   <p class="lead" data-c="lg_text">While we care for your car, relax in the GrandPride Lounge — a comfortable space designed for our clients to unwind, work, or simply enjoy a coffee while the work is done. Premium care extends beyond the vehicle.</p>
@@ -161,7 +168,7 @@
 </section>
 
 <!-- FEATURE PHOTO -->
-<div class="feature-photo" id="featPhoto" style="background-image:linear-gradient(rgba(10,10,10,.3),rgba(10,10,10,.3)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop')"></div>
+<div class="photo-band" id="featPhoto"></div>
 
 <!-- BRANDS -->
 <section class="brands" id="brandsSec">
@@ -232,21 +239,27 @@
       })();
       document.querySelectorAll('[data-c]').forEach(el=>{const v=C[el.dataset.c];if(v!=null&&v!=='')el.textContent=v;});
       document.querySelectorAll('[data-cimg]').forEach(el=>{const v=C[el.dataset.cimg];if(v)el.src=v;});
-      // --- section background photos ---
-      function bandBg(id,imgKey,dimKey){
-        const el=document.getElementById(id); if(!el||!C[imgKey]) return;
-        el.classList.add('band-bg');
-        el.style.backgroundImage="url('"+C[imgKey]+"')";
-        if(C[dimKey]!==undefined&&C[dimKey]!=='')
-          el.style.setProperty('--bgdim',Math.max(0,Math.min(100,+C[dimKey]||0))/100);
+      // --- standalone photo bands (NVN-style) ---
+      function photoBand(id,key){
+        const el=document.getElementById(id); if(!el) return;
+        const url=C[key];
+        if(url&&String(url).trim()){
+          el.style.backgroundImage="url('"+String(url).replace(/'/g,"")+"')";
+          el.classList.add('on');
+        } else { el.classList.remove('on'); }
       }
-      bandBg('invest','pi_bg','pi_bg_dim');
-      bandBg('wsBand','ws_bg','ws_bg_dim');
-      bandBg('lgBand','lg_bg','lg_bg_dim');
-      bandBg('brandsSec','br_bg','br_bg_dim');
-      // --- feature (Porsche) photo ---
-      if(C.feature_img){const fp=document.getElementById('featPhoto');
-        if(fp)fp.style.backgroundImage="linear-gradient(rgba(10,10,10,.3),rgba(10,10,10,.3)),url('"+C.feature_img+"')";}
+      photoBand('piPhoto','pi_bg');
+      photoBand('wsPhoto','ws_bg');
+      photoBand('lgPhoto','lg_bg');
+      photoBand('featPhoto','feature_img');
+      // brands section keeps its optional background behind the logos
+      (function(){const el=document.getElementById('brandsSec');
+        if(el&&C.br_bg&&String(C.br_bg).trim()){
+          el.classList.add('band-bg');
+          el.style.backgroundImage="url('"+String(C.br_bg).replace(/'/g,"")+"')";
+          if(C.br_bg_dim!==undefined&&C.br_bg_dim!=='')
+            el.style.setProperty('--bgdim',Math.max(0,Math.min(100,+C.br_bg_dim||0))/100);
+        }})();
       // --- footer background + logo + copyright ---
       const ft=document.querySelector('footer');
       if(ft&&C.ft_bg){ft.classList.add('has-bg');ft.style.backgroundImage="url('"+C.ft_bg+"')";

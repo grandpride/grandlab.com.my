@@ -69,7 +69,7 @@
   .lead{color:var(--muted);font-size:clamp(15px,2vw,17px);max-width:600px;font-weight:300}
 
   /* centered text band */
-  .band{text-align:center;background:var(--bg)}
+  .band{text-align:center;background:var(--bg);padding-top:clamp(24px,4vw,46px);padding-bottom:clamp(24px,4vw,46px)}
   /* optional photo background for any band/section */
   .band-bg{position:relative;background-size:cover;background-position:center;background-repeat:no-repeat}
   .band-bg::before{content:"";position:absolute;inset:0;background:rgba(10,10,10,var(--bgdim,.68));z-index:0}
@@ -96,7 +96,7 @@
   .split:hover .single-img img{transform:scale(1.04)}
 
   /* full-width feature photo */
-  .photo-band{position:relative;overflow:hidden;height:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#0f0f0d;opacity:0;transition:opacity .45s ease;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 93%,transparent 100%)}
+  .photo-band{position:relative;overflow:hidden;height:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#0f0f0d;opacity:0;transition:opacity .45s ease;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 78%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 78%,transparent 100%)}
   .band-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
   .photo-band.on{height:clamp(320px,62vh,680px);opacity:1}
 
@@ -277,6 +277,7 @@
         if(el&&C.br_bg&&String(C.br_bg).trim()){
           el.classList.add('band-bg');
           el.style.backgroundImage="url('"+String(C.br_bg).replace(/'/g,"")+"')";
+          if(C.br_pos&&String(C.br_pos).trim()) el.style.backgroundPosition='center '+String(C.br_pos).trim();
           if(C.br_bg_dim!==undefined&&C.br_bg_dim!=='')
             el.style.setProperty('--bgdim',Math.max(0,Math.min(100,+C.br_bg_dim||0))/100);
         }})();

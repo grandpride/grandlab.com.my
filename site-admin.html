@@ -156,6 +156,7 @@ const SCHEMA=[
    ['pi_text','Text','area'],
    ['pi_media_type','Band shows photo or video','mediatype'],
    ['pi_bg','Photo band above this section','img'],
+   ['pi_pos','Photo focus','pos'],
    ['pi_video','Video band (MP4)','video'],
  ]},
  {t:'Home',h:'3. Our Workshop',f:[
@@ -163,6 +164,7 @@ const SCHEMA=[
    ['ws_text','Text','area'],
    ['ws_media_type','Band shows photo or video','mediatype'],
    ['ws_bg','Photo band above this section','img'],
+   ['ws_pos','Photo focus','pos'],
    ['ws_video','Video band (MP4)','video'],
  ]},
  {t:'Home',h:'4. The GrandPride Lounge',f:[
@@ -170,11 +172,13 @@ const SCHEMA=[
    ['lg_text','Text','area'],
    ['lg_media_type','Band shows photo or video','mediatype'],
    ['lg_bg','Photo band above this section','img'],
+   ['lg_pos','Photo focus','pos'],
    ['lg_video','Video band (MP4)','video'],
  ]},
  {t:'Home',h:'5. Photo band before brands',f:[
    ['feature_media_type','Band shows photo or video','mediatype'],
    ['feature_img','Photo','img'],
+   ['feature_pos','Photo focus','pos'],
    ['feature_video','Video band (MP4)','video'],
  ]},
  {t:'Home',h:'6. Brands we work with',f:[
@@ -484,6 +488,15 @@ function render(){
           <option value="video"${v==='video'?' selected':''}>Video (loop)</option>
         </select>
         <div class="hint2">Choose whether the top banner shows a photo or a looping video.</div>`;
+      if(type==='pos') return `<label>${esc(label)}</label>
+        <select data-k="${key}" oninput="onEdit()">
+          <option value="center"${(!v||v==='center')?' selected':''}>Center (default)</option>
+          <option value="top"${v==='top'?' selected':''}>Show top of photo</option>
+          <option value="bottom"${v==='bottom'?' selected':''}>Show bottom of photo</option>
+          <option value="25%"${v==='25%'?' selected':''}>Upper third</option>
+          <option value="75%"${v==='75%'?' selected':''}>Lower third</option>
+        </select>
+        <div class="hint2"><i class="ti ti-arrows-move-vertical"></i> Which part of the photo stays visible in the band.</div>`;
       if(type==='gallery'){
         const urls=(v||'').split('|').map(x=>x.trim()).filter(Boolean);
         const thumbs=urls.map((u,i)=>`<div class="gthumb"><img src="${esc(u)}"><button type="button" onclick="galRemove('${key}',${i})">&times;</button></div>`).join('');

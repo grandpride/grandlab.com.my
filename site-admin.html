@@ -92,6 +92,12 @@ const $=id=>document.getElementById(id);
 
 // structure of the editor: sections -> fields (key,label,type)
 const SIZEHINT={
+  brand_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
+  sup_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
+  fq_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
+  rv_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
+  wp_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
+  lp_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
   ct_hero_img:'1920 &times; 800 px, landscape. Fades at the bottom into the page.',
   hero_img:'1920 &times; 1080 px (16:9), landscape. Keep under 500 KB.',
   hero_video:'1920 &times; 1080 px, MP4, <b>max 8 MB</b>, 10&ndash;20 sec, no sound.',
@@ -211,9 +217,12 @@ const SCHEMA=[
  {t:'Services',h:'Page hero',open:true,f:[
    ['sp_hero_eyebrow','Eyebrow','line'],['sp_hero_title','Title','line'],
    ['sp_hero_text','Sub-text','area'],['sp_hero_img','Hero image URL','img'],
+   ['sp_hero_pos','Hero photo focus','pos'],
  ]},
  {t:'Brand',h:'Page intro',open:true,f:[
    ['br_title','Page heading','line'],
+   ['brand_hero_img','Hero photo (top banner)','img'],
+   ['brand_hero_pos','Hero photo focus','pos'],
    ['br_text','Intro paragraph','area'],
  ]},
  {t:'Brand',h:'1. Our Customers',f:[
@@ -277,6 +286,8 @@ const SCHEMA=[
  ]},
  {t:'Workshop',h:'Text',open:true,f:[
    ['wp_intro_title','Page heading','line'],['wp_intro_text','Page text','area'],
+   ['wp_hero_img','Hero photo (top banner)','img'],
+   ['wp_hero_pos','Hero photo focus','pos'],
  ]},
  {t:'Workshop',h:'Carousel photos',open:true,f:[
    ['wp_grid','Carousel photos (first group)','gallery'],
@@ -284,6 +295,8 @@ const SCHEMA=[
  ]},
  {t:'Lounge',h:'Text',open:true,f:[
    ['lp_intro_title','Page heading','line'],['lp_intro_text','Page text','area'],
+   ['lp_hero_img','Hero photo (top banner)','img'],
+   ['lp_hero_pos','Hero photo focus','pos'],
  ]},
  {t:'Lounge',h:'Outlet card',f:[
    ['lo1_img','Outlet photo','img'],
@@ -296,6 +309,8 @@ const SCHEMA=[
  ]},
  {t:'Suppliers',h:'Page intro',open:true,f:[
    ['su_title','Page heading','line'],
+   ['sup_hero_img','Hero photo (top banner)','img'],
+   ['sup_hero_pos','Hero photo focus','pos'],
    ['su_text','Intro paragraph','area'],
  ]},
  {t:'Suppliers',h:'Supplier 1',open:true,f:[
@@ -336,6 +351,8 @@ const SCHEMA=[
  ]},
  {t:'FAQs',h:'Page intro',open:true,f:[
    ['fq_title','Page heading','line'],
+   ['fq_hero_img','Hero photo (top banner)','img'],
+   ['fq_hero_pos','Hero photo focus','pos'],
    ['fq_text','Intro paragraph','area'],
  ]},
  {t:'FAQs',h:'Question 1',f:[
@@ -396,6 +413,8 @@ const SCHEMA=[
  ]},
  {t:'Reviews',h:'Page intro',open:true,f:[
    ['rv_title','Page heading','line'],
+   ['rv_hero_img','Hero photo (top banner)','img'],
+   ['rv_hero_pos','Hero photo focus','pos'],
    ['rv_text','Intro paragraph','area'],
  ]},
  {t:'Reviews',h:'Rating summary',open:true,f:[

@@ -92,6 +92,7 @@ const $=id=>document.getElementById(id);
 
 // structure of the editor: sections -> fields (key,label,type)
 const SIZEHINT={
+  ct_hero_img:'1920 &times; 800 px, landscape. Fades at the bottom into the page.',
   hero_img:'1920 &times; 1080 px (16:9), landscape. Keep under 500 KB.',
   hero_video:'1920 &times; 1080 px, MP4, <b>max 8 MB</b>, 10&ndash;20 sec, no sound.',
   pi_bg:'1920 &times; 900 px, landscape. Full-width band &mdash; keep the subject centred.',
@@ -406,6 +407,8 @@ const SCHEMA=[
    ['rv_embed','Paste the Google reviews widget embed code here','area'],
  ]},
  {t:'Contact',h:'Details',open:true,f:[
+   ['ct_hero_img','Hero photo (top banner)','img'],
+   ['ct_hero_pos','Hero photo focus','pos'],
    ['ct_hero_title','Page title','line'],
    ['ct_hero_text','Intro text','area'],
    ['ct_outlet_name','Outlet name','line'],

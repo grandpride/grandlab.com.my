@@ -119,7 +119,7 @@
 
     </div>
     <iframe class="map" id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-      src="https://www.google.com/maps?q=5%20Jalan%2013%2F2%20PJS%2013%2046200%20Petaling%20Jaya%20Selangor&output=embed"></iframe>
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.926314053047!2d101.63732717447044!3d3.1141973533675658!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cdb34140361c93%3A0x3d1076c4a438850b!2sGrandlab%20detailing%20by%20Grandpride!5e0!3m2!1sen!2smy!4v1785094441408!5m2!1sen!2smy"></iframe>
   </div>
 </div>
 
@@ -197,7 +197,7 @@
       const addr=encodeURIComponent(C.ct_address||'PJS 13 Petaling Jaya');
       document.getElementById('mapsBtn').href=C.ct_maps||('https://www.google.com/maps/search/?api=1&query='+addr);
       document.getElementById('wazeBtn').href=C.ct_waze||('https://waze.com/ul?q='+addr);
-      document.getElementById('mapFrame').src='https://www.google.com/maps?q='+addr+'&output=embed';
+      // map iframe uses the fixed business-listing embed; do not overwrite
       // email (optional)
       if(C.ct_email){const er=document.getElementById('emailRow');er.style.display='block';const el=document.getElementById('emailLink');el.textContent=C.ct_email;el.href='mailto:'+C.ct_email;}
     }catch(e){}

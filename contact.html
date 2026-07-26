@@ -157,6 +157,11 @@
         if(C.font_body_scale)document.body.style.setProperty('--bscale',Math.max(80,Math.min(130,+C.font_body_scale))/100);
       })();
       document.querySelectorAll('[data-c]').forEach(e=>{const v=C[e.dataset.c];if(v!=null&&v!=='')e.textContent=v;});
+      // hours: honour line breaks typed in the admin
+      (function(){const h=document.querySelector('[data-c="ct_hours"]');
+        if(h&&C.ct_hours&&String(C.ct_hours).trim()){
+          h.innerHTML=String(C.ct_hours).replace(/[<>]/g,m=>m==='<'?'&lt;':'&gt;').replace(/\r?\n/g,'<br>');
+        }})();
       // hero photo band
       (function(){
         const el=document.getElementById('ctHero'); if(!el) return;

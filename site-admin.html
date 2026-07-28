@@ -92,6 +92,7 @@ const $=id=>document.getElementById(id);
 
 // structure of the editor: sections -> fields (key,label,type)
 const SIZEHINT={
+  mb_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
   ab_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
   brand_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
   sup_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
@@ -149,7 +150,7 @@ const SIZEHINT={
   ct_logo_maps:'240 &times; 240 px square, PNG. Cropped to a circle.',
   ct_logo_waze:'240 &times; 240 px square, PNG. Cropped to a circle.'
 };
-const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','About','Contact','Fonts'];
+const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','About','Membership','Contact','Fonts'];
 const SCHEMA=[
  {t:'Home',h:'1. Hero image + welcome text',open:true,f:[
    ['hero_media_type','Top banner: photo or video','mediatype'],
@@ -453,6 +454,64 @@ const SCHEMA=[
  {t:'About',h:'What we do',f:[
    ['ab_h3','Section heading','line'],
    ['ab_p5','Paragraph','area'],
+ ]},
+ {t:'Membership',h:'Hero + intro',open:true,f:[
+   ['mb_hero_img','Hero photo (top banner)','img'],
+   ['mb_hero_pos','Hero photo focus','pos'],
+   ['mb_title','Page heading','line'],
+   ['mb_intro','Intro paragraph','area'],
+ ]},
+ {t:'Membership',h:'Bronze tier',f:[
+   ['mb1_badge','Badge label','line'],
+   ['mb1_name','Tier name','line'],
+   ['mb1_sub','Sub-label','line'],
+   ['mb1_price','Price','line'],
+   ['mb1_priv','Privileges (separate with | )','area'],
+   ['mb1_reb_products','Rebate — GL products','line'],
+   ['mb1_reb_services','Rebate — GL services','line'],
+   ['mb1_reb_gp','Rebate — GP services','line'],
+   ['mb1_bday','Birthday rewards (separate with | )','area'],
+   ['mb1_reload','Min reload amount','line'],
+   ['mb1_plate','Number plate changes','line'],
+   ['mb1_validity','Validity','line'],
+   ['mb1_maxcar','Maximum cars','line'],
+   ['mb1_redeem','Redemption note','line'],
+ ]},
+ {t:'Membership',h:'Gold tier',f:[
+   ['mb2_badge','Badge label','line'],
+   ['mb2_name','Tier name','line'],
+   ['mb2_sub','Sub-label','line'],
+   ['mb2_price','Price','line'],
+   ['mb2_priv','Privileges (separate with | )','area'],
+   ['mb2_reb_products','Rebate — GL products','line'],
+   ['mb2_reb_services','Rebate — GL services','line'],
+   ['mb2_reb_gp','Rebate — GP services','line'],
+   ['mb2_bday','Birthday rewards (separate with | )','area'],
+   ['mb2_reload','Min reload amount','line'],
+   ['mb2_plate','Number plate changes','line'],
+   ['mb2_validity','Validity','line'],
+   ['mb2_maxcar','Maximum cars','line'],
+   ['mb2_redeem','Redemption note','line'],
+ ]},
+ {t:'Membership',h:'Platinum tier',f:[
+   ['mb3_badge','Badge label','line'],
+   ['mb3_name','Tier name','line'],
+   ['mb3_sub','Sub-label','line'],
+   ['mb3_price','Price','line'],
+   ['mb3_priv','Privileges (separate with | )','area'],
+   ['mb3_reb_products','Rebate — GL products','line'],
+   ['mb3_reb_services','Rebate — GL services','line'],
+   ['mb3_reb_gp','Rebate — GP services','line'],
+   ['mb3_bday','Birthday rewards (separate with | )','area'],
+   ['mb3_reload','Min reload amount','line'],
+   ['mb3_plate','Number plate changes','line'],
+   ['mb3_validity','Validity','line'],
+   ['mb3_maxcar','Maximum cars','line'],
+   ['mb3_redeem','Redemption note','line'],
+ ]},
+ {t:'Membership',h:'Terms & Conditions',f:[
+   ['mb_tc_title','Section heading','line'],
+   ['mb_tc','Terms (separate each with | )','area'],
  ]},
  {t:'Contact',h:'Details',open:true,f:[
    ['ct_hero_img','Hero photo (top banner)','img'],

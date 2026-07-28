@@ -92,6 +92,7 @@ const $=id=>document.getElementById(id);
 
 // structure of the editor: sections -> fields (key,label,type)
 const SIZEHINT={
+  ab_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
   brand_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
   sup_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
   fq_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
@@ -148,7 +149,7 @@ const SIZEHINT={
   ct_logo_maps:'240 &times; 240 px square, PNG. Cropped to a circle.',
   ct_logo_waze:'240 &times; 240 px square, PNG. Cropped to a circle.'
 };
-const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','Contact','Fonts'];
+const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','About','Contact','Fonts'];
 const SCHEMA=[
  {t:'Home',h:'1. Hero image + welcome text',open:true,f:[
    ['hero_media_type','Top banner: photo or video','mediatype'],
@@ -424,6 +425,30 @@ const SCHEMA=[
  ]},
  {t:'Reviews',h:'Widget embed code',open:true,f:[
    ['rv_embed','Paste the Google reviews widget embed code here','area'],
+ ]},
+ {t:'About',h:'Hero + intro',open:true,f:[
+   ['ab_hero_img','Hero photo (top banner)','img'],
+   ['ab_hero_pos','Hero photo focus','pos'],
+   ['ab_title','Page heading','line'],
+   ['ab_intro','Intro paragraph','area'],
+ ]},
+ {t:'About',h:'Our journey',f:[
+   ['ab_h1','Section heading','line'],
+   ['ab_p1','Paragraph 1','area'],
+   ['ab_p2','Paragraph 2','area'],
+   ['ab_t1','Timeline 2019','area'],
+   ['ab_t2','Timeline 2022','area'],
+   ['ab_t3','Timeline 2023','area'],
+   ['ab_t4','Timeline 2024','area'],
+ ]},
+ {t:'About',h:'Who we are today',f:[
+   ['ab_h2','Section heading','line'],
+   ['ab_p3','Paragraph 1','area'],
+   ['ab_p4','Paragraph 2','area'],
+ ]},
+ {t:'About',h:'What we do',f:[
+   ['ab_h3','Section heading','line'],
+   ['ab_p5','Paragraph','area'],
  ]},
  {t:'Contact',h:'Details',open:true,f:[
    ['ct_hero_img','Hero photo (top banner)','img'],

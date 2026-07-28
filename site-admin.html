@@ -93,6 +93,7 @@ const $=id=>document.getElementById(id);
 // structure of the editor: sections -> fields (key,label,type)
 const SIZEHINT={
   ap_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom.',
+  ap_membership_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, under 3 MB.',
   ap_book_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
   ap_wallet_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
   ap_rewards_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
@@ -531,6 +532,11 @@ const SCHEMA=[
    ['ap_hero_pos','Hero photo focus','pos'],
    ['ap_title','Page heading','line'],
    ['ap_intro','Intro paragraph','area'],
+ ]},
+ {t:'App',h:'GrandLab Membership Club',f:[
+   ['ap_membership_title','Feature title','line'],
+   ['ap_membership_text','Feature description','area'],
+   ['ap_membership_media','Screen GIF / MP4 (plays in the phone)','img'],
  ]},
  {t:'App',h:'Book appointments',f:[
    ['ap_book_title','Feature title','line'],

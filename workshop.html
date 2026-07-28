@@ -109,9 +109,11 @@
   footer .socials a:hover{border-color:var(--gold);color:var(--gold)}
   footer .copyright{position:relative;z-index:1;text-align:center;color:var(--muted);font-size:12px;margin-top:50px;padding-top:24px;border-top:1px solid var(--line)}
   @media(max-width:820px){.foot-grid{grid-template-columns:1fr;gap:34px;text-align:center}footer .socials{justify-content:center}.foot-row{justify-content:center}}
+
+  body.no-hero .intro{padding-top:clamp(90px,12vw,120px)}
 </style>
 </head>
-<body>
+<body class="no-hero">
 <nav id="nav">
   <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo"></a>
   <div class="links" id="navLinks">
@@ -257,7 +259,7 @@
       document.querySelectorAll('.socials a[aria-label=\"Instagram\"]').forEach(a=>{
         if(C.contact_instagram)a.href=C.contact_instagram;});
 
-      (function(){var el=document.getElementById('wpHero');if(!el)return;var u=C['wp_hero_img'];if(u&&String(u).trim()){var url=String(u).replace(/'/g,'');if(C['wp_hero_pos']&&String(C['wp_hero_pos']).trim())el.style.backgroundPosition='center '+String(C['wp_hero_pos']).trim();var pre=new Image();pre.onload=function(){el.style.backgroundImage="url('"+url+"')";el.classList.add('on');};pre.src=url;}})();
+      (function(){var el=document.getElementById('wpHero');if(!el)return;var u=C['wp_hero_img'];if(u&&String(u).trim()){var url=String(u).replace(/'/g,'');if(C['wp_hero_pos']&&String(C['wp_hero_pos']).trim())el.style.backgroundPosition='center '+String(C['wp_hero_pos']).trim();var pre=new Image();pre.onload=function(){el.style.backgroundImage="url('"+url+"')";el.classList.add('on');document.body.classList.remove('no-hero');};pre.src=url;}})();
       {const a=(C.wp_grid||'')+'|'+(C.wp_slides||'');
        buildCarousel('carou',a.split('|').map(x=>x.trim()).filter(Boolean));}
     }catch(e){}

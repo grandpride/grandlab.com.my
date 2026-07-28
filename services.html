@@ -105,9 +105,11 @@
   footer .socials a:hover{border-color:var(--gold);color:var(--gold)}
   footer .copyright{position:relative;z-index:1;text-align:center;color:var(--muted);font-size:12px;margin-top:50px;padding-top:24px;border-top:1px solid var(--line)}
   @media(max-width:820px){.foot-grid{grid-template-columns:1fr;gap:34px;text-align:center}footer .socials{justify-content:center}.foot-row{justify-content:center}}
+
+  body.no-hero .page-hero{padding-top:clamp(120px,15vw,150px)}
 </style>
 </head>
-<body>
+<body class="no-hero">
 <nav id="nav">
   <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo"></a>
   <div class="links" id="navLinks">
@@ -297,7 +299,7 @@
     (function(){var el=document.getElementById('spHero');if(!el)return;var u=C['sp_hero_img'];
       if(u&&String(u).trim()){var url=String(u).replace(/'/g,'');
         if(C['sp_hero_pos']&&String(C['sp_hero_pos']).trim())el.style.backgroundPosition='center '+String(C['sp_hero_pos']).trim();
-        var pre=new Image();pre.onload=function(){el.style.backgroundImage="url('"+url+"')";el.classList.add('on');};pre.src=url;}})();
+        var pre=new Image();pre.onload=function(){el.style.backgroundImage="url('"+url+"')";el.classList.add('on');document.body.classList.remove('no-hero');};pre.src=url;}})();
     // product tags (split on ·)
     [['sp1_tags',0],['sp2_tags',1],['sp3_tags',2],['sp4_tags',3]].forEach(([k])=>{});
     const blocks=document.querySelectorAll('.svc-block .prods');

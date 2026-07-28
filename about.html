@@ -129,9 +129,11 @@
   .pagenav a{display:inline-flex;align-items:center;gap:8px;color:var(--text);transition:.2s}
   .pagenav a:hover{color:var(--gold)}
   .pagenav b{font-weight:700;font-style:normal;letter-spacing:.02em}
+
+  body.no-hero .about-intro{padding-top:clamp(120px,15vw,150px)}
 </style>
 </head>
-<body>
+<body class="no-hero">
 <nav id="nav">
   <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo"></a>
   <div class="links" id="navLinks">
@@ -236,7 +238,7 @@
       (function(){var el=document.getElementById('abHero');if(!el)return;var u=C['ab_hero_img'];
         if(u&&String(u).trim()){var url=String(u).replace(/'/g,'');
           if(C['ab_hero_pos']&&String(C['ab_hero_pos']).trim())el.style.backgroundPosition='center '+String(C['ab_hero_pos']).trim();
-          var pre=new Image();pre.onload=function(){el.style.backgroundImage="url('"+url+"')";el.classList.add('on');};pre.src=url;}})();
+          var pre=new Image();pre.onload=function(){el.style.backgroundImage="url('"+url+"')";el.classList.add('on');document.body.classList.remove('no-hero');};pre.src=url;}})();
       // --- footer background + logo + copyright ---
       const ft=document.querySelector('footer');
       if(ft&&C.ft_bg){ft.classList.add('has-bg');ft.style.backgroundImage="url('"+C.ft_bg+"')";

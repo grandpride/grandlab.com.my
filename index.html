@@ -220,11 +220,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   document.getElementById('yr').textContent=new Date().getFullYear();
-  function toggleNav(){const l=document.getElementById('navLinks'),b=document.getElementById('burgerBtn');l.classList.toggle('open');const op=l.classList.contains('open');if(b)b.classList.toggle('open',op);const nv=document.getElementById('nav');if(nv)nv.classList.toggle('menu-open',op);document.body.style.overflow=op?'hidden':'';}
+  function toggleNav(){const l=document.getElementById('navLinks'),b=document.getElementById('burgerBtn');l.classList.toggle('open');const op=l.classList.contains('open');if(b)b.classList.toggle('open',op);const nv=document.getElementById('nav');if(nv){nv.classList.toggle('menu-open',op);if(op)nv.classList.remove('hidden');}document.body.style.overflow=op?'hidden':'';}
   function closeNav(){document.getElementById('navLinks').classList.remove('open');const b=document.getElementById('burgerBtn');if(b)b.classList.remove('open');const nv=document.getElementById('nav');if(nv)nv.classList.remove('menu-open');document.body.style.overflow='';}
   // hide-on-scroll nav
   const navEl=document.getElementById('nav');let lastY=scrollY;
-  addEventListener('scroll',()=>{const y=scrollY;if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');lastY=y;},{passive:true});
+  addEventListener('scroll',()=>{const y=scrollY;if(navEl.classList.contains('menu-open')){lastY=y;return;}if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');lastY=y;},{passive:true});
 
 
   // load editable content from Supabase

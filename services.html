@@ -238,9 +238,9 @@
 
 <script>
   document.getElementById('yr').textContent=new Date().getFullYear();
-  function toggleNav(){const l=document.getElementById('navLinks'),b=document.getElementById('burgerBtn');l.classList.toggle('open');const op=l.classList.contains('open');if(b)b.classList.toggle('open',op);const nv=document.getElementById('nav');if(nv)nv.classList.toggle('menu-open',op);document.body.style.overflow=op?'hidden':'';}
+  function toggleNav(){const l=document.getElementById('navLinks'),b=document.getElementById('burgerBtn');l.classList.toggle('open');const op=l.classList.contains('open');if(b)b.classList.toggle('open',op);const nv=document.getElementById('nav');if(nv){nv.classList.toggle('menu-open',op);if(op)nv.classList.remove('hidden');}document.body.style.overflow=op?'hidden':'';}
   const navEl=document.getElementById('nav');let lastY=window.scrollY;
-  addEventListener('scroll',()=>{const y=window.scrollY;
+  addEventListener('scroll',()=>{const y=window.scrollY;if(navEl.classList.contains('menu-open')){lastY=y;return;}
     navEl.classList.toggle('solid', y>60);
     if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');
     lastY=y;

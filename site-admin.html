@@ -92,6 +92,19 @@ const $=id=>document.getElementById(id);
 
 // structure of the editor: sections -> fields (key,label,type)
 const SIZEHINT={
+  ap_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom.',
+  ap_book_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
+  ap_wallet_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
+  ap_rewards_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
+  ap_warranty_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
+  ap_history_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
+  ap_package_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
+  ap_reminder_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
+  ap_spin_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
+  ap_checkin_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
+  ap_flash_media:'Portrait 9:19.5 (e.g. 900 &times; 1950 px). GIF or MP4, keep under 3 MB. Plays inside the phone.',
+  ap_join_media:'Portrait 9:19.5, GIF or MP4 under 3 MB.',
+
   mb_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
   ab_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
   brand_hero_img:'1920 &times; 900 px, landscape. Fades at the bottom into the page.',
@@ -150,7 +163,7 @@ const SIZEHINT={
   ct_logo_maps:'240 &times; 240 px square, PNG. Cropped to a circle.',
   ct_logo_waze:'240 &times; 240 px square, PNG. Cropped to a circle.'
 };
-const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','About','Membership','Contact','Fonts'];
+const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','About','Membership','App','Contact','Fonts'];
 const SCHEMA=[
  {t:'Home',h:'1. Hero image + welcome text',open:true,f:[
    ['hero_media_type','Top banner: photo or video','mediatype'],
@@ -512,6 +525,69 @@ const SCHEMA=[
  {t:'Membership',h:'Terms & Conditions',f:[
    ['mb_tc_title','Section heading','line'],
    ['mb_tc','Terms (separate each with | )','area'],
+ ]},
+ {t:'App',h:'Hero + intro',open:true,f:[
+   ['ap_hero_img','Hero photo (top banner)','img'],
+   ['ap_hero_pos','Hero photo focus','pos'],
+   ['ap_title','Page heading','line'],
+   ['ap_intro','Intro paragraph','area'],
+ ]},
+ {t:'App',h:'Book appointments',f:[
+   ['ap_book_title','Feature title','line'],
+   ['ap_book_text','Feature description','area'],
+   ['ap_book_media','Screen GIF / MP4 (plays in the phone)','img'],
+ ]},
+ {t:'App',h:'Digital wallet',f:[
+   ['ap_wallet_title','Feature title','line'],
+   ['ap_wallet_text','Feature description','area'],
+   ['ap_wallet_media','Screen GIF / MP4 (plays in the phone)','img'],
+ ]},
+ {t:'App',h:'Rewards & points',f:[
+   ['ap_rewards_title','Feature title','line'],
+   ['ap_rewards_text','Feature description','area'],
+   ['ap_rewards_media','Screen GIF / MP4 (plays in the phone)','img'],
+ ]},
+ {t:'App',h:'e-Warranty',f:[
+   ['ap_warranty_title','Feature title','line'],
+   ['ap_warranty_text','Feature description','area'],
+   ['ap_warranty_media','Screen GIF / MP4 (plays in the phone)','img'],
+ ]},
+ {t:'App',h:'Service history',f:[
+   ['ap_history_title','Feature title','line'],
+   ['ap_history_text','Feature description','area'],
+   ['ap_history_media','Screen GIF / MP4 (plays in the phone)','img'],
+ ]},
+ {t:'App',h:'Package balance',f:[
+   ['ap_package_title','Feature title','line'],
+   ['ap_package_text','Feature description','area'],
+   ['ap_package_media','Screen GIF / MP4 (plays in the phone)','img'],
+ ]},
+ {t:'App',h:'Service-due reminders',f:[
+   ['ap_reminder_title','Feature title','line'],
+   ['ap_reminder_text','Feature description','area'],
+   ['ap_reminder_media','Screen GIF / MP4 (plays in the phone)','img'],
+ ]},
+ {t:'App',h:'Spin rewards',f:[
+   ['ap_spin_title','Feature title','line'],
+   ['ap_spin_text','Feature description','area'],
+   ['ap_spin_media','Screen GIF / MP4 (plays in the phone)','img'],
+ ]},
+ {t:'App',h:'Check-in rewards',f:[
+   ['ap_checkin_title','Feature title','line'],
+   ['ap_checkin_text','Feature description','area'],
+   ['ap_checkin_media','Screen GIF / MP4 (plays in the phone)','img'],
+ ]},
+ {t:'App',h:'Flash deals',f:[
+   ['ap_flash_title','Feature title','line'],
+   ['ap_flash_text','Feature description','area'],
+   ['ap_flash_media','Screen GIF / MP4 (plays in the phone)','img'],
+ ]},
+ {t:'App',h:'Join section (QR)',f:[
+   ['ap_join_title','Heading','line'],
+   ['ap_join_text','Text','area'],
+   ['ap_join_media','Phone screen GIF / MP4','img'],
+   ['ap_qr_url','App link the QR points to','line'],
+   ['ap_qr_cap','Caption under the QR','line'],
  ]},
  {t:'Contact',h:'Details',open:true,f:[
    ['ct_hero_img','Hero photo (top banner)','img'],

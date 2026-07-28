@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="The GrandLab Membership Club — Bronze, Gold and Platinum tiers with premium privileges, rebates and rewards.">
-<title>Membership Club — GrandLab</title>
+<meta name="viewport" content="The GrandLab App — book services, pay from your wallet, earn rewards, check your warranty and more, all from your phone.">
+<title>GrandLab App — GrandLab</title>
 <meta name="description" content="The GrandLab brand — our customers, our people, our products and our facility in Petaling Jaya.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Iceland&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -111,46 +111,51 @@
 
 
 
+
   /* hero photo band */
   .hero-photo{position:relative;width:100%;height:0;overflow:hidden;background:#0a0a0a;background-size:cover;background-position:center;opacity:0;transition:opacity .5s ease;-webkit-mask-image:linear-gradient(to bottom,#000 45%,transparent 100%);mask-image:linear-gradient(to bottom,#000 45%,transparent 100%)}
   .hero-photo.on{height:clamp(300px,52vh,600px);opacity:1}
-  .mb-intro{max-width:820px;margin:0 auto;text-align:center;padding:clamp(30px,5vw,50px) 6vw clamp(30px,5vw,50px)}
-  .mb-intro .eyebrow2{font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
-  .mb-intro h1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(30px,5.5vw,56px);margin-bottom:20px}
-  .mb-intro p{color:var(--muted);font-size:clamp(15px,2vw,17px);line-height:1.8}
+  body.no-hero .app-intro{padding-top:clamp(120px,15vw,150px)}
+  .app-intro{max-width:820px;margin:0 auto;text-align:center;padding:clamp(30px,5vw,50px) 6vw clamp(20px,4vw,40px)}
+  .app-intro .eyebrow2{font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+  .app-intro h1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(30px,5.5vw,56px);margin-bottom:20px}
+  .app-intro p{color:var(--muted);font-size:clamp(15px,2vw,17px);line-height:1.8}
 
-  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,30px);max-width:1200px;margin:0 auto;padding:0 6vw clamp(40px,6vw,70px);align-items:start}
-  @media(max-width:900px){.tiers{grid-template-columns:1fr;max-width:460px}}
-  .tier{position:relative;background:linear-gradient(180deg,#161613,#0e0e0c);border:1px solid #2a2a24;border-radius:10px;overflow:hidden;transition:.3s}
-  .tier:hover{border-color:var(--gold);transform:translateY(-4px)}
-  .tier.feature{border-color:var(--gold);box-shadow:0 20px 50px rgba(0,0,0,.5)}
-  .tier .cap{padding:26px 26px 0;text-align:center}
-  .tier .badge{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600}
-  .tier .tname{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(26px,3.4vw,36px);margin:6px 0 2px;letter-spacing:.02em}
-  .tier .tsub{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
-  .tier .price{padding:20px 26px;text-align:center;border-bottom:1px solid #23231d}
-  .tier .price .lbl{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
-  .tier .price .amt{font-family:var(--serif);font-style:italic;font-weight:700;font-size:clamp(30px,4vw,44px);color:#fff}
-  .tier .body{padding:24px 26px 28px}
-  .tier .sec-h{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:22px 0 12px}
-  .tier .sec-h:first-child{margin-top:0}
-  .tier ul{list-style:none;margin:0;padding:0}
-  .tier li{position:relative;padding-left:20px;margin-bottom:9px;color:var(--muted);font-size:13.5px;line-height:1.55}
-  .tier li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
-  .tier .rebate{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);padding:6px 0;border-bottom:1px solid #1c1c17}
-  .tier .rebate b{color:#e6e6df;font-weight:600}
-  .tier .meta{border-top:1px solid #23231d;margin-top:8px;padding-top:16px}
-  .tier .mrow{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;color:var(--muted);margin-bottom:8px}
-  .tier .mrow b{color:#e6e6df;font-weight:600;text-align:right}
-  .tier .redeem{text-align:center;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-top:14px}
-  .mb-tc{max-width:1000px;margin:0 auto;padding:clamp(10px,3vw,30px) 6vw clamp(60px,9vw,110px)}
-  .mb-tc h2{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(22px,3vw,32px);text-align:center;margin-bottom:24px}
-  .mb-tc ul{list-style:none;max-width:760px;margin:0 auto;padding:0}
-  .mb-tc li{position:relative;padding-left:22px;margin-bottom:12px;color:var(--muted);font-size:14px;line-height:1.7}
-  .mb-tc li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
-  .mb-cta{text-align:center;padding:0 6vw clamp(60px,9vw,100px)}
-  .mb-cta a{display:inline-flex;align-items:center;gap:9px;padding:15px 34px;border-radius:2px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;background:var(--gold);color:#0a0a0a;transition:.25s}
-  .mb-cta a:hover{background:#ffd94a}
+  /* CSS phone mockup */
+  .phone{position:relative;width:clamp(200px,22vw,270px);aspect-ratio:9/19.5;margin:0 auto;
+    background:#111;border:2px solid #2c2c26;border-radius:34px;padding:10px;flex:none;
+    box-shadow:0 26px 60px rgba(0,0,0,.55)}
+  .phone::before{content:'';position:absolute;top:12px;left:50%;transform:translateX(-50%);
+    width:38%;height:20px;background:#0a0a0a;border-radius:0 0 14px 14px;z-index:3}
+  .phone .screen{width:100%;height:100%;border-radius:26px;overflow:hidden;position:relative;
+    background:#0a0a0a linear-gradient(160deg,#1c1c18,#0a0a0a)}
+  .phone .screen img,.phone .screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .phone .screen .ph-empty{position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:12px;color:#4a4a44;text-align:center;padding:20px}
+  .phone .screen .ph-empty i{font-size:40px;color:var(--gold);opacity:.5}
+  .phone .screen .ph-empty span{font-size:12px;letter-spacing:.1em}
+
+  .feat{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,80px);align-items:center;
+    max-width:1100px;margin:0 auto;padding:clamp(40px,7vw,90px) 6vw}
+  .feat.rev .fx{order:2}.feat.rev .fp{order:1}
+  .feat .fp{display:flex;justify-content:center}
+  .feat .fx .fnum{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:15px;margin-bottom:10px}
+  .feat .fx h2{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(24px,3.4vw,40px);margin-bottom:16px}
+  .feat .fx p{color:var(--muted);font-size:15px;line-height:1.85}
+  @media(max-width:820px){.feat{grid-template-columns:1fr;gap:30px}.feat.rev .fx,.feat.rev .fp{order:0}.feat .fx{text-align:center}}
+
+  /* join section: phone + QR */
+  .join{background:linear-gradient(180deg,#131311,#0a0a0a);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .join-in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,80px);align-items:center;
+    max-width:1000px;margin:0 auto;padding:clamp(50px,8vw,100px) 6vw}
+  .join .fp{display:flex;justify-content:center}
+  .join .qbox{text-align:left}
+  .join .qbox h2{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(26px,3.6vw,44px);margin-bottom:16px}
+  .join .qbox p{color:var(--muted);font-size:15px;line-height:1.85;margin-bottom:24px}
+  .join .qr{background:#fff;padding:14px;border-radius:12px;display:inline-block;line-height:0}
+  .join .qr canvas,.join .qr img{display:block;width:180px;height:180px}
+  .join .qcap{color:var(--muted);font-size:13px;margin-top:14px;letter-spacing:.05em}
+  @media(max-width:820px){.join-in{grid-template-columns:1fr;gap:34px;text-align:center}.join .qbox{text-align:center}.join .qr{margin:0 auto}}
 
   footer{background:#070707;border-top:1px solid var(--line);padding:clamp(60px,9vw,90px) 6vw 40px;position:relative;background-size:cover;background-position:center}
   .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto;text-align:left}
@@ -166,8 +171,6 @@
   footer .socials a:hover{border-color:var(--gold);color:var(--gold)}
   footer .copyright{position:relative;z-index:1;text-align:center;color:var(--muted);font-size:12px;margin-top:50px;padding-top:24px;border-top:1px solid var(--line)}
   @media(max-width:820px){.foot-grid{grid-template-columns:1fr;gap:34px;text-align:center}footer .socials{justify-content:center}.foot-row{justify-content:center}}
-
-  body.no-hero .mb-intro{padding-top:clamp(120px,15vw,150px)}
 </style>
 </head>
 <body class="no-hero">
@@ -181,110 +184,127 @@
   <button class="burger" id="burgerBtn" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<div class="hero-photo" id="mbHero"></div>
+<div class="hero-photo" id="apHero"></div>
 
-<header class="mb-intro">
-  <div class="eyebrow2">GrandLab Membership Club</div>
-  <h1 data-c="mb_title">Membership Club</h1>
-  <p data-c="mb_intro">Join the GrandLab Membership Club and enjoy premium privileges, generous rebates and priority service across all our locations. Choose the tier that suits you.</p>
+<header class="app-intro">
+  <div class="eyebrow2">GrandLab App</div>
+  <h1 data-c="ap_title">Your car care, in your pocket</h1>
+  <p data-c="ap_intro">Book services, pay from your wallet, track rewards and check your warranty — the GrandLab app puts everything about your vehicle in one place. Here is what it does.</p>
 </header>
 
-<section style="padding:0">
-  <div class="tiers">
-  <div class="tier" id="tier1">
-    <div class="cap">
-      <div class="badge" data-c="mb1_badge">Tier</div>
-      <div class="tname" data-c="mb1_name">Tier 1</div>
-      <div class="tsub" data-c="mb1_sub">Membership</div>
-    </div>
-    <div class="price">
-      <span class="lbl">Price</span>
-      <span class="amt" data-c="mb1_price">RM 0</span>
-    </div>
-    <div class="body">
-      <div class="sec-h">Privileges</div>
-      <ul id="mb1priv"></ul>
-      <div class="sec-h">Rebates</div>
-      <div class="rebate"><span>GL Products</span><b data-c="mb1_reb_products">—</b></div>
-      <div class="rebate"><span>GL Services</span><b data-c="mb1_reb_services">—</b></div>
-      <div class="rebate"><span>GP Services</span><b data-c="mb1_reb_gp">—</b></div>
-      <div class="sec-h">Birthday Rewards</div>
-      <ul id="mb1bday"></ul>
-      <div class="meta">
-        <div class="mrow"><span>Min reload</span><b data-c="mb1_reload">—</b></div>
-        <div class="mrow"><span>Plate changes</span><b data-c="mb1_plate">—</b></div>
-        <div class="mrow"><span>Validity</span><b data-c="mb1_validity">—</b></div>
-        <div class="mrow"><span>Maximum cars</span><b data-c="mb1_maxcar">—</b></div>
-      </div>
-      <div class="redeem" data-c="mb1_redeem"></div>
-    </div>
+<div class="feat">
+  <div class="fp"><div class="phone"><div class="screen" id="scr_book">
+        <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>Feature preview<br>coming soon</span></div>
+      </div></div></div>
+  <div class="fx">
+    <div class="fnum">Feature 01</div>
+    <h2 data-c="ap_book_title">Book in seconds</h2>
+    <p data-c="ap_book_text">Choose your service, pick a date and time, and confirm — your booking flows straight to our job board. No phone calls, no waiting.</p>
   </div>
-  <div class="tier feature" id="tier2">
-    <div class="cap">
-      <div class="badge" data-c="mb2_badge">Tier</div>
-      <div class="tname" data-c="mb2_name">Tier 2</div>
-      <div class="tsub" data-c="mb2_sub">Membership</div>
-    </div>
-    <div class="price">
-      <span class="lbl">Price</span>
-      <span class="amt" data-c="mb2_price">RM 0</span>
-    </div>
-    <div class="body">
-      <div class="sec-h">Privileges</div>
-      <ul id="mb2priv"></ul>
-      <div class="sec-h">Rebates</div>
-      <div class="rebate"><span>GL Products</span><b data-c="mb2_reb_products">—</b></div>
-      <div class="rebate"><span>GL Services</span><b data-c="mb2_reb_services">—</b></div>
-      <div class="rebate"><span>GP Services</span><b data-c="mb2_reb_gp">—</b></div>
-      <div class="sec-h">Birthday Rewards</div>
-      <ul id="mb2bday"></ul>
-      <div class="meta">
-        <div class="mrow"><span>Min reload</span><b data-c="mb2_reload">—</b></div>
-        <div class="mrow"><span>Plate changes</span><b data-c="mb2_plate">—</b></div>
-        <div class="mrow"><span>Validity</span><b data-c="mb2_validity">—</b></div>
-        <div class="mrow"><span>Maximum cars</span><b data-c="mb2_maxcar">—</b></div>
-      </div>
-      <div class="redeem" data-c="mb2_redeem"></div>
-    </div>
+</div>
+<div class="feat rev">
+  <div class="fp"><div class="phone"><div class="screen" id="scr_wallet">
+        <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>Feature preview<br>coming soon</span></div>
+      </div></div></div>
+  <div class="fx">
+    <div class="fnum">Feature 02</div>
+    <h2 data-c="ap_wallet_title">Digital wallet</h2>
+    <p data-c="ap_wallet_text">Top up once and pay for any service in a tap. Wallet-paid orders are deducted instantly, so checkout at the outlet is effortless.</p>
   </div>
-  <div class="tier" id="tier3">
-    <div class="cap">
-      <div class="badge" data-c="mb3_badge">Tier</div>
-      <div class="tname" data-c="mb3_name">Tier 3</div>
-      <div class="tsub" data-c="mb3_sub">Membership</div>
-    </div>
-    <div class="price">
-      <span class="lbl">Price</span>
-      <span class="amt" data-c="mb3_price">RM 0</span>
-    </div>
-    <div class="body">
-      <div class="sec-h">Privileges</div>
-      <ul id="mb3priv"></ul>
-      <div class="sec-h">Rebates</div>
-      <div class="rebate"><span>GL Products</span><b data-c="mb3_reb_products">—</b></div>
-      <div class="rebate"><span>GL Services</span><b data-c="mb3_reb_services">—</b></div>
-      <div class="rebate"><span>GP Services</span><b data-c="mb3_reb_gp">—</b></div>
-      <div class="sec-h">Birthday Rewards</div>
-      <ul id="mb3bday"></ul>
-      <div class="meta">
-        <div class="mrow"><span>Min reload</span><b data-c="mb3_reload">—</b></div>
-        <div class="mrow"><span>Plate changes</span><b data-c="mb3_plate">—</b></div>
-        <div class="mrow"><span>Validity</span><b data-c="mb3_validity">—</b></div>
-        <div class="mrow"><span>Maximum cars</span><b data-c="mb3_maxcar">—</b></div>
-      </div>
-      <div class="redeem" data-c="mb3_redeem"></div>
-    </div>
+</div>
+<div class="feat">
+  <div class="fp"><div class="phone"><div class="screen" id="scr_rewards">
+        <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>Feature preview<br>coming soon</span></div>
+      </div></div></div>
+  <div class="fx">
+    <div class="fnum">Feature 03</div>
+    <h2 data-c="ap_rewards_title">Rewards & points</h2>
+    <p data-c="ap_rewards_text">Earn points on every service — online, in-app or at the outlet — and watch them add up towards real rewards.</p>
   </div>
+</div>
+<div class="feat rev">
+  <div class="fp"><div class="phone"><div class="screen" id="scr_warranty">
+        <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>Feature preview<br>coming soon</span></div>
+      </div></div></div>
+  <div class="fx">
+    <div class="fnum">Feature 04</div>
+    <h2 data-c="ap_warranty_title">e-Warranty on hand</h2>
+    <p data-c="ap_warranty_text">Your coating and PPF warranties live in the app. Check coverage and validity any time, without digging for paperwork.</p>
   </div>
-</section>
+</div>
+<div class="feat">
+  <div class="fp"><div class="phone"><div class="screen" id="scr_history">
+        <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>Feature preview<br>coming soon</span></div>
+      </div></div></div>
+  <div class="fx">
+    <div class="fnum">Feature 05</div>
+    <h2 data-c="ap_history_title">Full service history</h2>
+    <p data-c="ap_history_text">Every visit, every service, in one place. See exactly what was done to each of your cars and when.</p>
+  </div>
+</div>
+<div class="feat rev">
+  <div class="fp"><div class="phone"><div class="screen" id="scr_package">
+        <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>Feature preview<br>coming soon</span></div>
+      </div></div></div>
+  <div class="fx">
+    <div class="fnum">Feature 06</div>
+    <h2 data-c="ap_package_title">Package balance</h2>
+    <p data-c="ap_package_text">Track how many coating or Bathe Essence sessions you have left, so you always know where you stand.</p>
+  </div>
+</div>
+<div class="feat">
+  <div class="fp"><div class="phone"><div class="screen" id="scr_reminder">
+        <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>Feature preview<br>coming soon</span></div>
+      </div></div></div>
+  <div class="fx">
+    <div class="fnum">Feature 07</div>
+    <h2 data-c="ap_reminder_title">Service-due reminders</h2>
+    <p data-c="ap_reminder_text">The app watches your maintenance schedule and reminds you automatically when a car is due — so protection never lapses.</p>
+  </div>
+</div>
+<div class="feat rev">
+  <div class="fp"><div class="phone"><div class="screen" id="scr_spin">
+        <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>Feature preview<br>coming soon</span></div>
+      </div></div></div>
+  <div class="fx">
+    <div class="fnum">Feature 08</div>
+    <h2 data-c="ap_spin_title">Spin rewards</h2>
+    <p data-c="ap_spin_text">Spin for a chance at vouchers, discounts and surprises. A little extra every time you engage.</p>
+  </div>
+</div>
+<div class="feat">
+  <div class="fp"><div class="phone"><div class="screen" id="scr_checkin">
+        <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>Feature preview<br>coming soon</span></div>
+      </div></div></div>
+  <div class="fx">
+    <div class="fnum">Feature 09</div>
+    <h2 data-c="ap_checkin_title">Check-in rewards</h2>
+    <p data-c="ap_checkin_text">Check in on each visit and get rewarded for coming back. Loyalty that actually gives something in return.</p>
+  </div>
+</div>
+<div class="feat rev">
+  <div class="fp"><div class="phone"><div class="screen" id="scr_flash">
+        <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>Feature preview<br>coming soon</span></div>
+      </div></div></div>
+  <div class="fx">
+    <div class="fnum">Feature 10</div>
+    <h2 data-c="ap_flash_title">Flash deals</h2>
+    <p data-c="ap_flash_text">Limited-time offers, first-come first-served, straight to your phone. Be the first to grab the best deals.</p>
+  </div>
+</div>
 
-<section class="mb-tc">
-  <h2 data-c="mb_tc_title">Terms &amp; Conditions</h2>
-  <ul id="mbTC"></ul>
-</section>
-
-<section class="mb-cta">
-  <a href="contact.html"><i class="ti ti-crown"></i> Enquire about membership</a>
+<section class="join">
+  <div class="join-in">
+    <div class="fp"><div class="phone"><div class="screen" id="scr_join">
+      <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>GrandLab App</span></div>
+    </div></div></div>
+    <div class="qbox">
+      <h2 data-c="ap_join_title">Join the GrandLab App now</h2>
+      <p data-c="ap_join_text">Scan the code with your phone camera to open the app. Create your account in minutes and start earning from your very first visit.</p>
+      <div class="qr" id="qrBox"></div>
+      <div class="qcap" data-c="ap_qr_cap">Scan with your phone camera</div>
+    </div>
+  </div>
 </section>
 
 <footer id="contact">
@@ -344,17 +364,33 @@
       document.querySelectorAll('[data-c]').forEach(e=>{const v=C[e.dataset.c];
       if(v!=null&&v!=='')e.textContent=v;});
 
-      (function(){var el=document.getElementById('mbHero');if(!el)return;var u=C['mb_hero_img'];
+      (function(){var el=document.getElementById('apHero');if(!el)return;var u=C['ap_hero_img'];
         if(u&&String(u).trim()){var url=String(u).replace(/'/g,'');
-          if(C['mb_hero_pos']&&String(C['mb_hero_pos']).trim())el.style.backgroundPosition='center '+String(C['mb_hero_pos']).trim();
+          if(C['ap_hero_pos']&&String(C['ap_hero_pos']).trim())el.style.backgroundPosition='center '+String(C['ap_hero_pos']).trim();
           var pre=new Image();pre.onload=function(){el.style.backgroundImage="url('"+url+"')";el.classList.add('on');document.body.classList.remove('no-hero');};pre.src=url;}})();
-      // membership lists (privileges, birthday rewards per tier; pipe-separated)
-      [1,2,3].forEach(n=>{
-        const pv=document.getElementById('mb'+n+'priv');
-        if(pv&&C['mb'+n+'_priv']){pv.innerHTML=String(C['mb'+n+'_priv']).split('|').map(x=>x.trim()).filter(Boolean).map(x=>'<li>'+x.replace(/[<>]/g,'')+'</li>').join('');}
-        const bd=document.getElementById('mb'+n+'bday');
-        if(bd&&C['mb'+n+'_bday']){bd.innerHTML=String(C['mb'+n+'_bday']).split('|').map(x=>x.trim()).filter(Boolean).map(x=>'<li>'+x.replace(/[<>]/g,'')+'</li>').join('');}
+      // feature GIF/MP4 into each phone screen
+      var FIDS=['book','wallet','rewards','warranty','history','package','reminder','spin','checkin','flash'];
+      FIDS.forEach(function(fid){
+        var scr=document.getElementById('scr_'+fid); if(!scr) return;
+        var media=C['ap_'+fid+'_media']; if(!media||!String(media).trim()) return;
+        var url=String(media).replace(/'/g,''); var lo=url.toLowerCase();
+        scr.innerHTML='';
+        if(lo.endsWith('.mp4')||lo.endsWith('.webm')){
+          var v=document.createElement('video');v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');scr.appendChild(v);
+        } else { var im=document.createElement('img');im.src=url;im.alt='';scr.appendChild(im); }
       });
+      // join phone screen
+      (function(){var scr=document.getElementById('scr_join');var m=C['ap_join_media'];
+        if(scr&&m&&String(m).trim()){var url=String(m).replace(/'/g,'');var lo=url.toLowerCase();scr.innerHTML='';
+          if(lo.endsWith('.mp4')||lo.endsWith('.webm')){var v=document.createElement('video');v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');scr.appendChild(v);}
+          else{var im=document.createElement('img');im.src=url;scr.appendChild(im);}}})();
+      // QR code generated from the app URL
+      (function(){var box=document.getElementById('qrBox');if(!box)return;
+        var link=(C['ap_qr_url']&&String(C['ap_qr_url']).trim())?String(C['ap_qr_url']).trim():'https://grandpride.github.io/Grandlab-app/';
+        function draw(){try{new QRCode(box,{text:link,width:180,height:180,colorDark:'#0a0a0a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});}catch(e){box.innerHTML='<img alt="QR" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data='+encodeURIComponent(link)+'">';}}
+        if(window.QRCode){draw();}else{var sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js';sc.onload=draw;sc.onerror=function(){box.innerHTML='<img alt="QR" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data='+encodeURIComponent(link)+'">';};document.head.appendChild(sc);}
+      })();
+      // membership lists (privileges, birthday rewards per tier; pipe-separated)
       // T&C list
       (function(){const tc=document.getElementById('mbTC');
         if(tc&&C['mb_tc']){tc.innerHTML=String(C['mb_tc']).split('|').map(x=>x.trim()).filter(Boolean).map(x=>'<li>'+x.replace(/[<>]/g,'')+'</li>').join('');}})();

@@ -218,7 +218,7 @@
       // hours: honour line breaks typed in the admin
       (function(){const h=document.querySelector('[data-c="ct_hours"]');
         if(h&&C.ct_hours&&String(C.ct_hours).trim()){
-          h.innerHTML=String(C.ct_hours).replace(/[<>]/g,m=>m==='<'?'&lt;':'&gt;').replace(/\r?\n/g,'<br>');
+          h.innerHTML=String(C.ct_hours).replace(/[<>]/g,m=>m==='<'?'&lt;':'&gt;').replace(/(Sunday[^\n<]*)/gi,'<b>$1</b>').replace(/\r?\n/g,'<br>');
         }})();
       // hero photo band
       (function(){

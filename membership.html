@@ -124,7 +124,7 @@
   .mb-intro p{color:var(--muted);font-size:clamp(15px,2vw,17px);line-height:1.8}
 
   .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,30px);max-width:1200px;margin:0 auto;padding:0 6vw clamp(40px,6vw,70px);align-items:start}
-  @media(max-width:1024px){.tiers{grid-template-columns:1fr;max-width:460px}}
+  @media(max-width:1024px){.tiers{grid-template-columns:1fr;max-width:560px;gap:24px}}
   .tier{position:relative;background:linear-gradient(180deg,#161613,#0e0e0c);border:1px solid #2a2a24;border-radius:10px;overflow:hidden;transition:.3s}
   .tier:hover{border-color:var(--gold);transform:translateY(-4px)}
   .tier.feature{border-color:var(--gold);box-shadow:0 20px 50px rgba(0,0,0,.5)}
@@ -136,15 +136,15 @@
   .tier .price .lbl{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
   .tier .price .amt{font-family:var(--serif);font-style:italic;font-weight:700;font-size:clamp(30px,4vw,44px);color:#fff}
   .tier .body{padding:24px 26px 28px}
-  .tier .sec-h{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:22px 0 12px}
+  .tier .sec-h{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:22px 0 12px}
   .tier .sec-h:first-child{margin-top:0}
   .tier ul{list-style:none;margin:0;padding:0}
-  .tier li{position:relative;padding-left:20px;margin-bottom:9px;color:var(--muted);font-size:13.5px;line-height:1.55}
+  .tier li{position:relative;padding-left:20px;margin-bottom:10px;color:var(--muted);font-size:15px;line-height:1.6}
   .tier li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
-  .tier .rebate{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);padding:6px 0;border-bottom:1px solid #1c1c17}
+  .tier .rebate{display:flex;justify-content:space-between;gap:12px;font-size:14.5px;color:var(--muted);padding:8px 0;border-bottom:1px solid #1c1c17}
   .tier .rebate b{color:#e6e6df;font-weight:600}
   .tier .meta{border-top:1px solid #23231d;margin-top:8px;padding-top:16px}
-  .tier .mrow{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;color:var(--muted);margin-bottom:8px}
+  .tier .mrow{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:var(--muted);margin-bottom:9px}
   .tier .mrow b{color:#e6e6df;font-weight:600;text-align:right}
   .tier .redeem{text-align:center;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-top:14px}
   .mb-tc{max-width:1000px;margin:0 auto;padding:clamp(10px,3vw,30px) 6vw clamp(60px,9vw,110px)}

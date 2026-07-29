@@ -65,6 +65,18 @@
   .ps-row input[type=range]{flex:1}
   .ps-row b{font-size:12px;color:#F5C518;width:44px;text-align:right}
   .ps-previews{display:flex;gap:14px;margin-top:8px;flex-wrap:wrap}
+  .hp-previews{display:flex;gap:14px;margin-top:8px;flex-wrap:wrap;align-items:flex-start}
+  .hp-col{flex:1;min-width:240px}
+  .hp-col.mb{flex:0 0 auto;min-width:0}
+  .hp-pc{width:100%;aspect-ratio:3.42/1;background:#1a1a17;background-size:cover;
+    background-position:center;position:relative;overflow:hidden;border-radius:4px}
+  .hp-mb{width:112px;aspect-ratio:.89/1;background:#1a1a17;background-size:cover;
+    background-position:center;position:relative;overflow:hidden;border-radius:6px}
+  .hp-nav{position:absolute;top:0;left:0;right:0;height:13%;display:flex;align-items:center;
+    justify-content:flex-end;padding:0 7px;font-size:7px;letter-spacing:.07em;color:#fff;
+    text-shadow:0 1px 4px rgba(0,0,0,.85);white-space:nowrap;overflow:hidden}
+  .hp-fade{position:absolute;left:0;right:0;bottom:0;height:56%;
+    background:linear-gradient(to bottom,rgba(10,10,10,0),#0a0a0a)}
   .ps-pv{flex:1;min-width:150px}
   .ps-tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:5px}
   .ps-pc{width:70%;max-width:180px;aspect-ratio:2/3;border-radius:0 12px 0 0;background:#1a1a17;background-size:cover;background-position:center;margin:0 auto}
@@ -262,7 +274,7 @@ const SCHEMA=[
  {t:'Brand',h:'Page intro',open:true,f:[
    ['br_title','Page heading','line'],
    ['brand_hero_img','Hero photo (top banner)','img'],
-   ['brand_hero_pos','Hero photo focus','pos'],
+   ['brand_hero_pos','Hero photo position — scroll the photo up / down','vpos'],
    ['br_text','Intro paragraph','area'],
  ]},
  {t:'Brand',h:'1. Our Customers',f:[
@@ -740,6 +752,23 @@ function render(){
           <option value="video"${v==='video'?' selected':''}>Video (loop)</option>
         </select>
         <div class="hint2">Choose whether the top banner shows a photo or a looping video.</div>`;
+      if(type==='vpos'){
+        const hv=hpNum(DATA[key]);
+        return `<label>${esc(label)}</label>
+        <input type="hidden" data-k="${key}" id="hpv_${key}" value="${hv}%">
+        <div class="ps-row"><span>Up / down</span>
+          <input type="range" min="0" max="100" step="1" value="${hv}" id="hpr_${key}"
+            oninput="document.getElementById('hpv_${key}').value=this.value+'%';document.getElementById('hplbl_${key}').textContent=this.value+'%';onEdit();hpRender('${key}')">
+          <b id="hplbl_${key}">${hv}%</b>
+        </div>
+        <div class="hint2"><i class="ti ti-arrows-move-vertical"></i> 0% = top of the photo, 100% = bottom. The faint menu line shows where the nav sits.</div>
+        <div class="hp-previews">
+          <div class="hp-col"><div class="ps-tag">PC view</div>
+            <div class="hp-pc" id="hppc_${key}"><div class="hp-nav">HOME · BRAND · SERVICES · MEMBERSHIP CLUB · APP · FAQS</div><div class="hp-fade"></div></div></div>
+          <div class="hp-col mb"><div class="ps-tag">Mobile view</div>
+            <div class="hp-mb" id="hpmb_${key}"><div class="hp-fade"></div></div></div>
+        </div>`;
+      }
       if(type==='pos') return `<label>${esc(label)}</label>
         <select data-k="${key}" oninput="onEdit()">
           <option value="center"${(!v||v==='center')?' selected':''}>Center (default)</option>
@@ -801,7 +830,25 @@ function previewImg(k){ const el=$('prev_'+k); if(el){ el.style.opacity=1; el.sr
           else { el.style.backgroundImage=''; el.classList.add('ps-empty'); }
         });
       }
-      function psRenderAll(){ ['br1','br2','br3','br4'].forEach(function(b){ if($('pspc_'+b)) psRender(b); }); }
+      function psRenderAll(){ ['br1','br2','br3','br4'].forEach(function(b){ if($('pspc_'+b)) psRender(b); });
+  if($('hppc_brand_hero_pos')) hpRender('brand_hero_pos'); }
+function hpNum(v){
+  if(v==null||v==='') return 50;
+  var t=String(v).trim();
+  if(t==='top') return 0;
+  if(t==='bottom') return 100;
+  if(t==='center'||t==='left'||t==='right') return 50;
+  var n=parseFloat(t); return isNaN(n)?50:Math.max(0,Math.min(100,Math.round(n)));
+}
+function hpRender(key){
+  var url=DATA[key.replace(/_pos$/,'_img')]||'';
+  var v=hpNum(DATA[key]);
+  ['hppc_','hpmb_'].forEach(function(p){
+    var el=$(p+key); if(!el) return;
+    el.style.backgroundImage = url ? "url('"+String(url).replace(/'/g,'')+"')" : 'none';
+    el.style.backgroundPosition = 'center '+v+'%';
+  });
+}
       previewImg;
 let dirty=false;
 function syncDom(){ document.querySelectorAll('[data-k]').forEach(el=>{ DATA[el.dataset.k]=el.value; }); }
@@ -818,7 +865,7 @@ async function uploadVideo(file,key){
       method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:'Bearer '+SUPABASE_ANON},body:file});
     if(r.ok){
       const url=SUPABASE_URL+'/storage/v1/object/public/gl-videos/'+path;
-      const inp=document.querySelector('[data-k="'+key+'"]'); inp.value=url; onEdit(); previewImg(key); { var _m=String(key).match(/^(br[0-9])_img$/); if(_m&&typeof psRender==='function') psRender(_m[1]); }
+      const inp=document.querySelector('[data-k="'+key+'"]'); inp.value=url; onEdit(); previewImg(key); if(key==='brand_hero_img'&&typeof hpRender==='function') hpRender('brand_hero_pos'); { var _m=String(key).match(/^(br[0-9])_img$/); if(_m&&typeof psRender==='function') psRender(_m[1]); }
       st.innerHTML='<span style="color:#3ec76e">✓ Uploaded. Remember to Save.</span>';
     } else { st.innerHTML='<span style="color:#e0533d">Upload failed — check the gl-videos bucket exists and is public.</span>'; }
   }catch(e){ st.innerHTML='<span style="color:#e0533d">Error: '+e.message+'</span>'; }

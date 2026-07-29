@@ -160,6 +160,26 @@
   .join .qr canvas,.join .qr img{display:block;width:180px;height:180px}
   .join .qcap{color:var(--muted);font-size:13px;margin-top:14px;letter-spacing:.05em}
   @media(max-width:820px){.join-in{grid-template-columns:1fr;gap:34px;text-align:center}.join .qbox{text-align:center}.join .qr{margin:0 auto}}
+  .install{margin-top:34px;max-width:420px}
+  .join .qbox .install{text-align:left}
+  @media(max-width:820px){.join .qbox .install{margin:34px auto 0}}
+  .inst-tabs{display:flex;gap:8px;margin-bottom:16px}
+  .inst-tab{flex:1;padding:9px 12px;border:1px solid #2a2a24;background:#111;color:var(--muted);
+    border-radius:4px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:6px;transition:.2s}
+  .inst-tab.on{border-color:var(--gold);color:var(--gold);background:#1a1712}
+  .inst-tab i{font-size:15px}
+  .inst-panel{display:none}
+  .inst-panel.on{display:block}
+  .inst-panel ol{list-style:none;counter-reset:step;margin:0;padding:0}
+  .inst-panel li{position:relative;padding-left:34px;margin-bottom:12px;color:var(--muted);
+    font-size:13.5px;line-height:1.55;counter-increment:step}
+  .inst-panel li::before{content:counter(step);position:absolute;left:0;top:0;width:22px;height:22px;
+    border-radius:50%;background:var(--gold);color:#0a0a0a;font-size:12px;font-weight:700;
+    display:flex;align-items:center;justify-content:center}
+  .inst-panel .ic{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;
+    vertical-align:-4px;color:var(--gold)}
+
 
   footer{background:#070707;border-top:1px solid var(--line);padding:clamp(60px,9vw,90px) 6vw 40px;position:relative;background-size:cover;background-position:center}
   .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto;text-align:left}
@@ -317,6 +337,29 @@
       <p data-c="ap_join_text">Scan the code with your phone camera to open the app. Create your account in minutes and start earning from your very first visit.</p>
       <div class="qr" id="qrBox"></div>
       <div class="qcap" data-c="ap_qr_cap">Scan with your phone camera</div>
+
+      <div class="install">
+        <div class="inst-tabs">
+          <div class="inst-tab on" id="tabIos" onclick="showInst('ios')"><i class="ti ti-brand-apple"></i> iPhone</div>
+          <div class="inst-tab" id="tabAnd" onclick="showInst('and')"><i class="ti ti-brand-android"></i> Android</div>
+        </div>
+        <div class="inst-panel on" id="instIos">
+          <ol>
+            <li>Open the link in <b>Safari</b> after scanning the code.</li>
+            <li>Tap the <b>Share</b> button <span class="ic"><i class="ti ti-share"></i></span> at the bottom of the screen.</li>
+            <li>Scroll down and tap <b>Add to Home Screen</b> <span class="ic"><i class="ti ti-square-plus"></i></span>.</li>
+            <li>Tap <b>Add</b> — the GrandLab app now sits on your home screen.</li>
+          </ol>
+        </div>
+        <div class="inst-panel" id="instAnd">
+          <ol>
+            <li>Open the link in <b>Chrome</b> after scanning the code.</li>
+            <li>Tap the <b>menu</b> <span class="ic"><i class="ti ti-dots-vertical"></i></span> at the top right.</li>
+            <li>Tap <b>Add to Home screen</b> (or <b>Install app</b>).</li>
+            <li>Confirm — the GrandLab app appears with your other apps.</li>
+          </ol>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -398,6 +441,16 @@
         if(scr&&m&&String(m).trim()){var url=String(m).replace(/'/g,'');var lo=url.toLowerCase();scr.innerHTML='';
           if(lo.endsWith('.mp4')||lo.endsWith('.webm')){var v=document.createElement('video');v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');scr.appendChild(v);}
           else{var im=document.createElement('img');im.src=url;scr.appendChild(im);}}})();
+      // install-steps tabs
+      window.showInst=function(which){
+        var ios=which==='ios';
+        var ti=document.getElementById('tabIos'),ta=document.getElementById('tabAnd');
+        var pi=document.getElementById('instIos'),pa=document.getElementById('instAnd');
+        if(ti)ti.classList.toggle('on',ios); if(ta)ta.classList.toggle('on',!ios);
+        if(pi)pi.classList.toggle('on',ios); if(pa)pa.classList.toggle('on',!ios);
+      };
+      // auto-select the visitor's platform
+      (function(){var ua=navigator.userAgent||'';if(/Android/i.test(ua))showInst('and');})();
       // QR code generated from the app URL
       (function(){var box=document.getElementById('qrBox');if(!box)return;
         var link=(C['ap_qr_url']&&String(C['ap_qr_url']).trim())?String(C['ap_qr_url']).trim():'https://grandpride.github.io/Grandlab-app/';

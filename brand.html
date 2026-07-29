@@ -22,6 +22,14 @@
   body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;--hpx:48px;--bpx:16px;font-size:var(--bpx)}
   a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
   nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 6vw;background:transparent;transition:transform .4s ease}
+  /* PC-only top scrim: keeps nav links readable over bright hero photos */
+  @media(min-width:1025px){
+    nav::before{content:"";position:absolute;left:0;right:0;top:0;height:210%;
+      background:linear-gradient(to bottom,rgba(0,0,0,.78) 0%,rgba(0,0,0,.45) 45%,rgba(0,0,0,0) 100%);
+      pointer-events:none;z-index:-1;opacity:1;transition:opacity .35s ease}
+    nav.solid::before{opacity:0}
+    nav .links a{text-shadow:0 1px 10px rgba(0,0,0,.85)}
+  }
   nav.hidden{transform:translateY(-100%)}
   nav:has(.links.open),nav.menu-open{transform:none!important}nav.solid{background:rgba(14,14,14,.92);backdrop-filter:blur(12px)}
   nav .brand-logo{height:34px;width:auto;display:block}

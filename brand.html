@@ -267,7 +267,7 @@
         var t=C['br4_text'];
         if(t&&String(t).trim()){
           var safe=String(t).replace(/[<>]/g,function(m){return m==='<'?'&lt;':'&gt;';});
-          safe=safe.replace(/GrandPride Lounge/g,'<a href="lounge.html"><b>GrandPride Lounge</b></a>');
+          safe=safe.replace(/Grand ?Pride Lounge/gi,function(m){return '<a href="lounge.html"><b>'+m+'</b></a>';});
           safe=safe.replace(/\bworkshop\b/g,'<a href="workshop.html"><b>workshop</b></a>');
           el.innerHTML=safe;
         } else {
@@ -310,7 +310,9 @@
         if(el&&v&&String(v).trim()){
           const url=String(v).replace(/'/g,'');
           const pos=C['br'+n+'_pos'];
-          if(pos&&String(pos).trim()) el.style.backgroundPosition='center '+String(pos).trim();
+          if(pos&&String(pos).trim()){var pp=String(pos).trim().toLowerCase();
+            if(pp.indexOf('left')>-1||pp.indexOf('right')>-1) el.style.backgroundPosition=pp+' center';
+            else el.style.backgroundPosition='center '+pp;}
           const pre=new Image();
           pre.onload=function(){el.style.backgroundImage="url('"+url+"')";el.classList.add('on');};
           pre.src=url;

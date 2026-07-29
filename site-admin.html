@@ -251,6 +251,9 @@ const SCHEMA=[
    ['font_heading_px','Heading size (px)','pxH'],
    ['font_body_px','Body size (px)','pxB'],
  ]},
+ {t:'Fonts',h:'Menu bar shade (PC only)',f:[
+   ['nav_dim','Dark shade behind the top menu links','dim'],
+ ]},
  {t:'Services',h:'Page hero',open:true,f:[
    ['sp_hero_eyebrow','Eyebrow','line'],['sp_hero_title','Title','line'],
    ['sp_hero_text','Sub-text','area'],['sp_hero_img','Hero image URL','img'],
@@ -701,6 +704,16 @@ function render(){
           <div class="ps-pv"><div class="ps-tag">PC view</div><div class="ps-pc" id="pspc_${key}"></div></div>
           <div class="ps-pv"><div class="ps-tag">Mobile view</div><div class="ps-mb" id="psmb_${key}"></div></div>
         </div>`;
+      }
+      if(type==='dim'){
+        const dv=(DATA[key]===undefined||DATA[key]==='')?'78':String(DATA[key]);
+        return `<label>${esc(label)}</label>
+        <div class="ps-row"><span>Shade</span>
+          <input type="range" min="0" max="90" step="2" value="${dv}" data-k="${key}"
+            oninput="onEdit();var e=document.getElementById('dimlbl_${key}');if(e)e.textContent=this.value+'%'">
+          <b id="dimlbl_${key}">${dv}%</b>
+        </div>
+        <div class="hint2"><i class="ti ti-info-circle"></i> Only affects desktop. 0 = no shade, 78 = default.</div>`;
       }
       if(type==='img') return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit();previewImg('${key}')" placeholder="photo URL (or upload below)">
         <button type="button" class="upbtn" onclick="imgPick('${key}')"><i class="ti ti-upload"></i> Upload photo</button>

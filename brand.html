@@ -25,7 +25,10 @@
   /* PC-only top scrim: keeps nav links readable over bright hero photos */
   @media(min-width:1025px){
     nav::before{content:"";position:absolute;left:0;right:0;top:0;height:210%;
-      background:linear-gradient(to bottom,rgba(0,0,0,.78) 0%,rgba(0,0,0,.45) 45%,rgba(0,0,0,0) 100%);
+      background:linear-gradient(to bottom,
+        rgba(0,0,0,var(--navdim,.78)) 0%,
+        rgba(0,0,0,calc(var(--navdim,.78) * .58)) 45%,
+        rgba(0,0,0,0) 100%);
       pointer-events:none;z-index:-1;opacity:1;transition:opacity .35s ease}
     nav.solid::before{opacity:0}
     nav .links a{text-shadow:0 1px 10px rgba(0,0,0,.85)}
@@ -265,6 +268,10 @@
         if(C.font_body) r.setProperty('--sans',"'"+C.font_body+"', sans-serif");
         if(C.font_heading_px) document.body.style.setProperty('--hpx',(+C.font_heading_px||48)+'px');
         if(C.font_body_px) document.body.style.setProperty('--bpx',(+C.font_body_px||16)+'px');
+        if(C.nav_dim!=null&&C.nav_dim!==''){
+          var _nd=Math.max(0,Math.min(90,parseFloat(C.nav_dim)||0))/100;
+          document.documentElement.style.setProperty('--navdim',String(_nd));
+        }
       })();
       document.querySelectorAll('[data-c]').forEach(e=>{const v=C[e.dataset.c];
       if(e.dataset.c==='br4_text')return; // handled below to keep links

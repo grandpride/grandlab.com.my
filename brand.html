@@ -23,14 +23,15 @@
   a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
   nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 6vw;background:transparent;transition:transform .4s ease}
   /* PC-only top scrim: keeps nav links readable over bright hero photos */
+  #navScrim{display:none}
   @media(min-width:1025px){
-    nav::before{content:"";position:absolute;left:0;right:0;top:0;height:210%;
+    #navScrim{display:block;position:fixed;top:0;left:0;right:0;height:170px;
+      z-index:99;pointer-events:none;opacity:1;transition:opacity .35s ease;
       background:linear-gradient(to bottom,
         rgba(0,0,0,var(--navdim,.78)) 0%,
-        rgba(0,0,0,calc(var(--navdim,.78) * .58)) 45%,
-        rgba(0,0,0,0) 100%);
-      pointer-events:none;z-index:-1;opacity:1;transition:opacity .35s ease}
-    nav.solid::before{opacity:0}
+        rgba(0,0,0,calc(var(--navdim,.78) * 0.55)) 42%,
+        rgba(0,0,0,0) 100%)}
+    #navScrim.off{opacity:0}
     nav .links a{text-shadow:0 1px 10px rgba(0,0,0,.85)}
   }
   nav.hidden{transform:translateY(-100%)}
@@ -163,6 +164,7 @@
 </style>
 </head>
 <body class="no-hero cloak">
+<div id="navScrim"></div>
 <nav id="nav">
   <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo"></a>
   <div class="links" id="navLinks">
@@ -248,7 +250,7 @@
   document.getElementById('yr').textContent=new Date().getFullYear();
   function toggleNav(){const l=document.getElementById('navLinks'),b=document.getElementById('burgerBtn');l.classList.toggle('open');const op=l.classList.contains('open');if(b)b.classList.toggle('open',op);const nv=document.getElementById('nav');if(nv){nv.classList.toggle('menu-open',op);if(op)nv.classList.remove('hidden');}document.body.style.overflow=op?'hidden':'';}
   const navEl=document.getElementById('nav');let lastY=scrollY;
-  addEventListener('scroll',()=>{const y=scrollY;navEl.classList.toggle('solid',y>60);if(navEl.classList.contains('menu-open')){lastY=y;return;}if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');lastY=y;},{passive:true});
+  addEventListener('scroll',()=>{const y=scrollY;navEl.classList.toggle('solid',y>60);var _sc=document.getElementById('navScrim');if(_sc)_sc.classList.toggle('off',y>60);if(navEl.classList.contains('menu-open')){lastY=y;return;}if(y>lastY&&y>120)navEl.classList.add('hidden');else navEl.classList.remove('hidden');lastY=y;},{passive:true});
 
 
 

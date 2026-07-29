@@ -66,8 +66,11 @@
   .svc-logos img{height:clamp(22px,3vw,34px);width:auto;object-fit:contain;opacity:.8;transition:.25s}
   .svc-logos img:hover{opacity:1}
   /* overlapping photo/card grid */
-  .grid-sec{padding-top:0}
-  .grid-title{text-align:center;font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(28px,4.5vw,46px);margin-bottom:clamp(30px,5vw,54px)}
+  .grid-sec{padding-top:clamp(44px,6vw,72px)}
+  .grid-head{max-width:1200px;margin:0 auto clamp(28px,4.5vw,50px);
+    padding-top:clamp(26px,4vw,40px);border-top:1px solid #262622}
+  .grid-title{text-align:center;margin:0;font-family:var(--serif);font-style:italic;
+    font-weight:500;font-size:clamp(28px,4.5vw,46px);line-height:1.1}
   .ogrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,3vw,34px);max-width:1200px;margin:0 auto}
   @media(max-width:760px){.ogrid{grid-template-columns:1fr}}
   .ocell{display:none}
@@ -196,22 +199,10 @@
   </div>
 </section>
 
-<section class="grid-sec" id="gridSec_sga" style="display:none">
-  <h2 class="grid-title" data-c="sga_title">Ceramic Coating</h2>
-  <div class="ogrid">
-    <div class="ocell" id="sgac1"><div class="ph" id="sgac1ph"></div>
-      <div class="card"><h3 data-c="sga1_title">Step 1</h3><p data-c="sga1_text">Add your text in the admin.</p></div></div>
-    <div class="ocell" id="sgac2"><div class="ph" id="sgac2ph"></div>
-      <div class="card"><h3 data-c="sga2_title">Step 2</h3><p data-c="sga2_text">Add your text in the admin.</p></div></div>
-    <div class="ocell" id="sgac3"><div class="ph" id="sgac3ph"></div>
-      <div class="card"><h3 data-c="sga3_title">Step 3</h3><p data-c="sga3_text">Add your text in the admin.</p></div></div>
-    <div class="ocell" id="sgac4"><div class="ph" id="sgac4ph"></div>
-      <div class="card"><h3 data-c="sga4_title">Step 4</h3><p data-c="sga4_text">Add your text in the admin.</p></div></div>
-  </div>
-</section>
-
 <section class="grid-sec" id="gridSec" style="display:none">
-  <h2 class="grid-title" data-c="sg_title">Paint Protection Film (PPF)</h2>
+  <div class="grid-head">
+    <h2 class="grid-title" data-c="sg_title">Paint Protection Film (PPF)</h2>
+  </div>
   <div class="ogrid">
     <div class="ocell" id="og1"><div class="ph" id="og1ph"></div>
       <div class="card"><h3 data-c="sg1_title">Preparation</h3><p data-c="sg1_text">Add your text in the admin.</p></div></div>
@@ -225,7 +216,9 @@
 </section>
 
 <section class="grid-sec" id="gridSec_sgc" style="display:none">
-  <h2 class="grid-title" data-c="sgc_title">Wrapping</h2>
+  <div class="grid-head">
+    <h2 class="grid-title" data-c="sgc_title">Wrapping</h2>
+  </div>
   <div class="ogrid">
     <div class="ocell" id="sgcc1"><div class="ph" id="sgcc1ph"></div>
       <div class="card"><h3 data-c="sgc1_title">Step 1</h3><p data-c="sgc1_text">Add your text in the admin.</p></div></div>
@@ -238,8 +231,26 @@
   </div>
 </section>
 
+<section class="grid-sec" id="gridSec_sga" style="display:none">
+  <div class="grid-head">
+    <h2 class="grid-title" data-c="sga_title">Ceramic Coating</h2>
+  </div>
+  <div class="ogrid">
+    <div class="ocell" id="sgac1"><div class="ph" id="sgac1ph"></div>
+      <div class="card"><h3 data-c="sga1_title">Step 1</h3><p data-c="sga1_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgac2"><div class="ph" id="sgac2ph"></div>
+      <div class="card"><h3 data-c="sga2_title">Step 2</h3><p data-c="sga2_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgac3"><div class="ph" id="sgac3ph"></div>
+      <div class="card"><h3 data-c="sga3_title">Step 3</h3><p data-c="sga3_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgac4"><div class="ph" id="sgac4ph"></div>
+      <div class="card"><h3 data-c="sga4_title">Step 4</h3><p data-c="sga4_text">Add your text in the admin.</p></div></div>
+  </div>
+</section>
+
 <section class="grid-sec" id="gridSec_sgd" style="display:none">
-  <h2 class="grid-title" data-c="sgd_title">Detailing</h2>
+  <div class="grid-head">
+    <h2 class="grid-title" data-c="sgd_title">Detailing</h2>
+  </div>
   <div class="ogrid">
     <div class="ocell" id="sgdc1"><div class="ph" id="sgdc1ph"></div>
       <div class="card"><h3 data-c="sgd1_title">Step 1</h3><p data-c="sgd1_text">Add your text in the admin.</p></div></div>
@@ -372,8 +383,8 @@
     });
     // overlapping photo/card grids — one per service
     (function(){
-      var GRIDS=[['sga','sgac','gridSec_sga'],['sg','og','gridSec'],
-                 ['sgc','sgcc','gridSec_sgc'],['sgd','sgdc','gridSec_sgd']];
+      var GRIDS=[['sg','og','gridSec'],['sgc','sgcc','gridSec_sgc'],
+                 ['sga','sgac','gridSec_sga'],['sgd','sgdc','gridSec_sgd']];
       GRIDS.forEach(function(g){
         var pre=g[0], cid=g[1], sid=g[2], shown=0;
         [1,2,3,4].forEach(function(n){

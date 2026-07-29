@@ -313,6 +313,9 @@
           if(pos&&String(pos).trim()){var pp=String(pos).trim().toLowerCase();
             if(pp.indexOf('left')>-1||pp.indexOf('right')>-1) el.style.backgroundPosition=pp+' center';
             else el.style.backgroundPosition='center '+pp;}
+          const zoom=C['br'+n+'_zoom'];
+          if(zoom&&String(zoom).trim()&&String(zoom).trim()!=='100'){el.style.backgroundSize=String(zoom).trim()+'%';}
+          else{el.style.backgroundSize='cover';}
           const pre=new Image();
           pre.onload=function(){el.style.backgroundImage="url('"+url+"')";el.classList.add('on');};
           pre.src=url;

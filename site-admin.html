@@ -57,6 +57,20 @@
   #gate .box{max-width:340px;width:100%}
   #gate .err{color:var(--red);font-size:12px;margin:8px 0;min-height:15px}
   a.back{position:fixed;top:8px;left:8px;z-index:110;background:rgba(0,0,0,.6);color:var(--gold);text-decoration:none;font-size:12px;font-weight:700;padding:6px 11px;border-radius:20px}
+
+  .ps-controls{margin:10px 0}
+  .ps-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .ps-row>span{width:48px;font-size:12px;color:#999;flex:none}
+  .ps-row select{flex:1;padding:6px 8px}
+  .ps-row input[type=range]{flex:1}
+  .ps-row b{font-size:12px;color:#F5C518;width:44px;text-align:right}
+  .ps-previews{display:flex;gap:14px;margin-top:8px;flex-wrap:wrap}
+  .ps-pv{flex:1;min-width:150px}
+  .ps-tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:5px}
+  .ps-pc{width:100%;aspect-ratio:5/4;border-radius:0 12px 0 0;background:#1a1a17;background-size:cover;background-position:center}
+  .ps-mb{width:120px;aspect-ratio:16/10;border-radius:6px;background:#1a1a17;background-size:cover;background-position:center;margin:0 auto}
+  .ps-empty{background:#1a1a17 !important;position:relative}
+  .ps-empty::after{content:'no photo';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#555;font-size:11px}
 </style>
 </head>
 <body>
@@ -249,26 +263,22 @@ const SCHEMA=[
    ['br_text','Intro paragraph','area'],
  ]},
  {t:'Brand',h:'1. Our Customers',f:[
-   ['br1_img','Photo (full-width band)','img'],
-   ['br1_pos','Photo focus','pos'],
+   ['br1','Photo','photostudio'],
    ['br1_title','Heading','line'],
    ['br1_text','Text','area'],
  ]},
  {t:'Brand',h:'2. Our People',f:[
-   ['br2_img','Photo (full-width band)','img'],
-   ['br2_pos','Photo focus','pos'],
+   ['br2','Photo','photostudio'],
    ['br2_title','Heading','line'],
    ['br2_text','Text','area'],
  ]},
  {t:'Brand',h:'3. Our Products',f:[
-   ['br3_img','Photo (full-width band)','img'],
-   ['br3_pos','Photo focus','pos'],
+   ['br3','Photo','photostudio'],
    ['br3_title','Heading','line'],
    ['br3_text','Text','area'],
  ]},
  {t:'Brand',h:'4. Our Facility',f:[
-   ['br4_img','Photo (full-width band)','img'],
-   ['br4_pos','Photo focus','pos'],
+   ['br4','Photo','photostudio'],
    ['br4_title','Heading','line'],
    ['br4_text','Text','area'],
  ]},
@@ -663,6 +673,34 @@ function render(){
     const fields=sec.f.map(([key,label,type])=>{
       const v=DATA[key]||'';
       if(type==='area') return `<label>${esc(label)}</label><textarea data-k="${key}" oninput="onEdit()">${esc(v)}</textarea>`;
+      if(type==='photostudio'){
+        const imgK=key+'_img', posK=key+'_pos', zoomK=key+'_zoom';
+        const iv=esc(DATA[imgK]||''), pv=esc(DATA[posK]||'center'), zv=esc(DATA[zoomK]||'100');
+        return `<label>${esc(label)}</label>
+        <input data-k="${imgK}" value="${iv}" oninput="onEdit();psRender('${key}')" placeholder="photo URL (or upload below)">
+        <button type="button" class="upbtn" onclick="imgPick('${imgK}')"><i class="ti ti-upload"></i> Upload photo</button>
+        ${SIZEHINT[imgK]?`<div class="hint2"><i class="ti ti-photo"></i> ${SIZEHINT[imgK]}</div>`:''}
+        <div class="ps-controls">
+          <div class="ps-row"><span>Focus</span>
+            <select data-k="${posK}" onchange="onEdit();psRender('${key}')">
+              <option value="center"${pv==='center'?' selected':''}>Center</option>
+              <option value="top"${pv==='top'?' selected':''}>Top</option>
+              <option value="bottom"${pv==='bottom'?' selected':''}>Bottom</option>
+              <option value="left"${pv==='left'?' selected':''}>Left</option>
+              <option value="right"${pv==='right'?' selected':''}>Right</option>
+            </select>
+          </div>
+          <div class="ps-row"><span>Zoom</span>
+            <input type="range" min="100" max="220" step="5" value="${zv}" data-k="${zoomK}"
+              oninput="onEdit();psZoom('${key}',this.value)">
+            <b id="pszl_${key}">${zv}%</b>
+          </div>
+        </div>
+        <div class="ps-previews">
+          <div class="ps-pv"><div class="ps-tag">PC view</div><div class="ps-pc" id="pspc_${key}"></div></div>
+          <div class="ps-pv"><div class="ps-tag">Mobile view</div><div class="ps-mb" id="psmb_${key}"></div></div>
+        </div>`;
+      }
       if(type==='img') return `<label>${esc(label)}</label><input data-k="${key}" value="${esc(v)}" oninput="onEdit();previewImg('${key}')" placeholder="photo URL (or upload below)">
         <button type="button" class="upbtn" onclick="imgPick('${key}')"><i class="ti ti-upload"></i> Upload photo</button>
         ${SIZEHINT[key]?`<div class="hint2"><i class="ti ti-photo"></i> ${SIZEHINT[key]}</div>`:''}
@@ -730,8 +768,26 @@ function render(){
   document.querySelectorAll('.sec .ggrid').forEach(g=>{
     const k=g.id.replace('gal_',''); if(k) galRender(k);
   });
+  psRenderAll();
 }
-function previewImg(k){ const el=$('prev_'+k); if(el){ el.style.opacity=1; el.src=document.querySelector('[data-k="'+k+'"]').value; } }
+function previewImg(k){ const el=$('prev_'+k); if(el){ el.style.opacity=1; el.src=document.querySelector('[data-k="'+k+'"]').value; } var mb=k.match(/^(br[0-9])_img$/); if(mb){ if(typeof psRender==='function') psRender(mb[1]); } }
+
+      function psZoom(base,val){ var l=$('pszl_'+base); if(l)l.textContent=val+'%'; psRender(base); }
+      function psRender(base){
+        var img=(DATA[base+'_img']||'').replace(/'/g,'');
+        var pos=(DATA[base+'_pos']||'center').toLowerCase();
+        var zoom=DATA[base+'_zoom']||'100';
+        var bgPos = (pos.indexOf('left')>-1||pos.indexOf('right')>-1) ? pos+' center' : 'center '+pos;
+        var bgSize = (zoom&&zoom!=='100') ? zoom+'%' : 'cover';
+        ['pspc_'+base,'psmb_'+base].forEach(function(id){
+          var el=$(id); if(!el) return;
+          if(img){ el.style.backgroundImage="url('"+img+"')"; el.style.backgroundPosition=bgPos;
+            el.style.backgroundSize=bgSize; el.style.backgroundRepeat='no-repeat'; el.classList.remove('ps-empty'); }
+          else { el.style.backgroundImage=''; el.classList.add('ps-empty'); }
+        });
+      }
+      function psRenderAll(){ ['br1','br2','br3','br4'].forEach(function(b){ if($('pspc_'+b)) psRender(b); }); }
+      previewImg;
 let dirty=false;
 function syncDom(){ document.querySelectorAll('[data-k]').forEach(el=>{ DATA[el.dataset.k]=el.value; }); }
 function onEdit(){ syncDom(); dirty=true; $('msg').textContent='Unsaved changes'; $('msg').className='msg'; }

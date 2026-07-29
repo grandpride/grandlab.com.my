@@ -134,9 +134,13 @@
   @media(max-width:820px){.foot-grid{grid-template-columns:1fr;gap:34px;text-align:center}footer .socials{justify-content:center}.foot-row{justify-content:center}}
 
   body.no-hero .brand-intro{padding-top:clamp(120px,15vw,150px)}
+
+  /* content flash guard */ /*data-cloak*/
+  body.cloak{opacity:0}
+  body{opacity:1;transition:opacity .2s ease}
 </style>
 </head>
-<body class="no-hero">
+<body class="no-hero cloak">
 <nav id="nav">
   <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo"></a>
   <div class="links" id="navLinks">
@@ -245,6 +249,7 @@
       })();
       document.querySelectorAll('[data-c]').forEach(e=>{const v=C[e.dataset.c];
       if(v!=null&&v!=='')e.textContent=v;});
+      document.body.classList.remove('cloak');
       // --- footer background + logo + copyright ---
       const ft=document.querySelector('footer');
       if(ft&&C.ft_bg){ft.classList.add('has-bg');ft.style.backgroundImage="url('"+C.ft_bg+"')";
@@ -283,8 +288,9 @@
           pre.src=url;
         }
       });
-    }catch(e){}
+    }catch(e){document.body.classList.remove('cloak');}
   })();
 </script>
+<script>setTimeout(function(){document.body.classList.remove('cloak');},1500);</script>
 </body>
 </html>

@@ -125,9 +125,13 @@
   .socials a i{font-size:18px;line-height:1;flex:none}
   .socials a:hover{border-color:var(--gold);color:var(--gold)}
   .copyright{text-align:center;color:var(--muted);font-size:12px;margin-top:50px;padding-top:24px;border-top:1px solid var(--line)}
+
+  /* content flash guard */ /*data-cloak*/
+  body.cloak{opacity:0}
+  body{opacity:1;transition:opacity .2s ease}
 </style>
 </head>
-<body>
+<body class="cloak">
 <nav id="nav">
   <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo"></a>
   <div class="links" id="navLinks">
@@ -251,6 +255,7 @@
         if(C.font_body_px){document.body.style.setProperty('--bpx',(+C.font_body_px||16)+'px');}
       })();
       document.querySelectorAll('[data-c]').forEach(el=>{const v=C[el.dataset.c];if(v!=null&&v!=='')el.textContent=v;});
+      document.body.classList.remove('cloak');
       document.querySelectorAll('[data-cimg]').forEach(el=>{const v=C[el.dataset.cimg];if(v)el.src=v;});
       // --- standalone photo bands (NVN-style) ---
       function photoBand(id,imgKey,vidKey,typeKey){
@@ -338,8 +343,9 @@
       if(C.contact_whatsapp){const w='https://wa.me/'+C.contact_whatsapp.replace(/[^0-9]/g,'');document.querySelectorAll('a[href*="wa.me"]').forEach(a=>a.href=w);}
       if(C.contact_phone){document.querySelectorAll('a[href^="tel:"]').forEach(a=>{a.href='tel:'+C.contact_phone.replace(/[^0-9+]/g,'');if(a.querySelector('i'))return;a.textContent=C.contact_phone;});}
       if(C.contact_instagram){document.querySelectorAll('a[href*="instagram.com"]').forEach(a=>a.href=C.contact_instagram);}
-    }catch(e){}
+    }catch(e){document.body.classList.remove('cloak');}
   })();
 </script>
+<script>setTimeout(function(){document.body.classList.remove('cloak');},1500);</script>
 </body>
 </html>

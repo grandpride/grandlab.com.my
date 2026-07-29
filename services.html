@@ -286,7 +286,7 @@
   <p>Tell us about your car and we'll recommend the right care for it.</p>
   <div class="btns">
     <a class="btn btn-gold" href="https://wa.me/60169618299" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp"></i> WhatsApp Us</a>
-    <a class="btn btn-ghost" href="pricing.html"><i class="ti ti-tag"></i> View Pricing</a>
+    <a class="btn btn-ghost" id="priceBtn" href="pricing.html" style="display:none"><i class="ti ti-tag"></i> View Pricing</a>
   </div>
 </section>
 
@@ -421,6 +421,11 @@
     (function(){
       var r=C.sg_ratio;
       if(r&&String(r).trim()) document.documentElement.style.setProperty('--gridratio',String(r).trim());
+    })();
+    // admin switch: View Pricing button (off by default)
+    (function(){
+      var b=document.getElementById('priceBtn');
+      if(b && String(C.sp_pricing_show||'no').toLowerCase()==='yes') b.style.display='';
     })();
     // admin switch: hide the four text/photo service blocks
     (function(){

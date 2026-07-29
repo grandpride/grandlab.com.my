@@ -274,6 +274,7 @@ const SCHEMA=[
  {t:'Services',h:'Service text blocks — show or hide',open:true,f:[
    ['sp_blocks_show','The four Coating / PPF / Wrapping / Detailing text blocks','yesno'],
    ['sg_ratio','Grid photo shape','ratio'],
+   ['sp_pricing_show','"View Pricing" button on the Ready to book panel','yesno2'],
  ]},
  {t:'Brand',h:'Page intro',open:true,f:[
    ['br_title','Page heading','line'],
@@ -842,6 +843,15 @@ function render(){
           ${opts.map(o=>`<option value="${o[0]}"${rv===o[0]?' selected':''}>${o[1]}</option>`).join('')}
         </select>
         <div class="hint2"><i class="ti ti-crop"></i> Applies to all four service grids.</div>`;
+      }
+      if(type==='yesno2'){
+        const yv=(String(DATA[key]||'no').toLowerCase()==='yes')?'yes':'no';
+        return `<label>${esc(label)}</label>
+        <select data-k="${key}" oninput="onEdit()">
+          <option value="no"${yv==='no'?' selected':''}>Hidden</option>
+          <option value="yes"${yv==='yes'?' selected':''}>Show on website</option>
+        </select>
+        <div class="hint2"><i class="ti ti-info-circle"></i> Keep hidden until a pricing page exists.</div>`;
       }
       if(type==='yesno'){
         const yv=(String(DATA[key]||'yes').toLowerCase()==='no')?'no':'yes';

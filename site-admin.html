@@ -273,6 +273,7 @@ const SCHEMA=[
  ]},
  {t:'Services',h:'Service text blocks — show or hide',open:true,f:[
    ['sp_blocks_show','The four Coating / PPF / Wrapping / Detailing text blocks','yesno'],
+   ['sg_ratio','Grid photo shape','ratio'],
  ]},
  {t:'Brand',h:'Page intro',open:true,f:[
    ['br_title','Page heading','line'],
@@ -816,6 +817,16 @@ function render(){
           <div class="hp-col mb"><div class="ps-tag">Mobile view</div>
             <div class="hp-mb" id="hpmb_${key}"><div class="hp-fade"></div></div></div>
         </div>`;
+      }
+      if(type==='ratio'){
+        const opts=[['3/4','Portrait — 3:4 (default)'],['2/3','Portrait — 2:3 (tall, matches your photos)'],
+                    ['4/5','Portrait — 4:5 (gentle)'],['1/1','Square'],['16/10','Landscape — 16:10 (old look)']];
+        const rv=String(DATA[key]||'3/4');
+        return `<label>${esc(label)}</label>
+        <select data-k="${key}" oninput="onEdit()">
+          ${opts.map(o=>`<option value="${o[0]}"${rv===o[0]?' selected':''}>${o[1]}</option>`).join('')}
+        </select>
+        <div class="hint2"><i class="ti ti-crop"></i> Applies to all four service grids.</div>`;
       }
       if(type==='yesno'){
         const yv=(String(DATA[key]||'yes').toLowerCase()==='no')?'no':'yes';

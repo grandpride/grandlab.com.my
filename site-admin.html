@@ -67,8 +67,8 @@
   .ps-previews{display:flex;gap:14px;margin-top:8px;flex-wrap:wrap}
   .ps-pv{flex:1;min-width:150px}
   .ps-tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:5px}
-  .ps-pc{width:100%;aspect-ratio:5/4;border-radius:0 12px 0 0;background:#1a1a17;background-size:cover;background-position:center}
-  .ps-mb{width:120px;aspect-ratio:16/10;border-radius:6px;background:#1a1a17;background-size:cover;background-position:center;margin:0 auto}
+  .ps-pc{width:70%;max-width:180px;aspect-ratio:2/3;border-radius:0 12px 0 0;background:#1a1a17;background-size:cover;background-position:center;margin:0 auto}
+  .ps-mb{width:90px;aspect-ratio:2/3;border-radius:6px;background:#1a1a17;background-size:cover;background-position:center;margin:0 auto}
   .ps-empty{background:#1a1a17 !important;position:relative}
   .ps-empty::after{content:'no photo';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#555;font-size:11px}
 </style>
@@ -691,7 +691,7 @@ function render(){
             </select>
           </div>
           <div class="ps-row"><span>Zoom</span>
-            <input type="range" min="100" max="220" step="5" value="${zv}" data-k="${zoomK}"
+            <input type="range" min="60" max="200" step="5" value="${zv}" data-k="${zoomK}"
               oninput="onEdit();psZoom('${key}',this.value)">
             <b id="pszl_${key}">${zv}%</b>
           </div>
@@ -778,7 +778,8 @@ function previewImg(k){ const el=$('prev_'+k); if(el){ el.style.opacity=1; el.sr
         var pos=(DATA[base+'_pos']||'center').toLowerCase();
         var zoom=DATA[base+'_zoom']||'100';
         var bgPos = (pos.indexOf('left')>-1||pos.indexOf('right')>-1) ? pos+' center' : 'center '+pos;
-        var bgSize = (zoom&&zoom!=='100') ? zoom+'%' : 'cover';
+        var zi=parseInt(zoom,10)||100;
+        var bgSize = zi<100 ? 'contain' : (zi===100 ? 'cover' : zi+'%');
         ['pspc_'+base,'psmb_'+base].forEach(function(id){
           var el=$(id); if(!el) return;
           if(img){ el.style.backgroundImage="url('"+img+"')"; el.style.backgroundPosition=bgPos;

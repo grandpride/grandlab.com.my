@@ -139,7 +139,7 @@
   <p data-c="sp_hero_text">Premium care for every surface of your vehicle — from lasting protection to a flawless finish.</p>
 </header>
 
-<section>
+<section id="svcBlocks">
   <!-- COATING -->
   <div class="svc-block">
     <div class="txt">
@@ -196,6 +196,20 @@
   </div>
 </section>
 
+<section class="grid-sec" id="gridSec_sga" style="display:none">
+  <h2 class="grid-title" data-c="sga_title">Ceramic Coating</h2>
+  <div class="ogrid">
+    <div class="ocell" id="sgac1"><div class="ph" id="sgac1ph"></div>
+      <div class="card"><h3 data-c="sga1_title">Step 1</h3><p data-c="sga1_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgac2"><div class="ph" id="sgac2ph"></div>
+      <div class="card"><h3 data-c="sga2_title">Step 2</h3><p data-c="sga2_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgac3"><div class="ph" id="sgac3ph"></div>
+      <div class="card"><h3 data-c="sga3_title">Step 3</h3><p data-c="sga3_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgac4"><div class="ph" id="sgac4ph"></div>
+      <div class="card"><h3 data-c="sga4_title">Step 4</h3><p data-c="sga4_text">Add your text in the admin.</p></div></div>
+  </div>
+</section>
+
 <section class="grid-sec" id="gridSec" style="display:none">
   <h2 class="grid-title" data-c="sg_title">Paint Protection Film (PPF)</h2>
   <div class="ogrid">
@@ -209,6 +223,35 @@
       <div class="card"><h3 data-c="sg4_title">Final inspection</h3><p data-c="sg4_text">Add your text in the admin.</p></div></div>
   </div>
 </section>
+
+<section class="grid-sec" id="gridSec_sgc" style="display:none">
+  <h2 class="grid-title" data-c="sgc_title">Wrapping</h2>
+  <div class="ogrid">
+    <div class="ocell" id="sgcc1"><div class="ph" id="sgcc1ph"></div>
+      <div class="card"><h3 data-c="sgc1_title">Step 1</h3><p data-c="sgc1_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgcc2"><div class="ph" id="sgcc2ph"></div>
+      <div class="card"><h3 data-c="sgc2_title">Step 2</h3><p data-c="sgc2_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgcc3"><div class="ph" id="sgcc3ph"></div>
+      <div class="card"><h3 data-c="sgc3_title">Step 3</h3><p data-c="sgc3_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgcc4"><div class="ph" id="sgcc4ph"></div>
+      <div class="card"><h3 data-c="sgc4_title">Step 4</h3><p data-c="sgc4_text">Add your text in the admin.</p></div></div>
+  </div>
+</section>
+
+<section class="grid-sec" id="gridSec_sgd" style="display:none">
+  <h2 class="grid-title" data-c="sgd_title">Detailing</h2>
+  <div class="ogrid">
+    <div class="ocell" id="sgdc1"><div class="ph" id="sgdc1ph"></div>
+      <div class="card"><h3 data-c="sgd1_title">Step 1</h3><p data-c="sgd1_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgdc2"><div class="ph" id="sgdc2ph"></div>
+      <div class="card"><h3 data-c="sgd2_title">Step 2</h3><p data-c="sgd2_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgdc3"><div class="ph" id="sgdc3ph"></div>
+      <div class="card"><h3 data-c="sgd3_title">Step 3</h3><p data-c="sgd3_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgdc4"><div class="ph" id="sgdc4ph"></div>
+      <div class="card"><h3 data-c="sgd4_title">Step 4</h3><p data-c="sgd4_text">Add your text in the admin.</p></div></div>
+  </div>
+</section>
+
 
 <section class="cta">
   <h2 class="serif">Ready to book?</h2>
@@ -327,19 +370,29 @@
           .map(u=>'<img src="'+u.replace(/"/g,'')+'" alt="" loading="lazy">').join('');
       }
     });
-    // overlapping photo/card grid
+    // overlapping photo/card grids — one per service
     (function(){
-      let shown=0;
-      [1,2,3,4].forEach(n=>{
-        const cell=document.getElementById('og'+n), ph=document.getElementById('og'+n+'ph');
-        const img=C['sg'+n+'_img'];
-        if(cell&&ph&&img&&String(img).trim()){
-          ph.style.backgroundImage="url('"+String(img).replace(/'/g,'')+"')";
-          cell.classList.add('on'); shown++;
-        }
+      var GRIDS=[['sga','sgac','gridSec_sga'],['sg','og','gridSec'],
+                 ['sgc','sgcc','gridSec_sgc'],['sgd','sgdc','gridSec_sgd']];
+      GRIDS.forEach(function(g){
+        var pre=g[0], cid=g[1], sid=g[2], shown=0;
+        [1,2,3,4].forEach(function(n){
+          var cell=document.getElementById(cid+n), ph=document.getElementById(cid+n+'ph');
+          var img=C[pre+n+'_img'];
+          if(cell&&ph&&img&&String(img).trim()){
+            ph.style.backgroundImage="url('"+String(img).replace(/'/g,'')+"')";
+            cell.classList.add('on'); shown++;
+          }
+        });
+        var sec=document.getElementById(sid);
+        if(sec&&shown) sec.style.display='block';
       });
-      const sec=document.getElementById('gridSec');
-      if(sec&&shown) sec.style.display='block';
+    })();
+    // admin switch: hide the four text/photo service blocks
+    (function(){
+      if(String(C.sp_blocks_show==null?'yes':C.sp_blocks_show).toLowerCase()==='no'){
+        var sb=document.getElementById('svcBlocks'); if(sb) sb.style.display='none';
+      }
     })();
   }catch(e){document.body.classList.remove('cloak');}
 })();

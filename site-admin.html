@@ -805,7 +805,7 @@ async function uploadVideo(file,key){
       method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:'Bearer '+SUPABASE_ANON},body:file});
     if(r.ok){
       const url=SUPABASE_URL+'/storage/v1/object/public/gl-videos/'+path;
-      const inp=document.querySelector('[data-k="'+key+'"]'); inp.value=url; onEdit();
+      const inp=document.querySelector('[data-k="'+key+'"]'); inp.value=url; onEdit(); previewImg(key); { var _m=String(key).match(/^(br[0-9])_img$/); if(_m&&typeof psRender==='function') psRender(_m[1]); }
       st.innerHTML='<span style="color:#3ec76e">✓ Uploaded. Remember to Save.</span>';
     } else { st.innerHTML='<span style="color:#e0533d">Upload failed — check the gl-videos bucket exists and is public.</span>'; }
   }catch(e){ st.innerHTML='<span style="color:#e0533d">Error: '+e.message+'</span>'; }
@@ -873,7 +873,10 @@ function fontPreview(){/* dropdown option font-family already previews */}
 async function saveAll(){
   $('saveBtn').disabled=true; $('msg').textContent='Saving…'; $('msg').className='msg';
   syncDom();
-  const ALLKEYS=[]; SCHEMA.forEach(sec=>sec.f.forEach(fd=>ALLKEYS.push(fd[0])));
+  const ALLKEYS=[]; SCHEMA.forEach(sec=>sec.f.forEach(fd=>{
+    if(fd[2]==='photostudio'){ ALLKEYS.push(fd[0]+'_img', fd[0]+'_pos', fd[0]+'_zoom'); }
+    else { ALLKEYS.push(fd[0]); }
+  }));
   const now=new Date().toISOString();
   const rows=ALLKEYS.filter(k=>DATA[k]!==undefined)
                     .map(k=>({key:k, value:DATA[k]===null?'':String(DATA[k]), updated_at:now}));

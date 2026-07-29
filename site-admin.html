@@ -680,6 +680,7 @@ function render(){
         <input data-k="${imgK}" value="${iv}" oninput="onEdit();psRender('${key}')" placeholder="photo URL (or upload below)">
         <button type="button" class="upbtn" onclick="imgPick('${imgK}')"><i class="ti ti-upload"></i> Upload photo</button>
         ${SIZEHINT[imgK]?`<div class="hint2"><i class="ti ti-photo"></i> ${SIZEHINT[imgK]}</div>`:''}
+        <div class="hint2" id="imgstat_${imgK}"></div>
         <div class="ps-controls">
           <div class="ps-row"><span>Focus</span>
             <select data-k="${posK}" onchange="onEdit();psRender('${key}')">
@@ -817,7 +818,8 @@ function imgPick(key){
 }
 async function imgUpload(key,file){
   const st=document.getElementById('imgstat_'+key);
-  st.textContent='Uploading…';
+  const setStat=(html,isHtml)=>{ if(!st)return; if(isHtml)st.innerHTML=html; else st.textContent=html; };
+  setStat('Uploading\u2026');
   try{
     const ext=(file.name.split('.').pop()||'jpg').toLowerCase();
     const path='site-'+Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+ext;
@@ -827,11 +829,11 @@ async function imgUpload(key,file){
       const url=SUPABASE_URL+'/storage/v1/object/public/gl-images/'+path;
       const inp=document.querySelector('input[data-k="'+key+'"]');
       inp.value=url; previewImg(key); onEdit();
-      st.innerHTML='<span style="color:#3ec76e">\u2713 Uploaded. Remember to Save.</span>';
+      setStat('<span style="color:#3ec76e">\u2713 Uploaded. Remember to Save.</span>',true);
     } else {
-      st.innerHTML='<span style="color:#e0533d">Upload failed — check the gl-images bucket is public.</span>';
+      setStat('<span style="color:#e0533d">Upload failed \u2014 check the gl-images bucket is public.</span>',true);
     }
-  }catch(e){ st.innerHTML='<span style="color:#e0533d">Error: '+e.message+'</span>'; }
+  }catch(e){ setStat('<span style="color:#e0533d">Error: '+e.message+'</span>',true); }
 }
 
 // ---- gallery (multi-photo) helpers ----

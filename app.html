@@ -32,7 +32,7 @@
   nav .burger.open span:nth-child(1){transform:translateY(11px) rotate(45deg)}
   nav .burger.open span:nth-child(2){opacity:0}
   nav .burger.open span:nth-child(3){width:34px;transform:translateY(-11px) rotate(-45deg)}
-  @media(max-width:860px){nav .links{position:fixed;inset:0;background:#0a0a0a;flex-direction:column;align-items:center;justify-content:flex-start;gap:clamp(10px,2.4vh,24px);font-family:var(--serif);font-size:clamp(17px,3.9vw,30px);font-weight:500;letter-spacing:.03em;transform:translateX(100%);transition:transform .35s ease;padding:clamp(96px,15vh,140px) 6vw 40px;z-index:100;overflow-y:auto;-webkit-overflow-scrolling:touch;text-align:center}
+  @media(max-width:1024px){nav .links{position:fixed;inset:0;background:#0a0a0a;flex-direction:column;align-items:center;justify-content:flex-start;gap:clamp(10px,2.4vh,24px);font-family:var(--serif);font-size:clamp(17px,3.9vw,30px);font-weight:500;letter-spacing:.03em;transform:translateX(100%);transition:transform .35s ease;padding:clamp(96px,15vh,140px) 6vw 40px;z-index:100;overflow-y:auto;-webkit-overflow-scrolling:touch;text-align:center}
   nav .links a{line-height:1.25;max-width:100%}nav .links.open{transform:translateX(0)}nav .burger{display:block}nav{justify-content:center}nav .brand{position:relative;z-index:102}nav .burger{position:fixed;right:6vw;top:26px;transform:none;z-index:102}nav .brand-logo{max-width:min(200px,55vw)}}
 
   /* hero slideshow */
@@ -390,7 +390,7 @@
       <div class="foot-h">Get In Touch</div>
       <div class="foot-row"><i class="ti ti-phone"></i><a id="footPhone" href="tel:+60169618299">+60 16-961 8299</a></div>
       <div class="foot-row"><i class="ti ti-brand-whatsapp"></i><a id="footWa" href="https://wa.me/60169618299" target="_blank" rel="noopener">WhatsApp</a></div>
-      <div class="foot-row"><i class="ti ti-shield-check"></i><a href="https://grandpride.github.io/Grandlab-app/gl-warranty.html" target="_blank" rel="noopener">Check GrandLab e-Warranty</a></div>
+      <div class="foot-row"><i class="ti ti-shield-check"></i><a href="https://app.grandlab.com.my/gl-warranty.html" target="_blank" rel="noopener">Check GrandLab e-Warranty</a></div>
     </div>
   </div>
   <div class="copyright" id="copyText">&copy; <span id="yr"></span> GrandPride Luxury Travel Sdn Bhd (1297143-K) &bull; All rights reserved</div>
@@ -458,7 +458,7 @@
       (function(){var ua=navigator.userAgent||'';if(/Android/i.test(ua))showInst('and');})();
       // QR code generated from the app URL
       (function(){var box=document.getElementById('qrBox');if(!box)return;
-        var link=(C['ap_qr_url']&&String(C['ap_qr_url']).trim())?String(C['ap_qr_url']).trim():'https://grandpride.github.io/Grandlab-app/';
+        var link=(C['ap_qr_url']&&String(C['ap_qr_url']).trim())?String(C['ap_qr_url']).trim():'https://app.grandlab.com.my/';
         function draw(){try{new QRCode(box,{text:link,width:180,height:180,colorDark:'#0a0a0a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});}catch(e){document.body.classList.remove('cloak');box.innerHTML='<img alt="QR" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data='+encodeURIComponent(link)+'">';}}
         if(window.QRCode){draw();}else{var sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js';sc.onload=draw;sc.onerror=function(){box.innerHTML='<img alt="QR" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data='+encodeURIComponent(link)+'">';};document.head.appendChild(sc);}
       })();

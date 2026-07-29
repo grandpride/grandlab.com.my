@@ -215,22 +215,6 @@
   </div>
 </section>
 
-<section class="grid-sec" id="gridSec_sgt" style="display:none">
-  <div class="grid-head">
-    <h2 class="grid-title" data-c="sgt_title">Window Tinting</h2>
-  </div>
-  <div class="ogrid">
-    <div class="ocell" id="sgtc1"><div class="ph" id="sgtc1ph"></div>
-      <div class="card"><h3 data-c="sgt1_title">Step 1</h3><p data-c="sgt1_text">Add your text in the admin.</p></div></div>
-    <div class="ocell" id="sgtc2"><div class="ph" id="sgtc2ph"></div>
-      <div class="card"><h3 data-c="sgt2_title">Step 2</h3><p data-c="sgt2_text">Add your text in the admin.</p></div></div>
-    <div class="ocell" id="sgtc3"><div class="ph" id="sgtc3ph"></div>
-      <div class="card"><h3 data-c="sgt3_title">Step 3</h3><p data-c="sgt3_text">Add your text in the admin.</p></div></div>
-    <div class="ocell" id="sgtc4"><div class="ph" id="sgtc4ph"></div>
-      <div class="card"><h3 data-c="sgt4_title">Step 4</h3><p data-c="sgt4_text">Add your text in the admin.</p></div></div>
-  </div>
-</section>
-
 <section class="grid-sec" id="gridSec_sgc" style="display:none">
   <div class="grid-head">
     <h2 class="grid-title" data-c="sgc_title">Wrapping</h2>
@@ -244,6 +228,22 @@
       <div class="card"><h3 data-c="sgc3_title">Step 3</h3><p data-c="sgc3_text">Add your text in the admin.</p></div></div>
     <div class="ocell" id="sgcc4"><div class="ph" id="sgcc4ph"></div>
       <div class="card"><h3 data-c="sgc4_title">Step 4</h3><p data-c="sgc4_text">Add your text in the admin.</p></div></div>
+  </div>
+</section>
+
+<section class="grid-sec" id="gridSec_sgt" style="display:none">
+  <div class="grid-head">
+    <h2 class="grid-title" data-c="sgt_title">Window Tinting</h2>
+  </div>
+  <div class="ogrid">
+    <div class="ocell" id="sgtc1"><div class="ph" id="sgtc1ph"></div>
+      <div class="card"><h3 data-c="sgt1_title">Step 1</h3><p data-c="sgt1_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgtc2"><div class="ph" id="sgtc2ph"></div>
+      <div class="card"><h3 data-c="sgt2_title">Step 2</h3><p data-c="sgt2_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgtc3"><div class="ph" id="sgtc3ph"></div>
+      <div class="card"><h3 data-c="sgt3_title">Step 3</h3><p data-c="sgt3_text">Add your text in the admin.</p></div></div>
+    <div class="ocell" id="sgtc4"><div class="ph" id="sgtc4ph"></div>
+      <div class="card"><h3 data-c="sgt4_title">Step 4</h3><p data-c="sgt4_text">Add your text in the admin.</p></div></div>
   </div>
 </section>
 
@@ -399,8 +399,8 @@
     });
     // overlapping photo/card grids — one per service
     (function(){
-      var GRIDS=[['sg','og','gridSec'],['sgt','sgtc','gridSec_sgt'],
-                 ['sgc','sgcc','gridSec_sgc'],['sga','sgac','gridSec_sga'],
+      var GRIDS=[['sg','og','gridSec'],['sgc','sgcc','gridSec_sgc'],
+                 ['sgt','sgtc','gridSec_sgt'],['sga','sgac','gridSec_sga'],
                  ['sgd','sgdc','gridSec_sgd']];
       GRIDS.forEach(function(g){
         var pre=g[0], cid=g[1], sid=g[2], shown=0;

@@ -1089,9 +1089,14 @@ async function glDeleteOld(oldUrl,newUrl,key){
     if(!name) return '';
     // still referenced by another field? then leave it alone
     for(var k in DATA){
-      if(k===key) continue;
       var v=DATA[k];
-      if(typeof v==='string' && v.indexOf(name)>=0) return ' (old file kept - still used by '+k+')';
+      if(typeof v!=='string' || v.indexOf(name)<0) continue;
+      if(k===key){
+        var live=(document.querySelector('input[data-k="'+key+'"]')||{}).value||'';
+        if(live.indexOf(name)>=0) return ' (kept - still in this gallery)';
+        continue;
+      }
+      return ' (old file kept - still used by '+k+')';
     }
     var r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-images/'+name,
                       {method:'DELETE',headers:await glUploadHeaders()});
@@ -1132,7 +1137,13 @@ function galRender(key){
   const urls=galUrls(key);
   document.getElementById('gal_'+key).innerHTML=urls.map((u,i)=>'<div class="gthumb"><img src="'+u+'"><button type="button" onclick="galRemove(\''+key+'\','+i+')">&times;</button></div>').join('');
 }
-function galRemove(key,i){ const u=galUrls(key); u.splice(i,1); galInput(key).value=u.join('|'); galRender(key); onEdit(); }
+async function galRemove(key,i){
+  const u=galUrls(key); const gone=u[i];
+  u.splice(i,1); galInput(key).value=u.join('|'); galRender(key); onEdit();
+  const st=document.getElementById('galstat_'+key);
+  const note=await glDeleteOld(gone,'',key);
+  if(st) st.innerHTML='Removed.'+(note?'<span style="opacity:.65">'+note+'</span>':'')+' Remember to Save.';
+}
 function galPick(key){
   const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.multiple=true;
   inp.onchange=async()=>{ await galUpload(key,inp.files); }; inp.click();
@@ -1140,14 +1151,22 @@ function galPick(key){
 async function galUpload(key,files){
   const st=document.getElementById('galstat_'+key); st.textContent='Uploading '+files.length+' photo(s)…';
   let cur=galUrls(key), done=0;
-  for(const f of files){
+  let saved=0, rawTotal=0;
+  for(const f0 of files){
     try{
+      rawTotal+=f0.size;
+      st.textContent='Resizing '+(done+1)+' of '+files.length+'…';
+      const sh=await glShrink(f0,1600);
+      const f=sh.file; saved+=f.size;
+      st.textContent='Uploading '+(done+1)+' of '+files.length+' ('+(f.size/1024).toFixed(0)+' kB)…';
       const path='site-'+Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+((f.name.split('.').pop()||'jpg').toLowerCase());
-      const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-images/'+path,{method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:'Bearer '+SUPABASE_ANON},body:f});
+      const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-images/'+path,{method:'POST',headers:await glUploadHeaders(),body:f});
       if(r.ok){ cur.push(SUPABASE_URL+'/storage/v1/object/public/gl-images/'+path); done++; galInput(key).value=cur.join('|'); galRender(key); }
     }catch(e){}
   }
-  onEdit(); st.innerHTML='<span style="color:#3ec76e">✓ Added '+done+' photo(s). Remember to Save.</span>';
+  onEdit();
+  const note = rawTotal>saved ? '<br><span style="opacity:.65;font-size:11px">'+(rawTotal/1048576).toFixed(1)+' MB → '+(saved/1048576).toFixed(1)+' MB</span>' : '';
+  st.innerHTML='<span style="color:#3ec76e">✓ Added '+done+' photo(s). Remember to Save.</span>'+note;
 }
 
 // load all curated google fonts for admin preview

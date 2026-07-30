@@ -946,6 +946,15 @@ let dirty=false;
 function syncDom(){ document.querySelectorAll('[data-k]').forEach(el=>{ DATA[el.dataset.k]=el.value; }); }
 function onEdit(){ syncDom(); dirty=true; $('msg').textContent='Unsaved changes'; $('msg').className='msg'; }
 
+// storage uploads must go as the logged-in user: gl-videos only allows authenticated inserts
+async function glUploadHeaders(){
+  var tok=SUPABASE_ANON;
+  try{
+    const {data}=await sb.auth.getSession();
+    if(data && data.session && data.session.access_token) tok=data.session.access_token;
+  }catch(e){}
+  return {apikey:SUPABASE_ANON, Authorization:'Bearer '+tok};
+}
 async function uploadVideo(file,key){
   if(!file) return;
   const st=document.getElementById('vidstat_'+key)||document.getElementById('vidstat');
@@ -954,12 +963,16 @@ async function uploadVideo(file,key){
   try{
     const path=key.replace(/[^a-z0-9_]/gi,'')+'-'+Date.now()+'.mp4';
     const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-videos/'+path,{
-      method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:'Bearer '+SUPABASE_ANON},body:file});
+      method:'POST',headers:await glUploadHeaders(),body:file});
     if(r.ok){
       const url=SUPABASE_URL+'/storage/v1/object/public/gl-videos/'+path;
       const inp=document.querySelector('[data-k="'+key+'"]'); inp.value=url; onEdit(); previewImg(key); if(key==='brand_hero_img'&&typeof hpRender==='function') hpRender('brand_hero_pos'); { var _m=String(key).match(/^(br[0-9])_img$/); if(_m&&typeof psRender==='function') psRender(_m[1]); }
       st.innerHTML='<span style="color:#3ec76e">✓ Uploaded. Remember to Save.</span>';
-    } else { st.innerHTML='<span style="color:#e0533d">Upload failed — check the gl-videos bucket exists and is public.</span>'; }
+    } else {
+      let why=''; try{ const j=await r.json(); why=j.message||j.error||''; }catch(_){}
+      if(r.status===400||r.status===401||r.status===403) why=why||'not signed in - sign out, sign back in, then retry';
+      st.innerHTML='<span style="color:#e0533d">Upload failed ('+r.status+')'+(why?' - '+why:'')+'</span>';
+    }
   }catch(e){ st.innerHTML='<span style="color:#e0533d">Error: '+e.message+'</span>'; }
 }
 
@@ -976,7 +989,7 @@ async function imgUpload(key,file){
     const ext=(file.name.split('.').pop()||'jpg').toLowerCase();
     const path='site-'+Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+ext;
     const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-images/'+path,
-      {method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:'Bearer '+SUPABASE_ANON},body:file});
+      {method:'POST',headers:await glUploadHeaders(),body:file});
     if(r.ok){
       const url=SUPABASE_URL+'/storage/v1/object/public/gl-images/'+path;
       const inp=document.querySelector('input[data-k="'+key+'"]');

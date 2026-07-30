@@ -284,6 +284,9 @@ const SCHEMA=[
    ['sg_cardlift','Grid card overlap','lift'],
    ['sp_pricing_show','"View Pricing" button on the Ready to book panel','yesno2'],
  ]},
+ {t:'Brand',h:'Photo shape (all four)',f:[
+   ['br_ratio','Brand photo shape','brratio'],
+ ]},
  {t:'Brand',h:'Page intro',open:true,f:[
    ['br_title','Page heading','line'],
    ['brand_hero_img','Hero photo (top banner)','img'],
@@ -896,6 +899,16 @@ function render(){
           <b id="vhlbl_${key}">${vv}% of screen</b>
         </div>
         <div class="hint2"><i class="ti ti-arrows-vertical"></i> Taller band = less of the photo or video is cropped. 62 is the original.</div>`;
+      }
+      if(type==='brratio'){
+        const opts=[['2/3','Portrait 2:3 (current)'],['3/4','Portrait 3:4'],
+                    ['1/1','Square 1:1'],['4/3','Landscape 4:3'],['16/9','Landscape 16:9']];
+        const bv=String(DATA[key]||'2/3');
+        return `<label>${esc(label)}</label>
+        <select data-k="${key}" oninput="onEdit()">
+          ${opts.map(o=>`<option value="${o[0]}"${bv===o[0]?' selected':''}>${o[1]}</option>`).join('')}
+        </select>
+        <div class="hint2"><i class="ti ti-crop"></i> Applies to all four brand photos. Crop your photos to match, or they will be trimmed to fit.</div>`;
       }
       if(type==='lift'){
         const lv=String(parseFloat(DATA[key])||11);

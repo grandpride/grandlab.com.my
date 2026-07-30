@@ -121,7 +121,7 @@
   .pagenav b{font-weight:700;font-style:normal;letter-spacing:.02em}
   .prow{display:grid;grid-template-columns:1fr 1fr;align-items:center;
     max-width:100%;margin:0;padding:0}
-  .prow .ph{width:100%;aspect-ratio:2/3;max-height:82vh;overflow:hidden;
+  .prow .ph{width:100%;aspect-ratio:var(--brratio,2/3);max-height:82vh;overflow:hidden;
     background:#141412 center/cover no-repeat;opacity:0;transition:opacity .5s ease;
     border-radius:0 22px 0 0}
   .prow .ph.on{opacity:1}
@@ -291,6 +291,9 @@
         if(C.font_body) r.setProperty('--sans',"'"+C.font_body+"', sans-serif");
         if(C.font_heading_px) document.body.style.setProperty('--hpx',(+C.font_heading_px||48)+'px');
         if(C.font_body_px) document.body.style.setProperty('--bpx',(+C.font_body_px||16)+'px');
+        if(C.br_ratio&&String(C.br_ratio).trim()){
+          document.documentElement.style.setProperty('--brratio',String(C.br_ratio).trim());
+        }
         if(C.nav_dim!=null&&C.nav_dim!==''){
           var _nd=Math.max(0,Math.min(90,parseFloat(C.nav_dim)||0))/100;
           document.documentElement.style.setProperty('--navdim',String(_nd));

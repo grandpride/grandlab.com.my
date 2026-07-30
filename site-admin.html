@@ -202,6 +202,8 @@ const SCHEMA=[
  {t:'Home',h:'Photo / video band height',f:[
    ['band_height','Desktop: how tall the bands are','vh'],
    ['band_mob','Phone: band shape','mobband'],
+   ['band_fit','Video: fill or show whole frame','bandfit'],
+   ['band_vpos','Video: which part stays visible','bandvpos'],
  ]},
  {t:'Home',h:'1. Hero image + welcome text',open:true,f:[
    ['hero_media_type','Top banner: photo or video','mediatype'],
@@ -837,6 +839,25 @@ function render(){
           <div class="hp-col mb"><div class="ps-tag">Mobile view</div>
             <div class="hp-mb" id="hpmb_${key}"><div class="hp-fade"></div></div></div>
         </div>`;
+      }
+      if(type==='bandfit'){
+        const fv=(String(DATA[key]||'cover')==='contain')?'contain':'cover';
+        return `<label>${esc(label)}</label>
+        <select data-k="${key}" oninput="onEdit()">
+          <option value="cover"${fv==='cover'?' selected':''}>Fill the band - crops the edges (default)</option>
+          <option value="contain"${fv==='contain'?' selected':''}>Show the whole frame - black bars at the sides</option>
+        </select>
+        <div class="hint2"><i class="ti ti-crop"></i> If your clip was filmed portrait, "whole frame" is the honest option.</div>`;
+      }
+      if(type==='bandvpos'){
+        const pv=String(parseFloat(DATA[key])||50);
+        return `<label>${esc(label)}</label>
+        <div class="ps-row"><span>Focus</span>
+          <input type="range" min="0" max="100" step="5" value="${pv}" data-k="${key}"
+            oninput="onEdit();var e=document.getElementById('bvlbl_${key}');if(e)e.textContent=this.value+'%'">
+          <b id="bvlbl_${key}">${pv}%</b>
+        </div>
+        <div class="hint2"><i class="ti ti-arrows-move-vertical"></i> 0% keeps the top of the clip, 100% the bottom. Only applies when filling.</div>`;
       }
       if(type==='mobband'){
         const opts=[['16/9','Full frame - nothing cropped (shortest)'],

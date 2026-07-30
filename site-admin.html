@@ -1063,7 +1063,7 @@ async function glShrink(file,maxW){
   try{ src=await glDecode(file); }catch(e){ return {file:file,note:''}; }
   var w=src.width||src.naturalWidth, h=src.height||src.naturalHeight;
   if(!w||!h) return {file:file,note:''};
-  var scale=Math.min(1,maxW/w);
+  var scale=Math.min(1, maxW/Math.max(w,h));   // cap the long edge, so portraits shrink properly
   var nw=Math.max(1,Math.round(w*scale)), nh=Math.max(1,Math.round(h*scale));
   var cv=document.createElement('canvas'); cv.width=nw; cv.height=nh;
   var cx=cv.getContext('2d');
@@ -1077,10 +1077,32 @@ async function glShrink(file,maxW){
   var out=new File([blob],base+'.'+ext,{type:'image/'+(ext==='jpg'?'jpeg':ext)});
   return {file:out, note:w+'\u00d7'+h+' \u2192 '+nw+'\u00d7'+nh+', '+(file.size/1048576).toFixed(1)+' MB \u2192 '+(out.size/1024).toFixed(0)+' kB'};
 }
+// remove the file a photo is replacing - only if nothing else still points at it
+async function glDeleteOld(oldUrl,newUrl,key){
+  try{
+    if(!oldUrl||typeof oldUrl!=='string') return '';
+    if(oldUrl===newUrl) return '';
+    var mark='/storage/v1/object/public/gl-images/';
+    var i=oldUrl.indexOf(mark);
+    if(i<0) return '';                              // not our bucket (stock photo, external URL)
+    var name=oldUrl.slice(i+mark.length).split('?')[0];
+    if(!name) return '';
+    // still referenced by another field? then leave it alone
+    for(var k in DATA){
+      if(k===key) continue;
+      var v=DATA[k];
+      if(typeof v==='string' && v.indexOf(name)>=0) return ' (old file kept - still used by '+k+')';
+    }
+    var r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-images/'+name,
+                      {method:'DELETE',headers:await glUploadHeaders()});
+    return r.ok ? ' Old file removed.' : '';
+  }catch(e){ return ''; }
+}
 async function imgUpload(key,file){
   const st=document.getElementById('imgstat_'+key);
   const setStat=(html,isHtml)=>{ if(!st)return; if(isHtml)st.innerHTML=html; else st.textContent=html; };
   setStat('Resizing\u2026');
+  const prevUrl=(document.querySelector('input[data-k="'+key+'"]')||{}).value||'';
   try{
     const maxW=/hero|_bg$|banner/i.test(key)?1920:1600;
     const sh=await glShrink(file,maxW);
@@ -1094,7 +1116,9 @@ async function imgUpload(key,file){
       const url=SUPABASE_URL+'/storage/v1/object/public/gl-images/'+path;
       const inp=document.querySelector('input[data-k="'+key+'"]');
       inp.value=url; previewImg(key); onEdit();
-      setStat('<span style="color:#3ec76e">\u2713 Uploaded. Remember to Save.</span>'+(sh.note?'<br><span style="opacity:.65;font-size:11px">'+sh.note+'</span>':''),true);
+      const delNote=await glDeleteOld(prevUrl,url,key);
+      setStat('<span style="color:#3ec76e">\u2713 Uploaded. Remember to Save.</span>'+
+        (sh.note||delNote?'<br><span style="opacity:.65;font-size:11px">'+sh.note+delNote+'</span>':''),true);
     } else {
       setStat('<span style="color:#e0533d">Upload failed \u2014 check the gl-images bucket is public.</span>',true);
     }

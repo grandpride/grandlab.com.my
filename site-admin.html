@@ -200,7 +200,8 @@ const SIZEHINT={
 const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','About','Membership','App','Contact','Fonts'];
 const SCHEMA=[
  {t:'Home',h:'Photo / video band height',f:[
-   ['band_height','How tall the full-width bands are','vh'],
+   ['band_height','Desktop: how tall the bands are','vh'],
+   ['band_mob','Phone: band shape','mobband'],
  ]},
  {t:'Home',h:'1. Hero image + welcome text',open:true,f:[
    ['hero_media_type','Top banner: photo or video','mediatype'],
@@ -836,6 +837,19 @@ function render(){
           <div class="hp-col mb"><div class="ps-tag">Mobile view</div>
             <div class="hp-mb" id="hpmb_${key}"><div class="hp-fade"></div></div></div>
         </div>`;
+      }
+      if(type==='mobband'){
+        const opts=[['16/9','Full frame - nothing cropped (shortest)'],
+                    ['3/2','Wide - shows about 84%'],
+                    ['4/3','Balanced - shows about 75% (default)'],
+                    ['1/1','Square - shows about 56%'],
+                    ['4/5','Tall - shows about 45%']];
+        const mv=String(DATA[key]||'4/3');
+        return `<label>${esc(label)}</label>
+        <select data-k="${key}" oninput="onEdit()">
+          ${opts.map(o=>`<option value="${o[0]}"${mv===o[0]?' selected':''}>${o[1]}</option>`).join('')}
+        </select>
+        <div class="hint2"><i class="ti ti-device-mobile"></i> Phones only. The slider above controls desktop.</div>`;
       }
       if(type==='vh'){
         const vv=String(parseFloat(DATA[key])||62);

@@ -200,7 +200,8 @@ const SIZEHINT={
 const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','About','Membership','App','Contact','Fonts'];
 const SCHEMA=[
  {t:'Home',h:'Photo / video band height',f:[
-   ['band_height','Desktop: how tall the bands are','vh'],
+   ['band_desk','Desktop: band shape','deskband'],
+   ['band_height','Desktop: how tall the bands are (only if "follow slider")','vh'],
    ['band_mob','Phone: band shape','mobband'],
    ['band_fit','Video: fill or show whole frame','bandfit'],
    ['band_vpos','Video: which part stays visible','bandvpos'],
@@ -839,6 +840,19 @@ function render(){
           <div class="hp-col mb"><div class="ps-tag">Mobile view</div>
             <div class="hp-mb" id="hpmb_${key}"><div class="hp-fade"></div></div></div>
         </div>`;
+      }
+      if(type==='deskband'){
+        const opts=[['vh','Follow the height slider below (changes with window size)'],
+                    ['16/9','Fixed 16:9 - matches a standard video exactly'],
+                    ['1.85/1','Fixed 1.85:1 - cinematic'],
+                    ['2/1','Fixed 2:1 - wide strip'],
+                    ['21/9','Fixed 21:9 - very wide strip']];
+        const dv=String(DATA[key]||'vh');
+        return `<label>${esc(label)}</label>
+        <select data-k="${key}" oninput="onEdit()">
+          ${opts.map(o=>`<option value="${o[0]}"${dv===o[0]?' selected':''}>${o[1]}</option>`).join('')}
+        </select>
+        <div class="hint2"><i class="ti ti-aspect-ratio"></i> Pick 16:9 and a 16:9 video fills the band with no cropping on any desktop.</div>`;
       }
       if(type==='bandfit'){
         const fv=(String(DATA[key]||'cover')==='contain')?'contain':'cover';

@@ -111,6 +111,10 @@
   @media(max-width:760px){
     .photo-band.on{height:auto;aspect-ratio:var(--bandmob,4/3);max-height:78vh}
   }
+  /* desktop: lock to a fixed shape instead of window height */
+  @media(min-width:761px){
+    html.band-fixed .photo-band.on{height:auto;aspect-ratio:var(--bandaspect,16/9);max-height:100vh}
+  }
 
   /* brands */
   .brands{text-align:center;background:var(--bg)}
@@ -290,6 +294,10 @@
         }
         if(C.band_fit&&String(C.band_fit).trim()==='contain'){
           document.documentElement.style.setProperty('--bandfit','contain');
+        }
+        if(C.band_desk&&String(C.band_desk).trim()&&String(C.band_desk).trim()!=='vh'){
+          document.documentElement.style.setProperty('--bandaspect',String(C.band_desk).trim());
+          document.documentElement.classList.add('band-fixed');
         }
         if(C.band_vpos!=null&&C.band_vpos!==''){
           var _bv=Math.max(0,Math.min(100,parseFloat(C.band_vpos)||50));

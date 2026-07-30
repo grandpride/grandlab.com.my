@@ -434,6 +434,28 @@
         if(u&&String(u).trim()){var url=String(u).replace(/'/g,'');
           if(C['ap_hero_pos']&&String(C['ap_hero_pos']).trim())el.style.backgroundPosition='center '+String(C['ap_hero_pos']).trim();
           var pre=new Image();pre.onload=function(){el.style.backgroundImage="url('"+url+"')";el.classList.add('on');document.body.classList.remove('no-hero');};pre.src=url;}})();
+      // play each phone-screen video only while it is on screen
+      var glVidObs = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          var v=en.target;
+          if(en.isIntersecting){
+            if(v.paused){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); }
+          } else if(!v.paused){ v.pause(); }
+        });
+      },{threshold:0.35,rootMargin:'80px 0px'}) : null;
+
+      function glMountVideo(scr,url){
+        var v=document.createElement('video');
+        v.src=url; v.loop=true; v.muted=true; v.defaultMuted=true;
+        v.playsInline=true; v.setAttribute('playsinline','');
+        v.setAttribute('muted','');
+        v.preload='metadata';
+        if(glVidObs){ v.autoplay=false; } else { v.autoplay=true; }   // no observer -> old behaviour
+        scr.appendChild(v);
+        if(glVidObs) glVidObs.observe(v);
+        return v;
+      }
+
       // feature GIF/MP4 into each phone screen
       var FIDS=['membership','book','wallet','rewards','warranty','history','package','reminder','spin','checkin','flash'];
       FIDS.forEach(function(fid){
@@ -442,13 +464,13 @@
         var url=String(media).replace(/'/g,''); var lo=url.toLowerCase();
         scr.innerHTML='';
         if(lo.endsWith('.mp4')||lo.endsWith('.webm')){
-          var v=document.createElement('video');v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');scr.appendChild(v);
+          glMountVideo(scr,url);
         } else { var im=document.createElement('img');im.src=url;im.alt='';scr.appendChild(im); }
       });
       // join phone screen
       (function(){var scr=document.getElementById('scr_join');var m=C['ap_join_media'];
         if(scr&&m&&String(m).trim()){var url=String(m).replace(/'/g,'');var lo=url.toLowerCase();scr.innerHTML='';
-          if(lo.endsWith('.mp4')||lo.endsWith('.webm')){var v=document.createElement('video');v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');scr.appendChild(v);}
+          if(lo.endsWith('.mp4')||lo.endsWith('.webm')){glMountVideo(scr,url);}
           else{var im=document.createElement('img');im.src=url;scr.appendChild(im);}}})();
       // install-steps tabs
       window.showInst=function(which){

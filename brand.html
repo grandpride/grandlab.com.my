@@ -130,7 +130,7 @@
   /* reversed: photo on right, round the LEFT inner corners, text on left */
   .prow.rev .ph{order:2;border-radius:22px 0 0 0}
   .prow.rev .tx{order:1}
-  @media(max-width:640px){.prow{grid-template-columns:1fr;min-height:0}.prow .ph{aspect-ratio:2/3;max-height:70vh;width:100%;border-radius:0}.prow.rev .ph{border-radius:0}.prow.rev .ph,.prow.rev .tx{order:0}.prow .tx{text-align:center;padding:clamp(24px,6vw,40px) 6vw}}
+  @media(max-width:640px){.prow{grid-template-columns:1fr;min-height:0}.prow .ph{aspect-ratio:var(--brratio,2/3);max-height:70vh;width:100%;border-radius:0}.prow.rev .ph{border-radius:0}.prow.rev .ph,.prow.rev .tx{order:0}.prow .tx{text-align:center;padding:clamp(24px,6vw,40px) 6vw}}
   .prow .tx h2{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(24px,3.6vw,42px);margin-bottom:18px}
   .prow .tx p{color:var(--muted);font-size:15px;line-height:1.85}
   .prow .tx a{color:var(--gold);text-decoration:underline;text-underline-offset:3px;font-weight:700}

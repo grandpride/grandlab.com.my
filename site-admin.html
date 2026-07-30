@@ -281,6 +281,7 @@ const SCHEMA=[
  {t:'Services',h:'Service text blocks — show or hide',open:true,f:[
    ['sp_blocks_show','The four Coating / PPF / Wrapping / Detailing text blocks','yesno'],
    ['sg_ratio','Grid photo shape','ratio'],
+   ['sg_cardlift','Grid card overlap','lift'],
    ['sp_pricing_show','"View Pricing" button on the Ready to book panel','yesno2'],
  ]},
  {t:'Brand',h:'Page intro',open:true,f:[
@@ -895,6 +896,16 @@ function render(){
           <b id="vhlbl_${key}">${vv}% of screen</b>
         </div>
         <div class="hint2"><i class="ti ti-arrows-vertical"></i> Taller band = less of the photo or video is cropped. 62 is the original.</div>`;
+      }
+      if(type==='lift'){
+        const lv=String(parseFloat(DATA[key])||11);
+        return `<label>${esc(label)}</label>
+        <div class="ps-row"><span>Overlap</span>
+          <input type="range" min="4" max="45" step="1" value="${lv}" data-k="${key}"
+            oninput="onEdit();var e=document.getElementById('lflbl_${key}');if(e)e.textContent=this.value+'%'">
+          <b id="lflbl_${key}">${lv}%</b>
+        </div>
+        <div class="hint2"><i class="ti ti-arrows-diff"></i> How far the text card sits up into the photo. Higher = shorter page. 11 is the original.</div>`;
       }
       if(type==='ratio'){
         const opts=[['3/4','Portrait — 3:4 (default)'],['2/3','Portrait — 2:3 (tall, matches your photos)'],

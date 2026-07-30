@@ -77,7 +77,7 @@
   .ocell{display:none}
   .ocell.on{display:block}
   .ocell .ph{aspect-ratio:var(--gridratio,3/4);background:#1a1a17 center/cover no-repeat;border-radius:3px}
-  .ocell .card{background:#1c1c19;border:1px solid #2b2b26;border-radius:4px;width:86%;margin:-64px auto 0;padding:clamp(22px,3vw,32px);position:relative;z-index:2;box-shadow:0 12px 30px rgba(0,0,0,.45)}
+  .ocell .card{background:#1c1c19;border:1px solid #2b2b26;border-radius:4px;width:86%;margin:var(--cardlift,-11%) auto 0;padding:clamp(22px,3vw,32px);position:relative;z-index:2;box-shadow:0 12px 30px rgba(0,0,0,.45)}
   @media(max-width:500px){.ocell .card{width:92%;margin:-40px auto 0}}
   .ocell .card h3{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(20px,2.6vw,27px);margin-bottom:12px;text-transform:uppercase;letter-spacing:.03em}
   .ocell .card p{color:var(--muted);font-size:14.5px;line-height:1.8}
@@ -448,6 +448,14 @@
         var sec=document.getElementById(sid);
         if(sec&&shown) sec.style.display='block';
       });
+    })();
+    // how far the card sits into the photo
+    (function(){
+      var v=C.sg_cardlift;
+      if(v!=null&&String(v).trim()!==''){
+        var n=Math.max(0,Math.min(50,parseFloat(v)||11));
+        document.documentElement.style.setProperty('--cardlift','-'+n+'%');
+      }
     })();
     // grid photo shape
     (function(){

@@ -199,6 +199,9 @@ const SIZEHINT={
 };
 const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','About','Membership','App','Contact','Fonts'];
 const SCHEMA=[
+ {t:'Home',h:'Photo / video band height',f:[
+   ['band_height','How tall the full-width bands are','vh'],
+ ]},
  {t:'Home',h:'1. Hero image + welcome text',open:true,f:[
    ['hero_media_type','Top banner: photo or video','mediatype'],
    ['hero_img','Top banner photo','img'],
@@ -833,6 +836,16 @@ function render(){
           <div class="hp-col mb"><div class="ps-tag">Mobile view</div>
             <div class="hp-mb" id="hpmb_${key}"><div class="hp-fade"></div></div></div>
         </div>`;
+      }
+      if(type==='vh'){
+        const vv=String(parseFloat(DATA[key])||62);
+        return `<label>${esc(label)}</label>
+        <div class="ps-row"><span>Height</span>
+          <input type="range" min="40" max="100" step="2" value="${vv}" data-k="${key}"
+            oninput="onEdit();var e=document.getElementById('vhlbl_${key}');if(e)e.textContent=this.value+'% of screen'">
+          <b id="vhlbl_${key}">${vv}% of screen</b>
+        </div>
+        <div class="hint2"><i class="ti ti-arrows-vertical"></i> Taller band = less of the photo or video is cropped. 62 is the original.</div>`;
       }
       if(type==='ratio'){
         const opts=[['3/4','Portrait — 3:4 (default)'],['2/3','Portrait — 2:3 (tall, matches your photos)'],

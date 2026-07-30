@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Admin editor - not for search results
+Disallow: /site-admin.html
+
+Sitemap: https://www.grandlab.com.my/sitemap.xml

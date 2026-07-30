@@ -398,6 +398,16 @@
           .map(u=>'<img src="'+u.replace(/"/g,'')+'" alt="" loading="lazy">').join('');
       }
     });
+    // grid photos download only when scrolled near — the originals are large
+    function glShowBg(ph){
+      var u=ph.getAttribute('data-bg'); if(!u) return;
+      ph.style.backgroundImage="url('"+u+"')";
+      ph.removeAttribute('data-bg');
+    }
+    var glImgObs = ('IntersectionObserver' in window) ? new IntersectionObserver(function(es,obs){
+      es.forEach(function(e){ if(e.isIntersecting){ glShowBg(e.target); obs.unobserve(e.target); } });
+    },{rootMargin:'600px 0px'}) : null;
+
     // overlapping photo/card grids — one per service
     (function(){
       var GRIDS=[['sg','og','gridSec'],['sgc','sgcc','gridSec_sgc'],
@@ -409,8 +419,9 @@
           var cell=document.getElementById(cid+n), ph=document.getElementById(cid+n+'ph');
           var img=C[pre+n+'_img'];
           if(cell&&ph&&img&&String(img).trim()){
-            ph.style.backgroundImage="url('"+String(img).replace(/'/g,'')+"')";
+            ph.setAttribute('data-bg',String(img).replace(/'/g,''));
             cell.classList.add('on'); shown++;
+            if(glImgObs) glImgObs.observe(ph); else glShowBg(ph);
           }
         });
         var sec=document.getElementById(sid);

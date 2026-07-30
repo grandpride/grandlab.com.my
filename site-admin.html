@@ -981,12 +981,50 @@ function imgPick(key){
   const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*';
   inp.onchange=async()=>{ if(inp.files&&inp.files[0]) await imgUpload(key,inp.files[0]); }; inp.click();
 }
+// ---- shrink photos before upload (camera originals are 2-28 MB) ----
+async function glDecode(file){
+  if(window.createImageBitmap){
+    try{ return await createImageBitmap(file,{imageOrientation:'from-image'}); }catch(e){}
+    try{ return await createImageBitmap(file); }catch(e){}
+  }
+  return await new Promise(function(res,rej){
+    var u=URL.createObjectURL(file), im=new Image();
+    im.onload=function(){ URL.revokeObjectURL(u); res(im); };
+    im.onerror=function(){ URL.revokeObjectURL(u); rej(new Error('decode failed')); };
+    im.src=u;
+  });
+}
+function glToBlob(cv,type,q){ return new Promise(function(r){ cv.toBlob(r,type,q); }); }
+async function glShrink(file,maxW){
+  if(!/^image\/(jpeg|jpg|png|webp)$/i.test(file.type||'')) return {file:file,note:''};
+  var src;
+  try{ src=await glDecode(file); }catch(e){ return {file:file,note:''}; }
+  var w=src.width||src.naturalWidth, h=src.height||src.naturalHeight;
+  if(!w||!h) return {file:file,note:''};
+  var scale=Math.min(1,maxW/w);
+  var nw=Math.max(1,Math.round(w*scale)), nh=Math.max(1,Math.round(h*scale));
+  var cv=document.createElement('canvas'); cv.width=nw; cv.height=nh;
+  var cx=cv.getContext('2d');
+  cx.imageSmoothingEnabled=true; cx.imageSmoothingQuality='high';
+  cx.drawImage(src,0,0,nw,nh);
+  if(src.close) src.close();
+  var blob=await glToBlob(cv,'image/webp',0.82), ext='webp';
+  if(!blob){ blob=await glToBlob(cv,'image/jpeg',0.85); ext='jpg'; }   // Safari fallback
+  if(!blob || blob.size>=file.size) return {file:file,note:''};        // never make it worse
+  var base=(file.name||'photo').replace(/\.[^.]+$/,'');
+  var out=new File([blob],base+'.'+ext,{type:'image/'+(ext==='jpg'?'jpeg':ext)});
+  return {file:out, note:w+'\u00d7'+h+' \u2192 '+nw+'\u00d7'+nh+', '+(file.size/1048576).toFixed(1)+' MB \u2192 '+(out.size/1024).toFixed(0)+' kB'};
+}
 async function imgUpload(key,file){
   const st=document.getElementById('imgstat_'+key);
   const setStat=(html,isHtml)=>{ if(!st)return; if(isHtml)st.innerHTML=html; else st.textContent=html; };
-  setStat('Uploading\u2026');
+  setStat('Resizing\u2026');
   try{
-    const ext=(file.name.split('.').pop()||'jpg').toLowerCase();
+    const maxW=/hero|_bg$|banner/i.test(key)?1920:1600;
+    const sh=await glShrink(file,maxW);
+    file=sh.file;
+    setStat('Uploading\u2026 ('+(file.size/1024).toFixed(0)+' kB)');
+    const ext=((file.name.split('.').pop())||'jpg').toLowerCase();
     const path='site-'+Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+ext;
     const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-images/'+path,
       {method:'POST',headers:await glUploadHeaders(),body:file});
@@ -994,7 +1032,7 @@ async function imgUpload(key,file){
       const url=SUPABASE_URL+'/storage/v1/object/public/gl-images/'+path;
       const inp=document.querySelector('input[data-k="'+key+'"]');
       inp.value=url; previewImg(key); onEdit();
-      setStat('<span style="color:#3ec76e">\u2713 Uploaded. Remember to Save.</span>',true);
+      setStat('<span style="color:#3ec76e">\u2713 Uploaded. Remember to Save.</span>'+(sh.note?'<br><span style="opacity:.65;font-size:11px">'+sh.note+'</span>':''),true);
     } else {
       setStat('<span style="color:#e0533d">Upload failed \u2014 check the gl-images bucket is public.</span>',true);
     }

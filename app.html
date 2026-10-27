@@ -212,11 +212,11 @@
 <meta property="og:url" content="https://www.grandlab.com.my/app.html">
 <meta property="og:title" content="GrandLab App — GrandLab">
 <meta property="og:description" content="The GrandLab App — book services, pay from your wallet, earn rewards, check your warranty and more, all from your phone.">
-<meta property="og:image" content="https://eychljpzorzmaveixlnu.supabase.co/storage/v1/object/public/gl-images/site-1784995513750-zddy.jpg">
+<meta property="og:image" content="https://db.grandlab.com.my/storage/v1/object/public/gl-images/site-1784995513750-zddy.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GrandLab App — GrandLab">
 <meta name="twitter:description" content="The GrandLab App — book services, pay from your wallet, earn rewards, check your warranty and more, all from your phone.">
-<meta name="twitter:image" content="https://eychljpzorzmaveixlnu.supabase.co/storage/v1/object/public/gl-images/site-1784995513750-zddy.jpg">
+<meta name="twitter:image" content="https://db.grandlab.com.my/storage/v1/object/public/gl-images/site-1784995513750-zddy.jpg">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "url": "https://www.grandlab.com.my/app.html", "name": "GrandLab App — GrandLab", "isPartOf": {"@id": "https://www.grandlab.com.my/#website"}, "about": {"@id": "https://www.grandlab.com.my/#business"}, "publisher": {"@id": "https://www.grandlab.com.my/#business"}}</script>
 </head>
 <body class="no-hero cloak">
@@ -432,7 +432,7 @@
 
   (async function(){
     try{
-      const sb=supabase.createClient("https://eychljpzorzmaveixlnu.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5Y2hsanB6b3J6bWF2ZWl4bG51Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDk2NjQsImV4cCI6MjA5NzIyNTY2NH0.6dA1zhz5ZIwf8byFB8vhfOzPI-uPPdPihEr1b8GG_oA",{auth:{persistSession:false}});
+      const sb=supabase.createClient("https://db.grandlab.com.my","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzkzMDY5NDExLCJleHAiOjE5NTA3NDk0MTF9.IcbPnDCd9p6Z-_FNMvzfg9k6ayX7IpC48zdGacAD_qw",{auth:{persistSession:false}});
       const {data}=await sb.from('gl_site_content').select('key,value');if(!data)return;
       const C={};data.forEach(r=>C[r.key]=r.value);
       (function(){/* apply fonts */

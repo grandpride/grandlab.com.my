@@ -635,6 +635,10 @@ const SCHEMA=[
    ['mb_tc_title','Section heading','line'],
    ['mb_tc','Terms (separate each with | )','area'],
  ]},
+ {t:'App',h:'App status',open:true,f:[
+   ['ap_status','Is the app ready for customers?','appstat'],
+   ['ap_soon_text','Coming-soon message','area'],
+ ]},
  {t:'App',h:'Hero + intro',open:true,f:[
    ['ap_hero_img','Hero photo (top banner)','img'],
    ['ap_hero_pos','Hero photo focus','pos'],
@@ -929,6 +933,15 @@ function render(){
           ${opts.map(o=>`<option value="${o[0]}"${rv===o[0]?' selected':''}>${o[1]}</option>`).join('')}
         </select>
         <div class="hint2"><i class="ti ti-crop"></i> Applies to all four service grids.</div>`;
+      }
+      if(type==='appstat'){
+        const av=(String(DATA[key]||'soon').toLowerCase()==='live')?'live':'soon';
+        return `<label>${esc(label)}</label>
+        <select data-k="${key}" oninput="onEdit()">
+          <option value="soon"${av==='soon'?' selected':''}>Coming soon - hide QR &amp; install steps</option>
+          <option value="live"${av==='live'?' selected':''}>Live - show QR &amp; install steps</option>
+        </select>
+        <div class="hint2"><i class="ti ti-info-circle"></i> Feature sections stay visible either way. Only the download block is hidden.</div>`;
       }
       if(type==='yesno2'){
         const yv=(String(DATA[key]||'no').toLowerCase()==='yes')?'yes':'no';

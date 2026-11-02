@@ -153,6 +153,12 @@
   @media(max-width:1024px){.feat{grid-template-columns:1fr;gap:30px}.feat.rev .fx,.feat.rev .fp{order:0}.feat .fx{text-align:center}}
 
   /* join section: phone + QR */
+  .soonbar{max-width:900px;margin:0 auto clamp(28px,5vw,48px);padding:18px 22px;
+    border:1px solid rgba(245,197,24,.32);border-radius:6px;background:rgba(245,197,24,.06);
+    display:flex;align-items:flex-start;gap:14px;text-align:left}
+  .soonbar i{font-size:22px;color:var(--gold);flex:0 0 auto;line-height:1.3}
+  .soonbar span{color:var(--text);font-size:15px;line-height:1.75}
+  @media(max-width:600px){.soonbar{padding:15px 16px;gap:11px}.soonbar span{font-size:14px}}
   .join{background:linear-gradient(180deg,#131311,#0a0a0a);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .join-in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,80px);align-items:center;
     max-width:1000px;margin:0 auto;padding:clamp(50px,8vw,100px) 6vw}
@@ -349,7 +355,11 @@
   </div>
 </div>
 
-<section class="join">
+<div class="soonbar" id="soonBar">
+  <i class="ti ti-tools" aria-hidden="true"></i>
+  <span id="soonTxt">The GrandLab App is still in development. These are the features it will launch with — WhatsApp us and we will let you know the moment it is ready.</span>
+</div>
+<section class="join" id="joinSec" style="display:none">
   <div class="join-in">
     <div class="fp"><div class="phone"><div class="screen" id="scr_join">
       <div class="ph-empty"><i class="ti ti-device-mobile"></i><span>GrandLab App</span></div>
@@ -477,6 +487,16 @@
         return v;
       }
 
+      // app status - install section stays hidden unless explicitly set live
+      (function(){
+        var live = String(C.ap_status||'soon').toLowerCase()==='live';
+        var bar=document.getElementById('soonBar'), js=document.getElementById('joinSec');
+        if(live){ if(bar) bar.style.display='none'; if(js) js.style.display=''; }
+        else if(bar && C.ap_soon_text && String(C.ap_soon_text).trim()){
+          var t=document.getElementById('soonTxt');
+          if(t) t.textContent=String(C.ap_soon_text).trim();
+        }
+      })();
       // feature GIF/MP4 into each phone screen
       var FIDS=['membership','book','wallet','rewards','warranty','history','package','reminder','spin','checkin','flash'];
       FIDS.forEach(function(fid){

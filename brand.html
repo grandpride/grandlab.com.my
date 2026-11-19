@@ -14,7 +14,9 @@
 <meta name="description" content="The GrandLab brand — our customers, our people, our products and our facility in Petaling Jaya.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Iceland&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
+<link rel="preconnect" href="https://db.grandlab.com.my" crossorigin>
+<link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css"></noscript>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   :root{--bg:#0a0a0a;--bg2:#111;--gold:#F5C518;--gold-dim:#c9a417;--text:#f4f4f0;--muted:#9a9a92;--line:#232320;--serif:'Iceland',cursive;--sans:'Work Sans',-apple-system,sans-serif}
@@ -370,5 +372,21 @@
   })();
 </script>
 <script>setTimeout(function(){document.body.classList.remove('cloak');},1500);</script>
+<!-- anonymous pageview: no cookies, no visitor id, no IP stored -->
+<script>(function(){try{
+  if(location.protocol==="file:"||location.hostname==="localhost")return;
+  var U="https://db.grandlab.com.my",K="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzkzMDY5NDExLCJleHAiOjE5NTA3NDk0MTF9.IcbPnDCd9p6Z-_FNMvzfg9k6ayX7IpC48zdGacAD_qw";
+  function send(){try{
+    var host=location.hostname.replace(/^www\./,""),r="";
+    try{if(document.referrer)r=new URL(document.referrer).hostname.replace(/^www\./,"");}catch(e){}
+    if(r===host)r="";
+    fetch(U+"/rest/v1/gl_site_hits",{method:"POST",keepalive:true,
+      headers:{"Content-Type":"application/json","apikey":K,"Authorization":"Bearer "+K,"Prefer":"return=minimal"},
+      body:JSON.stringify({page:(location.pathname||"/").slice(0,120),
+        ref:r?r.slice(0,120):null,dev:(window.innerWidth<760?"m":"d")})}).catch(function(){});
+  }catch(e){}}
+  function go(){ if(window.requestIdleCallback)requestIdleCallback(send,{timeout:3000}); else setTimeout(send,400); }
+  if(document.readyState==="complete")go(); else addEventListener("load",go);
+}catch(e){}})();</script>
 </body>
 </html>

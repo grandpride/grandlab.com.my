@@ -83,6 +83,33 @@
   .ps-mb{width:90px;aspect-ratio:2/3;border-radius:6px;background:#1a1a17;background-size:cover;background-position:center;margin:0 auto}
   .ps-empty{background:#1a1a17 !important;position:relative}
   .ps-empty::after{content:'no photo';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#555;font-size:11px}
+
+  /* --- Analytics + Health panels --- */
+  .ana-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:4px 0 22px}
+  .kpi{background:var(--bg3,#15151a);border:1px solid var(--line,#2a2a32);border-radius:8px;padding:14px 16px}
+  .kpi b{display:block;font-size:26px;line-height:1.2;margin-bottom:3px}
+  .kpi span{font-size:12px;color:var(--muted,#8b8b96);letter-spacing:.04em;text-transform:uppercase}
+  .bars{display:flex;align-items:flex-end;gap:2px;height:120px;margin:6px 0 6px;
+    border-bottom:1px solid var(--line,#2a2a32);padding-bottom:2px}
+  .bars i{flex:1;background:#3b82f6;border-radius:2px 2px 0 0;min-height:1px;display:block;opacity:.85}
+  .bars i:hover{opacity:1}
+  .barlbl{display:flex;justify-content:space-between;font-size:11px;color:var(--muted,#8b8b96);margin-bottom:22px}
+  .atable{width:100%;border-collapse:collapse;margin-bottom:8px}
+  .atable td{padding:7px 4px;border-bottom:1px solid var(--line,#2a2a32);font-size:13px;vertical-align:middle}
+  .atable td:last-child{text-align:right;color:var(--muted,#8b8b96);white-space:nowrap;padding-left:12px}
+  .atable tr:last-child td{border-bottom:none}
+  .acols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px}
+  .acol h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted,#8b8b96);
+    margin:0 0 6px;font-weight:600}
+  .hl{display:flex;gap:12px;align-items:flex-start;padding:13px 2px;border-bottom:1px solid var(--line,#2a2a32)}
+  .hl:last-child{border-bottom:none}
+  .hl .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;margin-top:6px}
+  .hl .ok{background:#3ec76e}.hl .warn{background:#e0a93d}.hl .bad{background:#e0533d}
+  .hl .lb{flex:1;min-width:0}
+  .hl .lb b{display:block;font-size:14px;margin-bottom:2px}
+  .hl .lb span{font-size:12.5px;color:var(--muted,#8b8b96);line-height:1.6}
+  .hl .vv{font-size:13px;text-align:right;white-space:nowrap;padding-left:10px}
 </style>
 </head>
 <body>
@@ -197,7 +224,7 @@ const SIZEHINT={
   ct_logo_maps:'240 &times; 240 px square, PNG. Cropped to a circle.',
   ct_logo_waze:'240 &times; 240 px square, PNG. Cropped to a circle.'
 };
-const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','About','Membership','App','Contact','Fonts'];
+const TABS=['Home','Brand','Services','Workshop','Lounge','Suppliers','FAQs','Reviews','About','Membership','App','Contact','Fonts','Analytics','Health'];
 const SCHEMA=[
  {t:'Home',h:'Photo / video band height',f:[
    ['band_desk','Desktop: band shape','deskband'],
@@ -762,6 +789,8 @@ function render(){
   $('tabbar').innerHTML=TABS.map(t=>
     `<button type="button" class="tabbtn${t===ACTIVE_TAB?' on':''}" onclick="setTab('${t}')">${esc(t)}</button>`
   ).join('');
+  if(ACTIVE_TAB==='Analytics'){ $('forms').innerHTML=anaShell(); anaLoad(); return; }
+  if(ACTIVE_TAB==='Health'){ $('forms').innerHTML=hlShell(); hlRun(); return; }
   $('forms').innerHTML=SCHEMA.filter(sec=>sec.t===ACTIVE_TAB).map((sec,si)=>{
     const secId=ACTIVE_TAB+'_'+si;
     if(!(secId in OPEN)) OPEN[secId] = !!sec.open;
@@ -1042,6 +1071,174 @@ function hpRender(key){
 }
       previewImg;
 let dirty=false;
+
+/* ============ ANALYTICS TAB (cookieless pageviews) ============ */
+var ANA_DAYS=30;
+function anaShell(){
+  return '<div class="sec"><div class="secbody" style="display:block">'
+    +'<div class="ana-top">'
+    + [7,30,90].map(function(d){return '<button type="button" class="tabbtn'+(d===ANA_DAYS?' on':'')+'" onclick="anaSet('+d+')">'+d+' days</button>';}).join('')
+    +'<button type="button" class="upbtn" style="margin-left:auto" onclick="anaLoad()"><i class="ti ti-refresh"></i> Refresh</button>'
+    +'</div><div id="anaBody"><div class="hint2">Loading…</div></div></div></div>';
+}
+function anaSet(d){ ANA_DAYS=d; render(); }
+async function anaLoad(){
+  var el=document.getElementById('anaBody'); if(!el) return;
+  try{
+    var since=new Date(Date.now()-ANA_DAYS*864e5).toISOString();
+    var res=await sb.from('gl_site_hits').select('page,ref,dev,ts').gte('ts',since).limit(50000);
+    if(res.error) throw res.error;
+    el.innerHTML=anaRender(res.data||[]);
+  }catch(e){
+    var m=String(e&&e.message||e);
+    var hint=/does not exist|schema cache|relation/i.test(m)
+      ? 'The stats table is not there yet — run <b>analytics_setup.sql</b> on your Supabase, then refresh.'
+      : 'Could not reach the backend. Check the Health tab.';
+    el.innerHTML='<div class="hint2" style="color:#e0533d">'+hint+'<br><span style="opacity:.6">'+esc(m)+'</span></div>';
+  }
+}
+function anaRender(rows){
+  if(!rows.length) return '<div class="hint2">No pageviews recorded yet in this period.<br>'
+    +'If you have just set it up: open the website in a normal tab, reload, then come back and hit Refresh. '
+    +'Visits to this admin page are never counted.</div>';
+  var days={}, pages={}, refs={}, mob=0, desk=0;
+  var start=new Date(Date.now()-(ANA_DAYS-1)*864e5);
+  for(var i=0;i<ANA_DAYS;i++) days[new Date(start.getTime()+i*864e5).toISOString().slice(0,10)]=0;
+  rows.forEach(function(r){
+    var k=String(r.ts||'').slice(0,10); if(k in days) days[k]++;
+    var p=r.page||'/'; pages[p]=(pages[p]||0)+1;
+    var rf=(r.ref==null||r.ref==='')?'— typed in or bookmarked':r.ref; refs[rf]=(refs[rf]||0)+1;
+    if(r.dev==='m') mob++; else desk++;
+  });
+  var keys=Object.keys(days), vals=keys.map(function(k){return days[k];});
+  var peak=Math.max.apply(null,vals.concat([1]));
+  var total=rows.length;
+  var mpct=total?Math.round(mob*100/total):0;
+  var perDay=(total/ANA_DAYS);
+  var bars='<div class="bars">'+keys.map(function(k){
+      return '<i style="height:'+Math.max(1,Math.round(days[k]*100/peak))+'%" title="'+k+': '+days[k]+'"></i>';
+    }).join('')+'</div><div class="barlbl"><span>'+keys[0]+'</span><span>'+keys[keys.length-1]+'</span></div>';
+  function tbl(obj,max,fmt){
+    var e=Object.keys(obj).map(function(k){return [k,obj[k]];}).sort(function(a,b){return b[1]-a[1];}).slice(0,max);
+    if(!e.length) return '<div class="hint2">Nothing yet.</div>';
+    return '<table class="atable">'+e.map(function(x){
+      return '<tr><td>'+esc(fmt?fmt(x[0]):x[0])+'</td><td>'+x[1]+'</td></tr>';}).join('')+'</table>';
+  }
+  return '<div class="kpis">'
+    +'<div class="kpi"><b>'+total+'</b><span>Page views</span></div>'
+    +'<div class="kpi"><b>'+(perDay>=10?Math.round(perDay):perDay.toFixed(1))+'</b><span>Per day</span></div>'
+    +'<div class="kpi"><b>'+mpct+'%</b><span>On phone</span></div>'
+    +'<div class="kpi"><b>'+Object.keys(pages).length+'</b><span>Pages viewed</span></div>'
+    +'</div>'+bars
+    +'<div class="acols">'
+    +'<div class="acol"><h4>Most viewed pages</h4>'+tbl(pages,12,function(p){return p==='/'?'/ (home)':p;})+'</div>'
+    +'<div class="acol"><h4>How they found you</h4>'+tbl(refs,12)+'</div>'
+    +'</div>'
+    +'<div class="hint2" style="margin-top:18px"><i class="ti ti-shield-check"></i> '
+    +'No cookies, no visitor ID, no IP addresses. Page, day, referring site and phone-or-desktop only.</div>';
+}
+
+/* ============ SYSTEM HEALTH TAB ============ */
+function hlShell(){
+  return '<div class="sec"><div class="secbody" style="display:block">'
+    +'<div class="ana-top"><button type="button" class="upbtn" onclick="hlRun()"><i class="ti ti-refresh"></i> Run checks again</button></div>'
+    +'<div id="hlBody"><div class="hint2">Checking…</div></div></div></div>';
+}
+function hlLine(st,label,val,note){
+  return '<div class="hl"><span class="dot '+st+'"></span><span class="lb"><b>'+esc(label)+'</b>'
+    +(note?'<span>'+note+'</span>':'')+'</span><span class="vv">'+esc(val)+'</span></div>';
+}
+function hlBytes(n){ return n>=1048576 ? (n/1048576).toFixed(1)+' MB' : Math.round(n/1024)+' kB'; }
+async function hlRun(){
+  var el=document.getElementById('hlBody'); if(!el) return;
+  el.innerHTML='<div class="hint2">Checking…</div>';
+  var out=[], content=null;
+
+  var t0=(window.performance&&performance.now)?performance.now():Date.now();
+  try{
+    var r=await sb.from('gl_site_content').select('key,value,updated_at').limit(5000);
+    if(r.error) throw r.error;
+    var ms=Math.round(((window.performance&&performance.now)?performance.now():Date.now())-t0);
+    content=r.data||[];
+    out.push(hlLine(ms<1500?'ok':'warn','Backend',ms+' ms',
+      'db.grandlab.com.my answered'+(ms>=1500?' — slower than usual':'')));
+    var last=''; content.forEach(function(x){ if(x.updated_at&&x.updated_at>last) last=x.updated_at; });
+    out.push(hlLine('ok','Website content',content.length+' settings',
+      last?('last edited '+new Date(last).toLocaleString()):'no edit date recorded'));
+  }catch(e){
+    out.push(hlLine('bad','Backend','Offline',
+      'db.grandlab.com.my did not answer. The website falls back to its built-in text, so it stays up — but edits and photos will not load. Check the server is running.'));
+    el.innerHTML=out.join('')+'<div class="hint2" style="margin-top:16px">Remaining checks need the backend, so they were skipped.</div>';
+    return;
+  }
+
+  var refd={}, totalFiles=0, totalBytes=0, missing=[];
+  for(var bi=0; bi<2; bi++){
+    var bucket=['gl-images','gl-videos'][bi];
+    try{
+      var lr=await sb.storage.from(bucket).list('',{limit:1000});
+      if(lr.error) throw lr.error;
+      var files=(lr.data||[]).filter(function(x){return x.name && x.name!=='.emptyFolderPlaceholder';});
+      var bytes=files.reduce(function(a,x){return a+((x.metadata&&x.metadata.size)||0);},0);
+      totalFiles+=files.length; totalBytes+=bytes;
+      out.push(hlLine(bytes>629145600?'warn':'ok',
+        bucket==='gl-images'?'Photo storage':'Video storage',
+        files.length+' files · '+hlBytes(bytes), bucket));
+      files.forEach(function(x){ refd[bucket+'/'+x.name]=false; });
+    }catch(e){
+      out.push(hlLine('warn',bucket==='gl-images'?'Photo storage':'Video storage','Could not read',esc(String(e.message||e))));
+    }
+  }
+
+  var blob=content.map(function(x){return String(x.value||'');}).join(' | ');
+  Object.keys(refd).forEach(function(k){
+    var name=k.split('/').slice(1).join('/');
+    if(blob.indexOf(name)>=0) refd[k]=true;
+  });
+  var used=Object.keys(refd).filter(function(k){return refd[k];}).length;
+  var orphans=Object.keys(refd).length-used;
+
+  var seen={};
+  content.forEach(function(x){
+    var v=String(x.value||'');
+    var re=/\/storage\/v1\/object\/public\/(gl-images|gl-videos)\/([^|"'\s?]+)/g, m;
+    while((m=re.exec(v))){
+      var k=m[1]+'/'+decodeURIComponent(m[2]);
+      if(!(k in refd) && !seen[k]){ seen[k]=1; missing.push(x.key); }
+    }
+  });
+  out.push(hlLine(missing.length?'bad':'ok','Broken photo links',
+    missing.length?missing.length+' broken':'None',
+    missing.length?('These settings point at files that are no longer in storage: '+esc(missing.slice(0,6).join(', '))+(missing.length>6?'…':'')):'every photo and video on the site resolves'));
+  out.push(hlLine(orphans>80?'warn':'ok','Unused files',orphans+' of '+totalFiles,
+    orphans?('Not referenced by any page — old versions left behind. Safe to clear from Supabase Storage if you want the space back.'):'nothing left over'));
+
+  try{
+    var since=new Date(Date.now()-864e5).toISOString();
+    var hr=await sb.from('gl_site_hits').select('id').gte('ts',since).limit(50000);
+    if(hr.error) throw hr.error;
+    var n=(hr.data||[]).length;
+    out.push(hlLine(n>0?'ok':'warn','Visitor tracking',n+' views / 24h',
+      n>0?'recording normally':'nothing recorded in the last day — fine if the site is quiet, otherwise check the setup SQL has been run'));
+  }catch(e){
+    out.push(hlLine('warn','Visitor tracking','Not set up','Run analytics_setup.sql on your Supabase to switch on the Analytics tab'));
+  }
+
+  var pages=['index.html','services.html','brand.html','app.html','membership.html','contact.html',
+             'workshop.html','lounge.html','suppliers.html','reviews.html','faqs.html','about.html',
+             'privacy.html','terms.html','cookies.html'];
+  var bad=[];
+  await Promise.all(pages.map(function(p){
+    return fetch(p,{method:'HEAD',cache:'no-store'}).then(function(r){ if(!r.ok) bad.push(p); })
+      .catch(function(){ bad.push(p); });
+  }));
+  out.push(hlLine(bad.length?'bad':'ok','Website pages',
+    (pages.length-bad.length)+' of '+pages.length+' OK',
+    bad.length?('Not loading: '+esc(bad.join(', '))):'every page responds'));
+
+  el.innerHTML=out.join('');
+}
+
 function syncDom(){ document.querySelectorAll('[data-k]').forEach(el=>{ DATA[el.dataset.k]=el.value; }); }
 function onEdit(){ syncDom(); dirty=true; $('msg').textContent='Unsaved changes'; $('msg').className='msg'; }
 

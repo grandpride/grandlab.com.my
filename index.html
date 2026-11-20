@@ -160,7 +160,7 @@
 </head>
 <body class="cloak">
 <nav id="nav">
-  <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo"></a>
+  <a class="brand" href="/"><img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="brand-logo" width="190" height="42"></a>
   <div class="links" id="navLinks">
     <a href="/">Home</a><a href="brand.html">Brand</a><a href="services.html">Services</a>
     <a href="membership.html">GrandLab Membership Club</a><a href="app.html">GrandLab App</a><a href="faqs.html">FAQs</a><a href="reviews.html">Reviews</a>
@@ -227,7 +227,7 @@
 <footer id="contact">
   <div class="foot-grid">
     <div>
-      <img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="foot-logo" id="footLogo"
+      <img src="GRANDLAB_LOGO_HORIZON.png" alt="GrandLab" class="foot-logo" id="footLogo" width="190" height="42"
            onerror="this.style.display='none';var w=document.getElementById('footWord');if(w)w.style.display='block'">
       <div class="brand" id="footWord" style="display:none">GRAND<span>LAB</span></div>
       <p>Petaling Jaya's one-stop garage — detailing, servicing &amp; modification. Detailing by GrandPride.</p>
@@ -309,14 +309,27 @@
       document.querySelectorAll('[data-c]').forEach(el=>{const v=C[el.dataset.c];if(v!=null&&v!=='')el.textContent=v;});
       document.body.classList.remove('cloak');
       document.querySelectorAll('[data-cimg]').forEach(el=>{const v=C[el.dataset.cimg];if(v)el.src=v;});
+      // band videos sit below the fold - don't download one until it is nearly on screen
+      var glBandObs = ('IntersectionObserver' in window) ? new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          var v=e.target;
+          if(e.isIntersecting){
+            if(!v.getAttribute('src') && v.dataset.src){ v.setAttribute('src', v.dataset.src); }
+            var p=v.play&&v.play(); if(p&&p.catch) p.catch(function(){});
+          } else if(!v.paused){ v.pause(); }
+        });
+      },{rootMargin:'400px 0px'}) : null;
+      function glBandVid(v,url){
+        if(!glBandObs){ v.setAttribute('src',url); v.play&&v.play().catch(function(){}); return; }
+        v.dataset.src=url; v.removeAttribute('autoplay'); glBandObs.observe(v);
+      }
       // --- standalone photo bands (NVN-style) ---
       function photoBand(id,imgKey,vidKey,typeKey){
         const el=document.getElementById(id); if(!el) return;
         const vid=document.getElementById(id+'Vid');
         const img=C[imgKey], mp4=C[vidKey], type=C[typeKey];
         if(type==='video'&&mp4&&String(mp4).trim()){
-          if(vid){vid.src=String(mp4);vid.style.display='block';
-            vid.play&&vid.play().catch(()=>{});}
+          if(vid){vid.style.display='block'; glBandVid(vid,String(mp4));}
           el.style.backgroundImage='';
           el.classList.add('on'); return;
         }

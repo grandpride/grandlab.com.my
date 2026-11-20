@@ -1086,56 +1086,101 @@ async function anaLoad(){
   var el=document.getElementById('anaBody'); if(!el) return;
   try{
     var since=new Date(Date.now()-ANA_DAYS*864e5).toISOString();
-    var res=await sb.from('gl_site_hits').select('page,ref,dev,ts').gte('ts',since).limit(50000);
+    // ev column may not exist yet on older setups - fall back to views-only
+    var res=await sb.from('gl_site_hits').select('page,ref,dev,ts,ev').gte('ts',since).limit(50000);
+    var noEv=false;
+    if(res.error && /column .*ev|ev.* does not exist/i.test(String(res.error.message||''))){
+      noEv=true;
+      res=await sb.from('gl_site_hits').select('page,ref,dev,ts').gte('ts',since).limit(50000);
+    }
     if(res.error) throw res.error;
-    el.innerHTML=anaRender(res.data||[]);
+    el.innerHTML=anaRender(res.data||[],noEv);
   }catch(e){
     var m=String(e&&e.message||e);
     var hint=/does not exist|schema cache|relation/i.test(m)
-      ? 'The stats table is not there yet — run <b>analytics_setup.sql</b> on your Supabase, then refresh.'
+      ? 'The stats table is not there yet - run <b>analytics_setup.sql</b> on your Supabase, then refresh.'
       : 'Could not reach the backend. Check the Health tab.';
     el.innerHTML='<div class="hint2" style="color:#e0533d">'+hint+'<br><span style="opacity:.6">'+esc(m)+'</span></div>';
   }
 }
-function anaRender(rows){
-  if(!rows.length) return '<div class="hint2">No pageviews recorded yet in this period.<br>'
+var ANA_EVN={wa:'WhatsApp',tel:'Phone call',map:'Directions'};
+function anaRender(rows,noEv){
+  if(!rows.length) return '<div class="hint2">Nothing recorded yet in this period.<br>'
     +'If you have just set it up: open the website in a normal tab, reload, then come back and hit Refresh. '
     +'Visits to this admin page are never counted.</div>';
+
   var days={}, pages={}, refs={}, mob=0, desk=0;
+  var acts={}, waPage={}, actPage={};
+  var views=0, actions=0;
   var start=new Date(Date.now()-(ANA_DAYS-1)*864e5);
   for(var i=0;i<ANA_DAYS;i++) days[new Date(start.getTime()+i*864e5).toISOString().slice(0,10)]=0;
+
   rows.forEach(function(r){
-    var k=String(r.ts||'').slice(0,10); if(k in days) days[k]++;
-    var p=r.page||'/'; pages[p]=(pages[p]||0)+1;
-    var rf=(r.ref==null||r.ref==='')?'— typed in or bookmarked':r.ref; refs[rf]=(refs[rf]||0)+1;
-    if(r.dev==='m') mob++; else desk++;
+    var ev=r.ev||'view';
+    var p=r.page||'/';
+    if(ev==='view'){
+      views++;
+      var k=String(r.ts||'').slice(0,10); if(k in days) days[k]++;
+      pages[p]=(pages[p]||0)+1;
+      var rf=(r.ref==null||r.ref==='')?'- typed in or bookmarked':r.ref; refs[rf]=(refs[rf]||0)+1;
+      if(r.dev==='m') mob++; else desk++;
+    }else{
+      actions++;
+      acts[ev]=(acts[ev]||0)+1;
+      actPage[p]=(actPage[p]||0)+1;
+      if(ev==='wa') waPage[p]=(waPage[p]||0)+1;
+    }
   });
+
   var keys=Object.keys(days), vals=keys.map(function(k){return days[k];});
   var peak=Math.max.apply(null,vals.concat([1]));
-  var total=rows.length;
-  var mpct=total?Math.round(mob*100/total):0;
-  var perDay=(total/ANA_DAYS);
+  var mpct=views?Math.round(mob*100/views):0;
+  var perDay=(views/ANA_DAYS);
+  var wa=acts.wa||0, tel=acts.tel||0, map=acts.map||0;
+  var rate=views?((wa+tel)*100/views):0;
+
   var bars='<div class="bars">'+keys.map(function(k){
       return '<i style="height:'+Math.max(1,Math.round(days[k]*100/peak))+'%" title="'+k+': '+days[k]+'"></i>';
     }).join('')+'</div><div class="barlbl"><span>'+keys[0]+'</span><span>'+keys[keys.length-1]+'</span></div>';
+
+  function pname(p){ return p==='/'?'/ (home)':p; }
   function tbl(obj,max,fmt){
     var e=Object.keys(obj).map(function(k){return [k,obj[k]];}).sort(function(a,b){return b[1]-a[1];}).slice(0,max);
     if(!e.length) return '<div class="hint2">Nothing yet.</div>';
     return '<table class="atable">'+e.map(function(x){
       return '<tr><td>'+esc(fmt?fmt(x[0]):x[0])+'</td><td>'+x[1]+'</td></tr>';}).join('')+'</table>';
   }
-  return '<div class="kpis">'
-    +'<div class="kpi"><b>'+total+'</b><span>Page views</span></div>'
-    +'<div class="kpi"><b>'+(perDay>=10?Math.round(perDay):perDay.toFixed(1))+'</b><span>Per day</span></div>'
+
+  var out='<div class="kpis">'
+    +'<div class="kpi"><b>'+views+'</b><span>Page views</span></div>'
+    +'<div class="kpi"><b>'+(perDay>=10?Math.round(perDay):perDay.toFixed(1))+'</b><span>Views per day</span></div>'
+    +'<div class="kpi"><b>'+wa+'</b><span>WhatsApp clicks</span></div>'
+    +'<div class="kpi"><b>'+tel+'</b><span>Phone clicks</span></div>'
+    +'<div class="kpi"><b>'+map+'</b><span>Directions</span></div>'
+    +'<div class="kpi"><b>'+rate.toFixed(1)+'%</b><span>Views that enquired</span></div>'
     +'<div class="kpi"><b>'+mpct+'%</b><span>On phone</span></div>'
-    +'<div class="kpi"><b>'+Object.keys(pages).length+'</b><span>Pages viewed</span></div>'
     +'</div>'+bars
     +'<div class="acols">'
-    +'<div class="acol"><h4>Most viewed pages</h4>'+tbl(pages,12,function(p){return p==='/'?'/ (home)':p;})+'</div>'
+    +'<div class="acol"><h4>Most viewed pages</h4>'+tbl(pages,12,pname)+'</div>'
     +'<div class="acol"><h4>How they found you</h4>'+tbl(refs,12)+'</div>'
-    +'</div>'
-    +'<div class="hint2" style="margin-top:18px"><i class="ti ti-shield-check"></i> '
-    +'No cookies, no visitor ID, no IP addresses. Page, day, referring site and phone-or-desktop only.</div>';
+    +'</div>';
+
+  if(noEv){
+    out+='<div class="hint2" style="margin-top:22px;color:#e0a33d">Button clicks are not being recorded yet - '
+       +'the <b>ev</b> column is missing from the stats table. Run the one-line SQL I gave you, then refresh.</div>';
+  }else{
+    out+='<div class="acols" style="margin-top:26px">'
+      +'<div class="acol"><h4>WhatsApp clicks by page</h4>'+tbl(waPage,12,pname)+'</div>'
+      +'<div class="acol"><h4>What they clicked</h4>'
+        +tbl(acts,8,function(k){return ANA_EVN[k]||k;})
+        +'<h4 style="margin-top:20px">Pages that drove enquiries</h4>'+tbl(actPage,12,pname)
+      +'</div></div>';
+  }
+
+  out+='<div class="hint2" style="margin-top:22px"><i class="ti ti-shield-check"></i> '
+    +'No cookies, no visitor ID, no IP addresses. Page, day, referring site, phone-or-desktop, '
+    +'and which action button was tapped - never who tapped it.</div>';
+  return out;
 }
 
 /* ============ SYSTEM HEALTH TAB ============ */

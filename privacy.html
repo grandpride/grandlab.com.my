@@ -260,9 +260,11 @@
   <h2>Cookies and website data</h2>
   <p>Our website does not set advertising or tracking cookies.</p>
   <p>We do keep a count of how our pages are used: which page was opened, on what date, which website
-  referred you, and whether you were on a phone or a computer. This is recorded without a cookie, without
-  any identifier for you or your device, and without your IP address, so it cannot be traced back to you
-  and is not personal data. See our <a href="cookies.html">Cookie Policy</a> for the full detail of what
+  referred you, and whether you were on a phone or a computer. We count the same four things when one of
+  our contact buttons is tapped, along with which kind of button it was &mdash; WhatsApp, a phone number,
+  or a link to directions &mdash; but not the message, call or conversation that follows. All of it is
+  recorded without a cookie, without any identifier for you or your device, and without your IP address,
+  so it cannot be traced back to you and is not personal data. See our <a href="cookies.html">Cookie Policy</a> for the full detail of what
   is and is not used.</p>
 
   <h2>Changes to this notice</h2>
@@ -380,21 +382,31 @@
   })();
 </script>
 <script>setTimeout(function(){document.body.classList.remove('cloak');},1500);</script>
-<!-- anonymous pageview: no cookies, no visitor id, no IP stored -->
+<!-- anonymous usage counting: no cookies, no visitor id, no IP stored -->
 <script>(function(){try{
   if(location.protocol==="file:"||location.hostname==="localhost")return;
   var U="https://db.grandlab.com.my",K="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzkzMDY5NDExLCJleHAiOjE5NTA3NDk0MTF9.IcbPnDCd9p6Z-_FNMvzfg9k6ayX7IpC48zdGacAD_qw";
-  function send(){try{
+  function send(ev){try{
     var host=location.hostname.replace(/^www\./,""),r="";
     try{if(document.referrer)r=new URL(document.referrer).hostname.replace(/^www\./,"");}catch(e){}
     if(r===host)r="";
     fetch(U+"/rest/v1/gl_site_hits",{method:"POST",keepalive:true,
       headers:{"Content-Type":"application/json","apikey":K,"Authorization":"Bearer "+K,"Prefer":"return=minimal"},
       body:JSON.stringify({page:(location.pathname||"/").slice(0,120),
-        ref:r?r.slice(0,120):null,dev:(window.innerWidth<760?"m":"d")})}).catch(function(){});
+        ref:r?r.slice(0,120):null,dev:(window.innerWidth<760?"m":"d"),ev:ev})}).catch(function(){});
   }catch(e){}}
-  function go(){ if(window.requestIdleCallback)requestIdleCallback(send,{timeout:3000}); else setTimeout(send,400); }
+  function go(){ if(window.requestIdleCallback)requestIdleCallback(function(){send("view");},{timeout:3000});
+            else setTimeout(function(){send("view");},400); }
   if(document.readyState==="complete")go(); else addEventListener("load",go);
+  document.addEventListener("click",function(e){try{
+    var t=e.target; if(!t||!t.closest)return;
+    var a=t.closest("a[href]"); if(!a)return;
+    var h=a.getAttribute("href")||"";
+    var ev = /wa\.me|api\.whatsapp\.com/i.test(h) ? "wa"
+           : /^tel:/i.test(h) ? "tel"
+           : /maps\.app\.goo\.gl|google\.[a-z.]+\/maps|waze\.com/i.test(h) ? "map" : "";
+    if(ev) send(ev);
+  }catch(e){}},true);
 }catch(e){}})();</script>
 </body>
 </html>

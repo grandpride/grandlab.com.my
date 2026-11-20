@@ -190,8 +190,8 @@
 
   <h2>The short version</h2>
   <p>This website does not use advertising cookies, tracking pixels or analytics that identify you.
-  We count page views, but not people. We do not build a profile of your browsing, and we do not share
-  your browsing behaviour with advertisers.</p>
+  We count page views and taps on our contact buttons, but not people. We do not build a profile of your
+  browsing, and we do not share your browsing behaviour with advertisers.</p>
 
   <h2>What is actually used</h2>
 
@@ -214,14 +214,20 @@
   </ul>
   <p>These are governed by the privacy policies of the providers concerned, not by us.</p>
 
-  <h3>Counting page views</h3>
+  <h3>Counting page views and button taps</h3>
   <p>We keep a simple count of how our own pages are used. For each page that is opened we record four
   things: which page it was, the date, which website sent you to us if any, and whether the screen was a
   phone or a computer. That is the entire record.</p>
-  <p>It is stored without a cookie, without any identifier for you or your device, and without your IP
-  address. Nothing in it is linked between one visit and the next, so the figures can tell us that a page
-  was opened but never who opened it, and we could not identify you from them even if we wanted to. We use
-  it only to see which of our services people are actually reading about.</p>
+  <p>We count the same four things when one of our contact buttons is tapped, together with which kind of
+  button it was &mdash; WhatsApp, a phone number, or a link to directions. We record that a button of that
+  kind was tapped on that page on that date, and nothing else: not the message you go on to write, not the
+  number you dial, and nothing about the conversation that follows. What you send us on WhatsApp is covered
+  by our <a href="privacy.html">Privacy Notice</a>, not by this count.</p>
+  <p>All of it is stored without a cookie, without any identifier for you or your device, and without your
+  IP address. Nothing in it is linked between one visit and the next, so the figures can tell us that a page
+  was opened or a button was tapped but never who opened or tapped it, and we could not identify you from
+  them even if we wanted to. We use it only to see which of our services people are actually reading about
+  and which pages lead people to get in touch.</p>
 
   <h2>The GrandLab app</h2>
   <p>The GrandLab customer app stores your login session and app preferences on your device so that you stay
@@ -233,7 +239,7 @@
   administration pages.</p>
 
   <h2>If this changes</h2>
-  <p>The page counting described above is the only measurement we do, and this policy was updated when
+  <p>The counting described above is the only measurement we do, and this policy was updated when
   it was introduced. If we ever add analytics or advertising tools that identify visitors, follow them
   between sites, or share their behaviour with anyone else, we will update this policy again and, where
   required, ask for your consent before those tools are used.</p>
@@ -349,21 +355,31 @@
   })();
 </script>
 <script>setTimeout(function(){document.body.classList.remove('cloak');},1500);</script>
-<!-- anonymous pageview: no cookies, no visitor id, no IP stored -->
+<!-- anonymous usage counting: no cookies, no visitor id, no IP stored -->
 <script>(function(){try{
   if(location.protocol==="file:"||location.hostname==="localhost")return;
   var U="https://db.grandlab.com.my",K="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzkzMDY5NDExLCJleHAiOjE5NTA3NDk0MTF9.IcbPnDCd9p6Z-_FNMvzfg9k6ayX7IpC48zdGacAD_qw";
-  function send(){try{
+  function send(ev){try{
     var host=location.hostname.replace(/^www\./,""),r="";
     try{if(document.referrer)r=new URL(document.referrer).hostname.replace(/^www\./,"");}catch(e){}
     if(r===host)r="";
     fetch(U+"/rest/v1/gl_site_hits",{method:"POST",keepalive:true,
       headers:{"Content-Type":"application/json","apikey":K,"Authorization":"Bearer "+K,"Prefer":"return=minimal"},
       body:JSON.stringify({page:(location.pathname||"/").slice(0,120),
-        ref:r?r.slice(0,120):null,dev:(window.innerWidth<760?"m":"d")})}).catch(function(){});
+        ref:r?r.slice(0,120):null,dev:(window.innerWidth<760?"m":"d"),ev:ev})}).catch(function(){});
   }catch(e){}}
-  function go(){ if(window.requestIdleCallback)requestIdleCallback(send,{timeout:3000}); else setTimeout(send,400); }
+  function go(){ if(window.requestIdleCallback)requestIdleCallback(function(){send("view");},{timeout:3000});
+            else setTimeout(function(){send("view");},400); }
   if(document.readyState==="complete")go(); else addEventListener("load",go);
+  document.addEventListener("click",function(e){try{
+    var t=e.target; if(!t||!t.closest)return;
+    var a=t.closest("a[href]"); if(!a)return;
+    var h=a.getAttribute("href")||"";
+    var ev = /wa\.me|api\.whatsapp\.com/i.test(h) ? "wa"
+           : /^tel:/i.test(h) ? "tel"
+           : /maps\.app\.goo\.gl|google\.[a-z.]+\/maps|waze\.com/i.test(h) ? "map" : "";
+    if(ev) send(ev);
+  }catch(e){}},true);
 }catch(e){}})();</script>
 </body>
 </html>

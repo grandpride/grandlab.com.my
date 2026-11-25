@@ -328,8 +328,8 @@
     var host=location.hostname.replace(/^www\./,""),r="";
     try{if(document.referrer)r=new URL(document.referrer).hostname.replace(/^www\./,"");}catch(e){}
     if(r===host)r="";
-    fetch(U+"/rest/v1/gl_site_hits",{method:"POST",keepalive:true,
-      headers:{"Content-Type":"application/json","apikey":K,"Authorization":"Bearer "+K,"Prefer":"return=minimal"},
+    fetch("https://gl-api.jimmykuek94.workers.dev/gl/public/hit",{method:"POST",keepalive:true,
+      headers:{"Content-Type":"application/json"},
       body:JSON.stringify({page:(location.pathname||"/").slice(0,120),
         ref:r?r.slice(0,120):null,dev:(window.innerWidth<760?"m":"d"),ev:ev})}).catch(function(){});
   }catch(e){}}

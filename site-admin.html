@@ -144,6 +144,9 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>/* new system (Cloudflare): the old server db.grandlab.com.my is switched off. These two files (same ones the staff pages use) make this page's login, saves and uploads go to the new system; the page code below stays as it was. */
+window.GLCF_PAGE_CFG={page:'site-admin',module:'core',public:true,restAuth:'token'};
+document.write('<script src="https://app.grandlab.com.my/gl-cf-client.js"><\/script><script src="https://app.grandlab.com.my/gl-cf-page.js"><\/script>');</script>
 <script>
 const SUPABASE_URL="https://db.grandlab.com.my";
 const SUPABASE_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzkzMDY5NDExLCJleHAiOjE5NTA3NDk0MTF9.IcbPnDCd9p6Z-_FNMvzfg9k6ayX7IpC48zdGacAD_qw";
@@ -1206,13 +1209,13 @@ async function hlRun(){
     var ms=Math.round(((window.performance&&performance.now)?performance.now():Date.now())-t0);
     content=r.data||[];
     out.push(hlLine(ms<1500?'ok':'warn','Backend',ms+' ms',
-      'db.grandlab.com.my answered'+(ms>=1500?' — slower than usual':'')));
+      'the new system answered'+(ms>=1500?' — slower than usual':'')));
     var last=''; content.forEach(function(x){ if(x.updated_at&&x.updated_at>last) last=x.updated_at; });
     out.push(hlLine('ok','Website content',content.length+' settings',
       last?('last edited '+new Date(last).toLocaleString()):'no edit date recorded'));
   }catch(e){
     out.push(hlLine('bad','Backend','Offline',
-      'db.grandlab.com.my did not answer. The website falls back to its built-in text, so it stays up — but edits and photos will not load. Check the server is running.'));
+      'The new system did not answer. The website falls back to its built-in text, so it stays up — but edits and photos will not load. Check the server is running.'));
     el.innerHTML=out.join('')+'<div class="hint2" style="margin-top:16px">Remaining checks need the backend, so they were skipped.</div>';
     return;
   }
@@ -1246,7 +1249,7 @@ async function hlRun(){
   var seen={};
   content.forEach(function(x){
     var v=String(x.value||'');
-    var re=/\/storage\/v1\/object\/public\/(gl-images|gl-videos)\/([^|"'\s?]+)/g, m;
+    var re=/\/(?:storage\/v1\/object\/public|gl\/files\/gl\/storage)\/(gl-images|gl-videos)\/([^|"'\s?]+)/g, m;
     while((m=re.exec(v))){
       var k=m[1]+'/'+decodeURIComponent(m[2]);
       if(!(k in refd) && !seen[k]){ seen[k]=1; missing.push(x.key); }
@@ -1287,6 +1290,11 @@ async function hlRun(){
 function syncDom(){ document.querySelectorAll('[data-k]').forEach(el=>{ DATA[el.dataset.k]=el.value; }); }
 function onEdit(){ syncDom(); dirty=true; $('msg').textContent='Unsaved changes'; $('msg').className='msg'; }
 
+// link to show/save for a file just uploaded: the new system's signed link when the upload gave one, else the old-format link
+function glLink(bucket,path){
+  try{ var u=sb.storage&&sb.storage.cachedSignedUrl&&sb.storage.cachedSignedUrl(bucket,path); if(u) return u; }catch(e){}
+  return SUPABASE_URL+'/storage/v1/object/public/'+bucket+'/'+path;
+}
 // storage uploads must go as the logged-in user: gl-videos only allows authenticated inserts
 async function glUploadHeaders(){
   var tok=SUPABASE_ANON;
@@ -1306,7 +1314,7 @@ async function uploadVideo(file,key){
     const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-videos/'+path,{
       method:'POST',headers:await glUploadHeaders(),body:file});
     if(r.ok){
-      const url=SUPABASE_URL+'/storage/v1/object/public/gl-videos/'+path;
+      const url=glLink('gl-videos',path);
       const inp=document.querySelector('[data-k="'+key+'"]'); inp.value=url; onEdit(); previewImg(key); if(key==='brand_hero_img'&&typeof hpRender==='function') hpRender('brand_hero_pos'); { var _m=String(key).match(/^(br[0-9])_img$/); if(_m&&typeof psRender==='function') psRender(_m[1]); }
       st.innerHTML='<span style="color:#3ec76e">✓ Uploaded. Remember to Save.</span>';
     } else {
@@ -1397,7 +1405,7 @@ async function imgUpload(key,file){
     const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-images/'+path,
       {method:'POST',headers:await glUploadHeaders(),body:file});
     if(r.ok){
-      const url=SUPABASE_URL+'/storage/v1/object/public/gl-images/'+path;
+      const url=glLink('gl-images',path);
       const inp=document.querySelector('input[data-k="'+key+'"]');
       inp.value=url; previewImg(key); onEdit();
       const delNote=await glDeleteOld(prevUrl,url,key);
@@ -1440,7 +1448,7 @@ async function galUpload(key,files){
       st.textContent='Uploading '+(done+1)+' of '+files.length+' ('+(f.size/1024).toFixed(0)+' kB)…';
       const path='site-'+Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+((f.name.split('.').pop()||'jpg').toLowerCase());
       const r=await fetch(SUPABASE_URL+'/storage/v1/object/gl-images/'+path,{method:'POST',headers:await glUploadHeaders(),body:f});
-      if(r.ok){ cur.push(SUPABASE_URL+'/storage/v1/object/public/gl-images/'+path); done++; galInput(key).value=cur.join('|'); galRender(key); }
+      if(r.ok){ cur.push(glLink('gl-images',path)); done++; galInput(key).value=cur.join('|'); galRender(key); }
     }catch(e){}
   }
   onEdit();

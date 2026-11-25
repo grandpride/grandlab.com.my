@@ -272,7 +272,7 @@
   // load editable content from Supabase
   (async function(){
     try{
-      const sb=supabase.createClient("https://db.grandlab.com.my","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzkzMDY5NDExLCJleHAiOjE5NTA3NDk0MTF9.IcbPnDCd9p6Z-_FNMvzfg9k6ayX7IpC48zdGacAD_qw",{auth:{persistSession:false}});
+      const sb={from:function(t){return{select:function(c){return fetch("https://gl-api.jimmykuek94.workers.dev/gl/public/db",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({table:t,op:"select",columns:c})}).then(function(r){return r.json();}).then(function(j){return{data:(j&&j.data)||null,error:(j&&j.error)||null};}).catch(function(e){return{data:null,error:e};});}};}};
       const {data}=await sb.from('gl_site_content').select('key,value');if(!data)return;
       const C={};data.forEach(r=>C[r.key]=r.value);
       // ---- apply fonts & sizes ----
